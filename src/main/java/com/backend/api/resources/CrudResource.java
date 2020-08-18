@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import com.backend.api.domain.Base;
 import com.backend.api.services.CrudService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 public class CrudResource<Bean extends Base, DTO> {
 
+    @Autowired
     protected CrudService<Bean, DTO> service;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
