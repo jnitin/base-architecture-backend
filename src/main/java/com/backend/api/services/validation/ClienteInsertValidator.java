@@ -6,7 +6,7 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.backend.api.domain.Cliente;
+import com.backend.api.domain.curso.Cliente;
 import com.backend.api.domain.enums.TipoCliente;
 import com.backend.api.dto.ClienteNewDTO;
 import com.backend.api.repositories.ClienteRepository;

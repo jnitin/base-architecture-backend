@@ -1,4 +1,4 @@
-package com.backend.api.domain;
+package com.backend.api.domain.curso;
 
 import javax.persistence.Entity;
 

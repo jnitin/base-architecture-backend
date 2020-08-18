@@ -3,9 +3,9 @@ package com.backend.api.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.backend.api.domain.Cidade;
-import com.backend.api.domain.Cliente;
-import com.backend.api.domain.Endereco;
+import com.backend.api.domain.curso.Cidade;
+import com.backend.api.domain.curso.Cliente;
+import com.backend.api.domain.curso.Endereco;
 import com.backend.api.domain.enums.TipoCliente;
 import com.backend.api.dto.ClienteDTO;
 import com.backend.api.dto.ClienteNewDTO;

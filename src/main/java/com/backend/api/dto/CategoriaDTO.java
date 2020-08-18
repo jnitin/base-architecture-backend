@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
 
-import com.backend.api.domain.Categoria;
+import com.backend.api.domain.curso.Categoria;
 
 import org.hibernate.validator.constraints.Length;
 

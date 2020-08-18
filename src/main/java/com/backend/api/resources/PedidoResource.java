@@ -1,6 +1,6 @@
 package com.backend.api.resources;
 
-import com.backend.api.domain.Pedido;
+import com.backend.api.domain.curso.Pedido;
 import com.backend.api.services.PedidoService;
 
 import org.springframework.beans.factory.annotation.Autowired;

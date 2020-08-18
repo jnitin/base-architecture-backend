@@ -2,7 +2,7 @@ package com.backend.api.services;
 
 import java.util.Optional;
 
-import com.backend.api.domain.Pedido;
+import com.backend.api.domain.curso.Pedido;
 import com.backend.api.repositories.PedidoRepository;
 import com.backend.api.services.exceptions.ObjectNotFoundException;
 

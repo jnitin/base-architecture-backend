@@ -3,7 +3,7 @@ package com.backend.api.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.backend.api.domain.Categoria;
+import com.backend.api.domain.curso.Categoria;
 import com.backend.api.dto.CategoriaDTO;
 import com.backend.api.repositories.CategoriaRepository;
 import com.backend.api.services.exceptions.DataIntegrityException;

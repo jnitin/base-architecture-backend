@@ -26,8 +26,6 @@ public class ClienteNewDTO implements Serializable {
 	private Integer cidadeId;
 
 	public ClienteNewDTO() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getNome() {

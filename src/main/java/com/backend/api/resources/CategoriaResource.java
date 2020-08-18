@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import com.backend.api.domain.Categoria;
+import com.backend.api.domain.curso.Categoria;
 import com.backend.api.dto.CategoriaDTO;
 import com.backend.api.services.CategoriaService;
 
