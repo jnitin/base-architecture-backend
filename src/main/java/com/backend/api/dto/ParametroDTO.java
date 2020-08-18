@@ -1,27 +1,20 @@
-package com.backend.api.domain;
+package com.backend.api.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity
-public class Parametro extends Base {
 
+public class ParametroDTO implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer id;
-
+    private Integer id;
     private String chave;
     private String valor;
     private String observacao;
 
-    public Parametro() {
+    public ParametroDTO() {
     }
 
-    public Parametro(Integer id, String chave, String valor, String observacao) {
+    public ParametroDTO(Integer id, String chave, String valor, String observacao) {
         this.id = id;
         this.chave = chave;
         this.valor = valor;
@@ -60,14 +53,6 @@ public class Parametro extends Base {
         return result;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -76,7 +61,7 @@ public class Parametro extends Base {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Parametro other = (Parametro) obj;
+        ParametroDTO other = (ParametroDTO) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -87,7 +72,7 @@ public class Parametro extends Base {
 
     @Override
     public String toString() {
-        return "Parametro [chave=" + chave + ", id=" + id + "]";
+        return "ParametroDTO [chave=" + chave + ", id=" + id + "]";
     }
 
 }

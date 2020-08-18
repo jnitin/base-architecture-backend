@@ -1,21 +1,38 @@
 package com.backend.api.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Perfil implements Serializable {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+@Entity
+public class Perfil extends Base {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Integer id;
+
     private String descricao;
     private Integer nivel;
 
+    @ManyToMany
+    @JoinTable(name = "perfil_rota", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "rota_id"))
     private List<Rota> rotas = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "perfil_rotina", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
     private List<Rotina> rotinas = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "perfil_usuario", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> usuarios = new ArrayList<>();
 
     public Perfil() {

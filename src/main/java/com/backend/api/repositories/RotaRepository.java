@@ -1,11 +1,11 @@
 package com.backend.api.repositories;
 
-import com.backend.api.domain.curso.Estado;
+import com.backend.api.domain.Rota;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EstadoRepository extends JpaRepository<Estado, Integer>{
+public interface RotaRepository extends JpaRepository<Rota, Integer>{
 
 }

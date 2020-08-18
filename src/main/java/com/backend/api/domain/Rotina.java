@@ -1,18 +1,31 @@
 package com.backend.api.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rotina implements Serializable {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+@Entity
+public class Rotina extends Base {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Integer id;
+
     private String descricao;
     private Integer codigo;
 
+    @ManyToMany(mappedBy = "rotinas")
     private List<Usuario> usuarios = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "rotinas")
+    private List<Perfil> perfis = new ArrayList<>();
 
     public Rotina() {
     }
@@ -53,6 +66,14 @@ public class Rotina implements Serializable {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public List<Perfil> getPerfis() {
+        return perfis;
+    }
+
+    public void setPerfis(List<Perfil> perfis) {
+        this.perfis = perfis;
     }
 
     @Override

@@ -1,22 +1,32 @@
 package com.backend.api.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
 import com.backend.api.domain.enums.TipoRota;
 
-public class Rota implements Serializable {
+@Entity
+public class Rota extends Base {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Integer id;
+
     private String descricao;
     private TipoRota tipo;
     private String url;
     private String icone;
     private Rota pai;
 
+    @ManyToMany(mappedBy = "rotas")
     private List<Perfil> perfis = new ArrayList<>();
 
     public Rota() {

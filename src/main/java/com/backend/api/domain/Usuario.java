@@ -1,26 +1,42 @@
 package com.backend.api.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 import com.backend.api.domain.enums.SituacaoUsuario;
 
-public class Usuario implements Serializable {
+@Entity
+public class Usuario extends Base {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Integer id;
+
     private String nome;
     private String email;
     private String senha;
     private Integer situacao;
 
+    @ManyToMany(mappedBy = "usuarios")
     private List<Perfil> perfis = new ArrayList<>();
 
-    private List<Rotina> rotinas = new ArrayList<>();
-
+    @ManyToMany(mappedBy = "usuarios")
     private List<Empresa> empresas = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "usuario_rotina", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
+
+    private List<Rotina> rotinas = new ArrayList<>();
 
     public Usuario() {
     }
@@ -31,6 +47,14 @@ public class Usuario implements Serializable {
         this.email = email;
         this.senha = senha;
         this.situacao = situacao == null ? null : situacao.getCod();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -87,14 +111,6 @@ public class Usuario implements Serializable {
 
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     @Override
