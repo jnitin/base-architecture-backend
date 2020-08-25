@@ -5,7 +5,7 @@ public enum SituacaoUsuario {
 	ATIVO(1, "Ativo"),
 	INATIVO(2, "Inativo");
 
-	private int cod;
+	private Integer cod;
 	private String descricao;
 
 	private SituacaoUsuario(int cod, String descricao) {
@@ -13,7 +13,7 @@ public enum SituacaoUsuario {
 		this.descricao = descricao;
 	}
 
-	public int getCod() {
+	public Integer getCod() {
 		return cod;
 	}
 

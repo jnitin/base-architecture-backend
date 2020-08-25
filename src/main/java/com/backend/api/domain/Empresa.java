@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Empresa extends Base {
@@ -20,7 +21,9 @@ public class Empresa extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
+    @NotNull
     private String nome;
+    
     private String cnpj;
 
     @ManyToMany
@@ -69,7 +72,7 @@ public class Empresa extends Base {
     }
 
     @Override
-    public int hashCode() {
+    public Integer hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());

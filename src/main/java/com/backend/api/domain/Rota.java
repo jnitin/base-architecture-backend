@@ -21,7 +21,7 @@ public class Rota extends Base {
     protected Integer id;
 
     private String descricao;
-    private TipoRota tipo;
+    private Integer tipo;
     private String url;
     private String icone;
     private Rota pai;
@@ -35,7 +35,7 @@ public class Rota extends Base {
     public Rota(Integer id, String descricao, TipoRota tipo, String url, String icone, Rota pai) {
         this.id = id;
         this.descricao = descricao;
-        this.tipo = tipo;
+        this.tipo = tipo.getCod();
         this.url = url;
         this.icone = icone;
         this.pai = pai;
@@ -58,11 +58,11 @@ public class Rota extends Base {
     }
 
     public TipoRota getTipo() {
-        return tipo;
+        return TipoRota.toEnum(tipo);
     }
 
     public void setTipo(TipoRota tipo) {
-        this.tipo = tipo;
+        this.tipo = tipo.getCod();
     }
 
     public String getUrl() {
@@ -98,7 +98,7 @@ public class Rota extends Base {
     }
 
     @Override
-    public int hashCode() {
+    public Integer hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());

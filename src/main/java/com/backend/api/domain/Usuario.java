@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 
 import com.backend.api.domain.enums.SituacaoUsuario;
 
@@ -22,9 +23,16 @@ public class Usuario extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
+    @NotNull
     private String nome;
+
+    @NotNull
     private String email;
+    
+    @NotNull
     private String senha;
+
+    @NotNull
     private Integer situacao;
 
     @ManyToMany(mappedBy = "usuarios")
@@ -119,7 +127,7 @@ public class Usuario extends Base {
     }
 
     @Override
-    public int hashCode() {
+    public Integer hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());

@@ -2,11 +2,9 @@ package com.backend.api.dto;
 
 import java.io.Serializable;
 
-
-public class ParametroDTO implements Serializable{
+public class ParametroDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
     private String chave;
     private String valor;
     private String observacao;
@@ -14,8 +12,7 @@ public class ParametroDTO implements Serializable{
     public ParametroDTO() {
     }
 
-    public ParametroDTO(Integer id, String chave, String valor, String observacao) {
-        this.id = id;
+    public ParametroDTO( String chave, String valor, String observacao) {
         this.chave = chave;
         this.valor = valor;
         this.observacao = observacao;
@@ -46,33 +43,8 @@ public class ParametroDTO implements Serializable{
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ParametroDTO other = (ParametroDTO) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
-
-    @Override
     public String toString() {
-        return "ParametroDTO [chave=" + chave + ", id=" + id + "]";
+        return "ParametroDTO [chave=" + chave +  "]";
     }
 
 }

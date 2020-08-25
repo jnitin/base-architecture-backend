@@ -25,8 +25,8 @@ public class CrudResource<Bean extends Base, DTO> {
     protected CrudService<Bean, DTO> service;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Bean> find(@PathVariable Integer id) {
-        Bean obj = service.find(id);
+    public ResponseEntity<DTO> find(@PathVariable Integer id) {
+        DTO obj = service.toDTO(service.find(id));
         return ResponseEntity.ok().body(obj);
     }
 
@@ -62,18 +62,10 @@ public class CrudResource<Bean extends Base, DTO> {
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ResponseEntity<Page<DTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
-            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
         Page<Bean> list = service.findPage(page, linesPerPage, orderBy, direction);
         Page<DTO> listDto = list.map(c -> service.toDTO(c));
         return ResponseEntity.ok().body(listDto);
-    }
-
-    public CrudService<Bean, DTO> getService() {
-        return service;
-    }
-
-    public void setService(CrudService<Bean, DTO> service) {
-        this.service = service;
     }
 }

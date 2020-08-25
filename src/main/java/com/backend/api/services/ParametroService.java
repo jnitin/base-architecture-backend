@@ -1,55 +1,29 @@
 package com.backend.api.services;
 
-import java.util.List;
-
 import com.backend.api.domain.Parametro;
 import com.backend.api.dto.ParametroDTO;
-import org.springframework.data.domain.Page;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class ParametroService extends CrudService<Parametro, ParametroDTO> {
 
 	@Override
-	public Parametro fromDTO(ParametroDTO obj) {
-		// TODO Auto-generated method stub
-		return null;
+	public Parametro fromDTO(ParametroDTO dto) {
+		if (dto == null) {
+			return null;
+		}
+		final Parametro obj = new Parametro(null, dto.getChave(), dto.getValor(), dto.getObservacao());
+		return obj;
 	}
 
 	@Override
 	public ParametroDTO toDTO(Parametro obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Parametro insert(Parametro obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Parametro update(Parametro obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Page<Parametro> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Parametro> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		if (obj == null) {
+			return null;
+		}
+		final ParametroDTO dto = new ParametroDTO(obj.getChave(), obj.getValor(), obj.getObservacao());
+		return dto;
 	}
 
 }

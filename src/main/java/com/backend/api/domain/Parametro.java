@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Parametro extends Base {
@@ -14,8 +15,13 @@ public class Parametro extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
+    @NotNull
     private String chave;
+
+    @NotNull
     private String valor;
+
+    
     private String observacao;
 
     public Parametro() {
@@ -53,7 +59,7 @@ public class Parametro extends Base {
     }
 
     @Override
-    public int hashCode() {
+    public Integer hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -87,7 +93,8 @@ public class Parametro extends Base {
 
     @Override
     public String toString() {
-        return "Parametro [chave=" + chave + ", id=" + id + "]";
+        return "Parametro [chave=" + chave + ", id=" + id + ", observacao=" + observacao + ", valor=" + valor + "]";
     }
 
+  
 }

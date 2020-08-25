@@ -77,7 +77,7 @@ public class Rotina extends Base {
     }
 
     @Override
-    public int hashCode() {
+    public Integer hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());

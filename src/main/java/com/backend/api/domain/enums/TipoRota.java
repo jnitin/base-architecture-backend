@@ -6,7 +6,7 @@ public enum TipoRota {
 	REQUISICAO(2, "Requisição"),
 	CRUD(3, "CRUD");
 
-	private int cod;
+	private Integer cod;
 	private String descricao;
 
 	private TipoRota(int cod, String descricao) {
@@ -14,7 +14,7 @@ public enum TipoRota {
 		this.descricao = descricao;
 	}
 
-	public int getCod() {
+	public Integer getCod() {
 		return cod;
 	}
 
