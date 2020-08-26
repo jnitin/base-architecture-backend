@@ -35,7 +35,7 @@ public class ApiApplication implements CommandLineRunner {
 	private RouteRepository rotaRepository;
 
 	@Autowired
-	private ProfileRepository perfilRepository;
+	private ProfileRepository profileRepository;
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
 	}
@@ -44,7 +44,7 @@ public class ApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Parameter p1 = new Parameter(null, "key", "value", "Observação");
 
-		User user = new User(null, "Gabriel", "gabs", pe.encode("senha"), UserSituation.ATIVO);
+		User user = new User(null, "Gabriel", "gabs", pe.encode("password"), UserSituation.ATIVO);
 
 		UserProfile p = new UserProfile(null, "Administrador", 20);
 
@@ -66,7 +66,7 @@ public class ApiApplication implements CommandLineRunner {
 		rotaRepository.save(r1);
 		rotaRepository.save(r2);
 
-		perfilRepository.save(p);
+		profileRepository.save(p);
 
 
 		parametroRepository.save(p1);

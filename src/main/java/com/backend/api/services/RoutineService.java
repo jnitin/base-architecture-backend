@@ -13,7 +13,7 @@ public class RoutineService extends CrudService<Routine, RoutineDTO> {
 		if (dto == null) {
 			return null;
 		}
-		final Routine obj = new Routine(null, dto.getdescription(), dto.getCodigo());
+		final Routine obj = new Routine(null, dto.getDescription(), dto.getCode());
 		return obj;
 	}
 
@@ -22,7 +22,7 @@ public class RoutineService extends CrudService<Routine, RoutineDTO> {
 		if (obj == null) {
 			return null;
 		}
-		final RoutineDTO dto = new RoutineDTO(obj.getdescription(), obj.getCodigo());
+		final RoutineDTO dto = new RoutineDTO(obj.getDescription(), obj.getCode());
 		return dto;
 	}
 

@@ -17,19 +17,19 @@ public class RoutineDTO implements Serializable {
         this.code = code;
     }
 
-    public String getdescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setdescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Integer getCodigo() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCodigo(Integer code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

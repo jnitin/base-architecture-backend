@@ -22,27 +22,27 @@ public class UserProfile extends Base {
     protected Integer id;
 
     private String description;
-    private Integer nivel;
+    private Integer level;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "perfil_rota", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "rota_id"))
+    @JoinTable(name = "profile_rota", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "rota_id"))
     private List<Route> rotas = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "perfil_rotina", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
-    private List<Routine> rotinas = new ArrayList<>();
+    @JoinTable(name = "profile_routine", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "routine_id"))
+    private List<Routine> routines = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "perfil_user", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "profile_user", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
 
     public UserProfile() {
     }
 
-    public UserProfile(Integer id, String description, Integer nivel) {
+    public UserProfile(Integer id, String description, Integer level) {
         this.id = id;
         this.description = description;
-        this.nivel = nivel;
+        this.level = level;
     }
 
     public Integer getId() {
@@ -53,20 +53,20 @@ public class UserProfile extends Base {
         this.id = id;
     }
 
-    public String getdescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setdescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Integer getNivel() {
-        return nivel;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setNivel(Integer nivel) {
-        this.nivel = nivel;
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public List<Route> getRoutes() {
@@ -78,11 +78,11 @@ public class UserProfile extends Base {
     }
 
     public List<Routine> getRoutines() {
-        return rotinas;
+        return routines;
     }
 
-    public void setRoutines(List<Routine> rotinas) {
-        this.rotinas = rotinas;
+    public void setRoutines(List<Routine> routines) {
+        this.routines = routines;
     }
 
     public List<User> getUsers() {
@@ -120,7 +120,7 @@ public class UserProfile extends Base {
 
     @Override
     public String toString() {
-        return "Perfil [description=" + description + ", id=" + id + "]";
+        return "Profile [description=" + description + ", id=" + id + "]";
     }
 
 }

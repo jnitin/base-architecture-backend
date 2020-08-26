@@ -6,35 +6,35 @@ public class ProfileDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String description;
-    private Integer nivel;
+    private Integer level;
 
-    public ProfileDTO(String description, Integer nivel) {
+    public ProfileDTO(String description, Integer level) {
         this.description = description;
-        this.nivel = nivel;
+        this.level = level;
     }
 
     public ProfileDTO() {
     }
 
-    public String getdescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setdescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Integer getNivel() {
-        return nivel;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setNivel(Integer nivel) {
-        this.nivel = nivel;
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     @Override
     public String toString() {
-        return "PerfilDTO [description=" + description + ", nivel=" + nivel + "]";
+        return "ProfileDTO [description=" + description + ", level=" + level + "]";
     }
 
     

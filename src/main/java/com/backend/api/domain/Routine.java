@@ -21,10 +21,10 @@ public class Routine extends Base {
     private String description;
     private Integer code;
 
-    @ManyToMany(mappedBy = "rotinas")
+    @ManyToMany(mappedBy = "routines")
     private List<User> users = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "rotinas")
+    @ManyToMany(mappedBy = "routines")
     private List<UserProfile> profiles = new ArrayList<>();
 
     public Routine() {
@@ -44,19 +44,19 @@ public class Routine extends Base {
         this.id = id;
     }
 
-    public String getdescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setdescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Integer getCodigo() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCodigo(Integer code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

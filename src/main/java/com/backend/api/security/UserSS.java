@@ -16,18 +16,18 @@ public class UserSS implements UserDetails {
 	
 	private Integer id;
 	private String email;
-	private String senha;
+	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	public UserSS() {
 	}
 	
-	public UserSS(Integer id, String email, String senha, Set<Profile> profiles) {
+	public UserSS(Integer id, String email, String password, Set<Profile> profiles) {
 		super();
 		this.id = id;
 		this.email = email;
-		this.senha = senha;
-		this.authorities = profiles.stream().map(x -> new SimpleGrantedAuthority(x.getdescription())).collect(Collectors.toList());
+		this.password = password;
+		this.authorities = profiles.stream().map(x -> new SimpleGrantedAuthority(x.getDescription())).collect(Collectors.toList());
 	}
 
 	public Integer getId() {
@@ -41,7 +41,7 @@ public class UserSS implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return senha;
+		return password;
 	}
 
 	@Override
@@ -69,12 +69,12 @@ public class UserSS implements UserDetails {
 		return true;
 	}
 	
-	public boolean hasRole(UserProfile perfil) {
-		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getdescription()));
+	public boolean hasRole(UserProfile profile) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(profile.getDescription()));
 	}
 
 	@Override
 	public String toString() {
-		return "UserSS [email=" + email + ", id=" + id + ", senha=" + senha + "]";
+		return "UserSS [email=" + email + ", id=" + id + ", password=" + password + "]";
 	}
 }

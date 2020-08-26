@@ -9,17 +9,17 @@ public class UserDTO implements Serializable {
 
     private String name;
     private String email;
-    private String senha;
-    private Integer situacao;
+    private String password;
+    private Integer situation;
 
     public UserDTO() {
     }
 
-    public UserDTO(String name, String email, String senha, UserSituation situacao) {
+    public UserDTO(String name, String email, String password, UserSituation situation) {
         this.name = name;
         this.email = email;
-        this.senha = senha;
-        this.situacao = situacao.getCod();
+        this.password = password;
+        this.situation = situation.getCod();
     }
 
     public String getName() {
@@ -39,19 +39,19 @@ public class UserDTO implements Serializable {
     }
 
     public String getPassword() {
-        return senha;
+        return password;
     }
 
-    public void setPassword(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UserSituation getSituation() {
-        return UserSituation.toEnum(situacao);
+        return UserSituation.toEnum(situation);
     }
 
-    public void setSituation(UserSituation situacao) {
-        this.situacao = situacao.getCod();
+    public void setSituation(UserSituation situation) {
+        this.situation = situation.getCod();
     }
 
     @Override

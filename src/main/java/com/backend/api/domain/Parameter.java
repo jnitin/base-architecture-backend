@@ -22,16 +22,16 @@ public class Parameter extends Base {
     private String value;
 
     
-    private String observacao;
+    private String note;
 
     public Parameter() {
     }
 
-    public Parameter(Integer id, String key, String value, String observacao) {
+    public Parameter(Integer id, String key, String value, String note) {
         this.id = id;
         this.key = key;
         this.value = value;
-        this.observacao = observacao;
+        this.note = note;
     }
 
     public String getChave() {
@@ -50,12 +50,12 @@ public class Parameter extends Base {
         this.value = value;
     }
 
-    public String getObservacao() {
-        return observacao;
+    public String getNote() {
+        return note;
     }
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class Parameter extends Base {
 
     @Override
     public String toString() {
-        return "Parametro [key=" + key + ", id=" + id + ", observacao=" + observacao + ", value=" + value + "]";
+        return "Parametro [key=" + key + ", id=" + id + ", note=" + note + ", value=" + value + "]";
     }
 
   

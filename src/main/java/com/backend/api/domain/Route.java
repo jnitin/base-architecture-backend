@@ -59,11 +59,11 @@ public class Route extends Base {
         this.id = id;
     }
 
-    public String getdescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setdescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -106,10 +106,6 @@ public class Route extends Base {
     public void setUserProfiles(List<UserProfile> profiles) {
         this.profiles = profiles;
     }
-
- 
-
-
 
     @Override
     public String toString() {

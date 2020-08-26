@@ -6,7 +6,7 @@ public class CredentialsDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String email;
-	private String senha;
+	private String password;
 	
 	public CredentialsDTO() {
 	}
@@ -18,14 +18,14 @@ public class CredentialsDTO implements Serializable {
 		this.email = email;
 	}
 	public String getPassword() {
-		return senha;
+		return password;
 	}
-	public void setPassword(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "CredenciaisDTO [email=" + email + ", senha=" + senha + "]";
+		return "CredenciaisDTO [email=" + email + ", password=" + password + "]";
 	}
 }

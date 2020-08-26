@@ -18,8 +18,8 @@ public class UserService extends CrudService<User, UserDTO> {
 		if (dto == null) {
 			return null;
 		}
-		String senha = pe.encode(dto.getPassword());
-		final User obj = new User(null, dto.getName(), dto.getEmail(), senha, dto.getSituation());
+		String password = pe.encode(dto.getPassword());
+		final User obj = new User(null, dto.getName(), dto.getEmail(), password, dto.getSituation());
 		return obj;
 	}
 

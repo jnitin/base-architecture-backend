@@ -17,7 +17,7 @@ public enum UserSituation {
 		return cod;
 	}
 
-	public String getdescription () {
+	public String getDescription () {
 		return description;
 	}
 

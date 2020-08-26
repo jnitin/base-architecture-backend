@@ -7,15 +7,15 @@ public class ParameterDTO implements Serializable {
 
     private String key;
     private String value;
-    private String observacao;
+    private String note;
 
     public ParameterDTO() {
     }
 
-    public ParameterDTO( String key, String value, String observacao) {
+    public ParameterDTO( String key, String value, String note) {
         this.key = key;
         this.value = value;
-        this.observacao = observacao;
+        this.note = note;
     }
 
     public String getChave() {
@@ -34,12 +34,12 @@ public class ParameterDTO implements Serializable {
         this.value = value;
     }
 
-    public String getObservacao() {
-        return observacao;
+    public String getNote() {
+        return note;
     }
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override

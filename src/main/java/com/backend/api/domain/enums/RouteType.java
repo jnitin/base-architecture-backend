@@ -18,7 +18,7 @@ public enum RouteType {
 		return cod;
 	}
 
-	public String getdescription () {
+	public String getDescription () {
 		return description;
 	}
 

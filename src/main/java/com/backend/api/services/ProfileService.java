@@ -13,7 +13,7 @@ public class ProfileService extends CrudService<UserProfile, ProfileDTO> {
 		if (dto == null) {
 			return null;
 		}
-		final UserProfile obj = new UserProfile(null, dto.getdescription(), dto.getNivel());
+		final UserProfile obj = new UserProfile(null, dto.getDescription(), dto.getLevel());
 		return obj;
 	}
 
@@ -22,7 +22,7 @@ public class ProfileService extends CrudService<UserProfile, ProfileDTO> {
 		if (obj == null) {
 			return null;
 		}
-		final ProfileDTO dto = new ProfileDTO(obj.getdescription(), obj.getNivel());
+		final ProfileDTO dto = new ProfileDTO(obj.getDescription(), obj.getLevel());
 		return dto;
 	}
 

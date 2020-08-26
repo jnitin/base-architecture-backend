@@ -13,7 +13,7 @@ public class ParameterService extends CrudService<Parameter, ParameterDTO> {
 		if (dto == null) {
 			return null;
 		}
-		final Parameter obj = new Parameter(null, dto.getChave(), dto.getValor(), dto.getObservacao());
+		final Parameter obj = new Parameter(null, dto.getChave(), dto.getValor(), dto.getNote());
 		return obj;
 	}
 
@@ -22,7 +22,7 @@ public class ParameterService extends CrudService<Parameter, ParameterDTO> {
 		if (obj == null) {
 			return null;
 		}
-		final ParameterDTO dto = new ParameterDTO(obj.getChave(), obj.getValor(), obj.getObservacao());
+		final ParameterDTO dto = new ParameterDTO(obj.getChave(), obj.getValor(), obj.getNote());
 		return dto;
 	}
 

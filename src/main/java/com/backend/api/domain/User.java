@@ -37,10 +37,10 @@ public class User extends Base {
     private String email;
     
     @NotNull
-    private String senha;
+    private String password;
 
     @NotNull
-    private Integer situacao;
+    private Integer situation;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private List<UserProfile> userProfiles = new ArrayList<>();
@@ -49,8 +49,8 @@ public class User extends Base {
     private List<Company> companies = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "user_rotina", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
-    private List<Routine> rotinas = new ArrayList<>();
+    @JoinTable(name = "user_routine", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "routine_id"))
+    private List<Routine> routines = new ArrayList<>();
 
     @ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PROFILES")
@@ -59,12 +59,12 @@ public class User extends Base {
     public User() {
     }
 
-    public User(Integer id, String name, String email, String senha, UserSituation situacao) {
+    public User(Integer id, String name, String email, String password, UserSituation situation) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.senha = senha;
-        this.situacao = situacao == null ? null : situacao.getCod();
+        this.password = password;
+        this.situation = situation == null ? null : situation.getCod();
         addProfile(Profile.CLIENTE);
     }
 
@@ -102,19 +102,19 @@ public class User extends Base {
     }
 
     public String getPassword() {
-        return senha;
+        return password;
     }
 
-    public void setPassword(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UserSituation getSituation() {
-        return UserSituation.toEnum(situacao);
+        return UserSituation.toEnum(situation);
     }
 
-    public void setSituation(UserSituation situacao) {
-        this.situacao = situacao.getCod();
+    public void setSituation(UserSituation situation) {
+        this.situation = situation.getCod();
     }
 
     public List<UserProfile> getUserProfiles() {
@@ -126,11 +126,11 @@ public class User extends Base {
     }
 
     public List<Routine> getRoutines() {
-        return rotinas;
+        return routines;
     }
 
-    public void setRoutines(List<Routine> rotinas) {
-        this.rotinas = rotinas;
+    public void setRoutines(List<Routine> routines) {
+        this.routines = routines;
     }
 
     public List<Company> getEmpresas() {
