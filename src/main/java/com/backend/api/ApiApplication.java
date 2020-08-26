@@ -48,17 +48,24 @@ public class ApiApplication implements CommandLineRunner {
 
 		Perfil p = new Perfil(null, "Administrador", 20);
 
-		Rota r = new Rota(null, "Teste", TipoRota.REQUISICAO, "/parametros/[0-9]+", null, null, "GET");
+		Rota r1 = new Rota(null, "Teste", TipoRota.REQUISICAO, "/parametros/[0-9]+", null, null, "GET");
+		Rota r2 = new Rota(null, "Teste2", TipoRota.REQUISICAO, "/parametros/?", null, null, "GET");
 
-		p.getRotas().add(r);
+
+		p.getRotas().add(r1);
+		p.getRotas().add(r2);
 		p.getUsuarios().add(user);
 
-		r.getPerfis().add(p);
+		r1.getPerfis().add(p);
+		r2.getPerfis().add(p);
 
 		user.getPerfis().add(p);
 
 		usuarioRepository.save(user);
-		rotaRepository.save(r);
+
+		rotaRepository.save(r1);
+		rotaRepository.save(r2);
+
 		perfilRepository.save(p);
 
 

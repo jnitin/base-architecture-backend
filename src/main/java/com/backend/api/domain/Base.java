@@ -1,7 +1,6 @@
 package com.backend.api.domain;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -42,15 +41,8 @@ public class Base implements Serializable {
                 if (getterValue != null) {
                     setters.get(key).invoke(this, getterValue);
                 }
-            } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Um erro ocorreu ao tentar clonar um objeto");
             }
         });
     }

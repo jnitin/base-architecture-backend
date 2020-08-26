@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.api.security.JWTUtil;
 import com.backend.api.security.UserSS;
-import com.backend.api.services.AuthService;
 import com.backend.api.services.UserService;
 
 @RestController
@@ -19,9 +18,6 @@ public class AuthResource {
 
 	@Autowired
 	private JWTUtil jwtUtil;
-	
-	@Autowired
-	private AuthService service;
 	
 	@RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
 	public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
