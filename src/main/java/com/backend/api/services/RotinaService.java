@@ -13,7 +13,7 @@ public class RotinaService extends CrudService<Rotina, RotinaDTO> {
 		if (dto == null) {
 			return null;
 		}
-		final Rotina obj = new Rotina(null, dto.getDescricao(), dto.getCodigo())
+		final Rotina obj = new Rotina(null, dto.getDescricao(), dto.getCodigo());
 		return obj;
 	}
 
