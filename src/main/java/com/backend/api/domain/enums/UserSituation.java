@@ -1,6 +1,6 @@
 package com.backend.api.domain.enums;
 
-public enum SituacaoUsuario {
+public enum UserSituation {
 
 	ATIVO(1, "Ativo"),
 	INATIVO(2, "Inativo");
@@ -8,7 +8,7 @@ public enum SituacaoUsuario {
 	private Integer cod;
 	private String descricao;
 
-	private SituacaoUsuario(int cod, String descricao) {
+	private UserSituation(int cod, String descricao) {
 		this.cod = cod;
 		this.descricao = descricao;
 	}
@@ -21,13 +21,13 @@ public enum SituacaoUsuario {
 		return descricao;
 	}
 
-	public static SituacaoUsuario toEnum(Integer cod) {
+	public static UserSituation toEnum(Integer cod) {
 
 		if (cod == null) {
 			return null;
 		}
 
-		for (SituacaoUsuario x : SituacaoUsuario.values()) {
+		for (UserSituation x : UserSituation.values()) {
 			if (cod.equals(x.getCod())) {
 				return x;
 			}

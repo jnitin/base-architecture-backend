@@ -2,18 +2,18 @@ package com.backend.api.dto;
 
 import java.io.Serializable;
 
-public class PerfilDTO implements Serializable {
+public class ProfileDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String descricao;
     private Integer nivel;
 
-    public PerfilDTO(String descricao, Integer nivel) {
+    public ProfileDTO(String descricao, Integer nivel) {
         this.descricao = descricao;
         this.nivel = nivel;
     }
 
-    public PerfilDTO() {
+    public ProfileDTO() {
     }
 
     public String getDescricao() {

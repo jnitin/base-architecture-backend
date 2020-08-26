@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.backend.api.domain.Perfil;
+import com.backend.api.domain.UserProfile;
 import com.backend.api.domain.enums.Profile;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -69,7 +69,7 @@ public class UserSS implements UserDetails {
 		return true;
 	}
 	
-	public boolean hasRole(Perfil perfil) {
+	public boolean hasRole(UserProfile perfil) {
 		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.api.security.JWTUtil;
 import com.backend.api.security.UserSS;
-import com.backend.api.services.UserService;
+import com.backend.api.services.UserSSService;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -21,7 +21,7 @@ public class AuthResource {
 	
 	@RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
 	public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
-		UserSS user = UserService.authenticated();
+		UserSS user = UserSSService.authenticated();
 		String token = jwtUtil.generateToken(user.getUsername());
 		response.addHeader("Authorization", "Bearer " + token);
 		response.addHeader("access-control-expose-headers", "Authorization");

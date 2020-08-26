@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Empresa extends Base {
+public class Enterprise extends Base {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,20 +28,20 @@ public class Empresa extends Base {
 
     @ManyToMany
     @JoinTable(name = "empresa_usuario", joinColumns = @JoinColumn(name = "empresa_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<Usuario> usuarios = new ArrayList<>();
+    private List<User> usuarios = new ArrayList<>();
 
-    public Empresa() {
+    public Enterprise() {
     }
 
-    public List<Usuario> getUsuarios() {
+    public List<User> getUsuarios() {
         return usuarios;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
+    public void setUsuarios(List<User> usuarios) {
         this.usuarios = usuarios;
     }
 
-    public Empresa(Integer id, String nome, String cnpj) {
+    public Enterprise(Integer id, String nome, String cnpj) {
         this.id = id;
         this.nome = nome;
         this.cnpj = cnpj;
@@ -87,7 +87,7 @@ public class Empresa extends Base {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Empresa other = (Empresa) obj;
+        Enterprise other = (Enterprise) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

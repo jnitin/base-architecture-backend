@@ -19,10 +19,10 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 import com.backend.api.domain.enums.Profile;
-import com.backend.api.domain.enums.SituacaoUsuario;
+import com.backend.api.domain.enums.UserSituation;
 
 @Entity
-public class Usuario extends Base {
+public class User extends Base {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,10 +43,10 @@ public class Usuario extends Base {
     private Integer situacao;
 
     @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
-    private List<Perfil> perfis = new ArrayList<>();
+    private List<UserProfile> perfis = new ArrayList<>();
 
     @ManyToMany(mappedBy = "usuarios")
-    private List<Empresa> empresas = new ArrayList<>();
+    private List<Enterprise> empresas = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "usuario_rotina", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
@@ -56,10 +56,10 @@ public class Usuario extends Base {
 	@CollectionTable(name="PROFILES")
 	private Set<Integer> profiles = new HashSet<>();
 
-    public Usuario() {
+    public User() {
     }
 
-    public Usuario(Integer id, String nome, String email, String senha, SituacaoUsuario situacao) {
+    public User(Integer id, String nome, String email, String senha, UserSituation situacao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -109,19 +109,19 @@ public class Usuario extends Base {
         this.senha = senha;
     }
 
-    public SituacaoUsuario getSituacao() {
-        return SituacaoUsuario.toEnum(situacao);
+    public UserSituation getSituacao() {
+        return UserSituation.toEnum(situacao);
     }
 
-    public void setSituacao(SituacaoUsuario situacao) {
+    public void setSituacao(UserSituation situacao) {
         this.situacao = situacao.getCod();
     }
 
-    public List<Perfil> getPerfis() {
+    public List<UserProfile> getPerfis() {
         return perfis;
     }
 
-    public void setPerfis(List<Perfil> perfis) {
+    public void setPerfis(List<UserProfile> perfis) {
         this.perfis = perfis;
     }
 
@@ -133,11 +133,11 @@ public class Usuario extends Base {
         this.rotinas = rotinas;
     }
 
-    public List<Empresa> getEmpresas() {
+    public List<Enterprise> getEmpresas() {
         return empresas;
     }
 
-    public void setEmpresas(List<Empresa> empresas) {
+    public void setEmpresas(List<Enterprise> empresas) {
         this.empresas = empresas;
     }
 
@@ -162,7 +162,7 @@ public class Usuario extends Base {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Usuario other = (Usuario) obj;
+        User other = (User) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

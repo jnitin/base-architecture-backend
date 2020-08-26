@@ -18,7 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.backend.api.repositories.UsuarioRepository;
+import com.backend.api.repositories.UserRepository;
 import com.backend.api.security.JWTAuthenticationFilter;
 import com.backend.api.security.JWTAuthorizationFilter;
 import com.backend.api.security.JWTUtil;
@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 
 	@Autowired
-	private UsuarioRepository UsuarioRepository;
+	private UserRepository UsuarioRepository;
 
 	@Autowired
 	private JWTUtil jwtUtil;

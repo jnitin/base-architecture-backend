@@ -22,10 +22,10 @@ public class Rotina extends Base {
     private Integer codigo;
 
     @ManyToMany(mappedBy = "rotinas")
-    private List<Usuario> usuarios = new ArrayList<>();
+    private List<User> usuarios = new ArrayList<>();
 
     @ManyToMany(mappedBy = "rotinas")
-    private List<Perfil> perfis = new ArrayList<>();
+    private List<UserProfile> perfis = new ArrayList<>();
 
     public Rotina() {
     }
@@ -60,19 +60,19 @@ public class Rotina extends Base {
         this.codigo = codigo;
     }
 
-    public List<Usuario> getUsuarios() {
+    public List<User> getUsuarios() {
         return usuarios;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
+    public void setUsuarios(List<User> usuarios) {
         this.usuarios = usuarios;
     }
 
-    public List<Perfil> getPerfis() {
+    public List<UserProfile> getPerfis() {
         return perfis;
     }
 
-    public void setPerfis(List<Perfil> perfis) {
+    public void setPerfis(List<UserProfile> perfis) {
         this.perfis = perfis;
     }
 

@@ -1,11 +1,11 @@
 package com.backend.api.repositories;
 
-import com.backend.api.domain.Rota;
+import com.backend.api.domain.Enterprise;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RotaRepository extends JpaRepository<Rota, Integer>{
+public interface EnterpriseRepository extends JpaRepository<Enterprise, Integer>{
 
 }

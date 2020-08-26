@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Parametro extends Base {
+public class Parameter extends Base {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,10 +24,10 @@ public class Parametro extends Base {
     
     private String observacao;
 
-    public Parametro() {
+    public Parameter() {
     }
 
-    public Parametro(Integer id, String chave, String valor, String observacao) {
+    public Parameter(Integer id, String chave, String valor, String observacao) {
         this.id = id;
         this.chave = chave;
         this.valor = valor;
@@ -82,7 +82,7 @@ public class Parametro extends Base {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Parametro other = (Parametro) obj;
+        Parameter other = (Parameter) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

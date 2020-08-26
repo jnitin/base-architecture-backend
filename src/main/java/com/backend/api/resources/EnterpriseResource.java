@@ -1,13 +1,13 @@
 package com.backend.api.resources;
 
-import com.backend.api.domain.Empresa;
-import com.backend.api.dto.EmpresaDTO;
+import com.backend.api.domain.Enterprise;
+import com.backend.api.dto.EnterpriseDTO;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/empresas")
-public class EmpresaResource extends CrudResource<Empresa, EmpresaDTO> {
+public class EnterpriseResource extends CrudResource<Enterprise, EnterpriseDTO> {
 
 }

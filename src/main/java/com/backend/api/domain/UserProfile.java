@@ -13,7 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Perfil extends Base {
+public class UserProfile extends Base {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,12 +34,12 @@ public class Perfil extends Base {
 
     @ManyToMany
     @JoinTable(name = "perfil_usuario", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<Usuario> usuarios = new ArrayList<>();
+    private List<User> usuarios = new ArrayList<>();
 
-    public Perfil() {
+    public UserProfile() {
     }
 
-    public Perfil(Integer id, String descricao, Integer nivel) {
+    public UserProfile(Integer id, String descricao, Integer nivel) {
         this.id = id;
         this.descricao = descricao;
         this.nivel = nivel;
@@ -85,11 +85,11 @@ public class Perfil extends Base {
         this.rotinas = rotinas;
     }
 
-    public List<Usuario> getUsuarios() {
+    public List<User> getUsuarios() {
         return usuarios;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
+    public void setUsuarios(List<User> usuarios) {
         this.usuarios = usuarios;
     }
 
@@ -109,7 +109,7 @@ public class Perfil extends Base {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Perfil other = (Perfil) obj;
+        UserProfile other = (UserProfile) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

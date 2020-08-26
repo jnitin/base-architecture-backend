@@ -1,15 +1,15 @@
 package com.backend.api.domain.enums;
 
-public enum EstadoPagamento {
+public enum RouteType {
 
-	PENDENTE(1, "Pendente"),
-	QUITADO(2, "Quitado"),
-	CANCELADO(3, "Cancelado");
+	MENU(1, "Menu"),
+	REQUISICAO(2, "Requisição"),
+	CRUD(3, "CRUD");
 
 	private Integer cod;
 	private String descricao;
 
-	private EstadoPagamento(int cod, String descricao) {
+	private RouteType(int cod, String descricao) {
 		this.cod = cod;
 		this.descricao = descricao;
 	}
@@ -22,13 +22,13 @@ public enum EstadoPagamento {
 		return descricao;
 	}
 
-	public static EstadoPagamento toEnum(Integer cod) {
+	public static RouteType toEnum(Integer cod) {
 
 		if (cod == null) {
 			return null;
 		}
 
-		for (EstadoPagamento x : EstadoPagamento.values()) {
+		for (RouteType x : RouteType.values()) {
 			if (cod.equals(x.getCod())) {
 				return x;
 			}

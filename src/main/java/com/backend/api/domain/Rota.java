@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.backend.api.domain.enums.TipoRota;
+import com.backend.api.domain.enums.RouteType;
 
 @Entity
 public class Rota extends Base {
@@ -28,12 +28,12 @@ public class Rota extends Base {
     private Rota pai;
 
     @ManyToMany(mappedBy = "rotas")
-    private List<Perfil> perfis = new ArrayList<>();
+    private List<UserProfile> perfis = new ArrayList<>();
 
     public Rota() {
     }
 
-    public Rota(Integer id, String descricao, TipoRota tipo, String url, String icone, Rota pai, String method) {
+    public Rota(Integer id, String descricao, RouteType tipo, String url, String icone, Rota pai, String method) {
         this.id = id;
         this.descricao = descricao;
         this.tipo = tipo.getCod();
@@ -67,11 +67,11 @@ public class Rota extends Base {
         this.descricao = descricao;
     }
 
-    public TipoRota getTipo() {
-        return TipoRota.toEnum(tipo);
+    public RouteType getTipo() {
+        return RouteType.toEnum(tipo);
     }
 
-    public void setTipo(TipoRota tipo) {
+    public void setTipo(RouteType tipo) {
         this.tipo = tipo.getCod();
     }
 
@@ -99,11 +99,11 @@ public class Rota extends Base {
         this.pai = pai;
     }
 
-    public List<Perfil> getPerfis() {
+    public List<UserProfile> getPerfis() {
         return perfis;
     }
 
-    public void setPerfis(List<Perfil> perfis) {
+    public void setPerfis(List<UserProfile> perfis) {
         this.perfis = perfis;
     }
 

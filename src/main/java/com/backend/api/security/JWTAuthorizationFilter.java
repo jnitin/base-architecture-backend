@@ -9,11 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.backend.api.domain.Perfil;
+import com.backend.api.domain.UserProfile;
 import com.backend.api.domain.Rota;
-import com.backend.api.domain.Usuario;
-import com.backend.api.domain.enums.TipoRota;
-import com.backend.api.repositories.UsuarioRepository;
+import com.backend.api.domain.User;
+import com.backend.api.domain.enums.RouteType;
+import com.backend.api.repositories.UserRepository;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,12 +26,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private JWTUtil jwtUtil;
 
-	private UsuarioRepository usuarioRepository;
+	private UserRepository usuarioRepository;
 
 	private UserDetailsService userDetailsService;
 
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
-			UserDetailsService userDetailsService, UsuarioRepository usuarioRepository) {
+			UserDetailsService userDetailsService, UserRepository usuarioRepository) {
 		super(authenticationManager);
 		this.jwtUtil = jwtUtil;
 		this.userDetailsService = userDetailsService;
@@ -49,7 +49,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 				UserSS userSS = (UserSS) auth.getPrincipal();
 				Integer id = userSS.getId();
 
-				Usuario user = usuarioRepository.findById(id).orElse(null);
+				User user = usuarioRepository.findById(id).orElse(null);
 				String route = request.getRequestURI();
 				String method = request.getMethod();
 
@@ -61,12 +61,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		chain.doFilter(request, response);
 	}
 
-	private boolean isAllowedRoute(String route, String method, Usuario user) {
+	private boolean isAllowedRoute(String route, String method, User user) {
 		Rota r = new Rota();
 		r.setMethod(method);
 		r.setUrl(route);
-		for (Perfil p : user.getPerfis()) {
-			List<Rota> rotas = p.getRotas().stream().filter(rota -> rota.getTipo().equals(TipoRota.REQUISICAO)).collect(Collectors.toList());
+		for (UserProfile p : user.getPerfis()) {
+			List<Rota> rotas = p.getRotas().stream().filter(rota -> rota.getTipo().equals(RouteType.REQUISICAO)).collect(Collectors.toList());
 			if (rotas.contains(r)) {
 				return true;
 			}

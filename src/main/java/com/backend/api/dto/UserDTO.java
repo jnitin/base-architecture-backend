@@ -2,9 +2,9 @@ package com.backend.api.dto;
 
 import java.io.Serializable;
 
-import com.backend.api.domain.enums.SituacaoUsuario;
+import com.backend.api.domain.enums.UserSituation;
 
-public class UsuarioDTO implements Serializable {
+public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String nome;
@@ -12,10 +12,10 @@ public class UsuarioDTO implements Serializable {
     private String senha;
     private Integer situacao;
 
-    public UsuarioDTO() {
+    public UserDTO() {
     }
 
-    public UsuarioDTO(String nome, String email, String senha, SituacaoUsuario situacao) {
+    public UserDTO(String nome, String email, String senha, UserSituation situacao) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -46,11 +46,11 @@ public class UsuarioDTO implements Serializable {
         this.senha = senha;
     }
 
-    public SituacaoUsuario getSituacao() {
-        return SituacaoUsuario.toEnum(situacao);
+    public UserSituation getSituacao() {
+        return UserSituation.toEnum(situacao);
     }
 
-    public void setSituacao(SituacaoUsuario situacao) {
+    public void setSituacao(UserSituation situacao) {
         this.situacao = situacao.getCod();
     }
 

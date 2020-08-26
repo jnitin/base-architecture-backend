@@ -2,18 +2,18 @@ package com.backend.api.dto;
 
 import java.io.Serializable;
 
-public class EmpresaDTO implements Serializable {
+public class EnterpriseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String nome;
     private String cnpj;
 
-    public EmpresaDTO(String nome, String cnpj) {
+    public EnterpriseDTO(String nome, String cnpj) {
         this.nome = nome;
         this.cnpj = cnpj;
     }
 
-    public EmpresaDTO() {
+    public EnterpriseDTO() {
     }
 
     public String getNome() {

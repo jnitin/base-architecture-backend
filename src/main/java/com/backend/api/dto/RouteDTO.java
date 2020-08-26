@@ -3,9 +3,9 @@ package com.backend.api.dto;
 import java.io.Serializable;
 
 import com.backend.api.domain.Rota;
-import com.backend.api.domain.enums.TipoRota;
+import com.backend.api.domain.enums.RouteType;
 
-public class RotaDTO implements Serializable {
+public class RouteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String descricao;
@@ -15,12 +15,12 @@ public class RotaDTO implements Serializable {
     private Rota pai;
     private String method;
 
-    public RotaDTO() {
+    public RouteDTO() {
     }
 
     
 
-    public RotaDTO(String descricao, TipoRota tipo, String url, String icone, Rota pai, String method) {
+    public RouteDTO(String descricao, RouteType tipo, String url, String icone, Rota pai, String method) {
         this.descricao = descricao;
         this.tipo = tipo.getCod();
         this.url = url;
@@ -45,11 +45,11 @@ public class RotaDTO implements Serializable {
         this.descricao = descricao;
     }
 
-    public TipoRota getTipo() {
-        return TipoRota.toEnum(tipo);
+    public RouteType getTipo() {
+        return RouteType.toEnum(tipo);
     }
 
-    public void setTipo(TipoRota tipo) {
+    public void setTipo(RouteType tipo) {
         this.tipo = tipo.getCod();
     }
 

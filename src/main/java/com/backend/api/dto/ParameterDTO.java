@@ -2,17 +2,17 @@ package com.backend.api.dto;
 
 import java.io.Serializable;
 
-public class ParametroDTO implements Serializable {
+public class ParameterDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String chave;
     private String valor;
     private String observacao;
 
-    public ParametroDTO() {
+    public ParameterDTO() {
     }
 
-    public ParametroDTO( String chave, String valor, String observacao) {
+    public ParameterDTO( String chave, String valor, String observacao) {
         this.chave = chave;
         this.valor = valor;
         this.observacao = observacao;
