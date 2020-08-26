@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Enterprise extends Base {
+public class Company extends Base {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,37 +22,37 @@ public class Enterprise extends Base {
     protected Integer id;
 
     @NotNull
-    private String nome;
+    private String name;
     
     private String cnpj;
 
     @ManyToMany
-    @JoinTable(name = "empresa_usuario", joinColumns = @JoinColumn(name = "empresa_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<User> usuarios = new ArrayList<>();
+    @JoinTable(name = "company_user", joinColumns = @JoinColumn(name = "company_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users = new ArrayList<>();
 
-    public Enterprise() {
+    public Company() {
     }
 
-    public List<User> getUsuarios() {
-        return usuarios;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUsuarios(List<User> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
-    public Enterprise(Integer id, String nome, String cnpj) {
+    public Company(Integer id, String name, String cnpj) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.cnpj = cnpj;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCnpj() {
@@ -87,7 +87,7 @@ public class Enterprise extends Base {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Enterprise other = (Enterprise) obj;
+        Company other = (Company) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -98,7 +98,7 @@ public class Enterprise extends Base {
 
     @Override
     public String toString() {
-        return "Empresa [id=" + id + ", nome=" + nome + "]";
+        return "Empresa [id=" + id + ", name=" + name + "]";
     }
 
 }

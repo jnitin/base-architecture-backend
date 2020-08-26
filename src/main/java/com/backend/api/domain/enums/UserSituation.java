@@ -6,19 +6,19 @@ public enum UserSituation {
 	INATIVO(2, "Inativo");
 
 	private Integer cod;
-	private String descricao;
+	private String description;
 
-	private UserSituation(int cod, String descricao) {
+	private UserSituation(int cod, String description) {
 		this.cod = cod;
-		this.descricao = descricao;
+		this.description = description;
 	}
 
 	public Integer getCod() {
 		return cod;
 	}
 
-	public String getDescricao () {
-		return descricao;
+	public String getdescription () {
+		return description;
 	}
 
 	public static UserSituation toEnum(Integer cod) {

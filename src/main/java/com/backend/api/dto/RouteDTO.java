@@ -2,17 +2,17 @@ package com.backend.api.dto;
 
 import java.io.Serializable;
 
-import com.backend.api.domain.Rota;
+import com.backend.api.domain.Route;
 import com.backend.api.domain.enums.RouteType;
 
 public class RouteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String descricao;
-    private Integer tipo;
+    private String description;
+    private Integer type;
     private String url;
-    private String icone;
-    private Rota pai;
+    private String icon;
+    private Route father;
     private String method;
 
     public RouteDTO() {
@@ -20,12 +20,12 @@ public class RouteDTO implements Serializable {
 
     
 
-    public RouteDTO(String descricao, RouteType tipo, String url, String icone, Rota pai, String method) {
-        this.descricao = descricao;
-        this.tipo = tipo.getCod();
+    public RouteDTO(String description, RouteType type, String url, String icon, Route father, String method) {
+        this.description = description;
+        this.type = type.getCod();
         this.url = url;
-        this.icone = icone;
-        this.pai = pai;
+        this.icon = icon;
+        this.father = father;
         this.method = method;
     }
 
@@ -37,20 +37,20 @@ public class RouteDTO implements Serializable {
         this.method = method;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getdescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public RouteType getTipo() {
-        return RouteType.toEnum(tipo);
+        return RouteType.toEnum(type);
     }
 
-    public void setTipo(RouteType tipo) {
-        this.tipo = tipo.getCod();
+    public void setTipo(RouteType type) {
+        this.type = type.getCod();
     }
 
     public String getUrl() {
@@ -62,24 +62,24 @@ public class RouteDTO implements Serializable {
     }
 
     public String getIcone() {
-        return icone;
+        return icon;
     }
 
-    public void setIcone(String icone) {
-        this.icone = icone;
+    public void setIcone(String icon) {
+        this.icon = icon;
     }
 
-    public Rota getPai() {
-        return pai;
+    public Route getPai() {
+        return father;
     }
 
-    public void setPai(Rota pai) {
-        this.pai = pai;
+    public void setPai(Route father) {
+        this.father = father;
     }
 
     @Override
     public String toString() {
-        return "RotaDTO [descricao=" + descricao + ", url=" + url + "]";
+        return "RouteDTO [description=" + description + ", url=" + url + "]";
     }
     
 

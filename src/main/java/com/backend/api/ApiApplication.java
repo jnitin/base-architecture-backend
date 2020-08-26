@@ -2,7 +2,7 @@ package com.backend.api;
 
 import com.backend.api.domain.Parameter;
 import com.backend.api.domain.UserProfile;
-import com.backend.api.domain.Rota;
+import com.backend.api.domain.Route;
 import com.backend.api.domain.User;
 import com.backend.api.domain.enums.UserSituation;
 import com.backend.api.domain.enums.RouteType;
@@ -26,7 +26,7 @@ public class ApiApplication implements CommandLineRunner {
 	ParameterRepository parametroRepository;
 
 	@Autowired
-	UserRepository usuarioRepository;
+	UserRepository userRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder pe;
@@ -42,26 +42,26 @@ public class ApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Parameter p1 = new Parameter(null, "chave", "valor", "Observação");
+		Parameter p1 = new Parameter(null, "key", "value", "Observação");
 
 		User user = new User(null, "Gabriel", "gabs", pe.encode("senha"), UserSituation.ATIVO);
 
 		UserProfile p = new UserProfile(null, "Administrador", 20);
 
-		Rota r1 = new Rota(null, "Teste", RouteType.REQUISICAO, "/parametros/[0-9]+", null, null, "GET");
-		Rota r2 = new Rota(null, "Teste2", RouteType.REQUISICAO, "/parametros/?", null, null, "GET");
+		Route r1 = new Route(null, "Teste", RouteType.REQUISICAO, "/parametros/[0-9]+", null, null, "GET");
+		Route r2 = new Route(null, "Teste2", RouteType.REQUISICAO, "/parametros/?", null, null, "GET");
 
 
-		p.getRotas().add(r1);
-		p.getRotas().add(r2);
-		p.getUsuarios().add(user);
+		p.getRoutes().add(r1);
+		p.getRoutes().add(r2);
+		p.getUsers().add(user);
 
-		r1.getPerfis().add(p);
-		r2.getPerfis().add(p);
+		r1.getUserProfiles().add(p);
+		r2.getUserProfiles().add(p);
 
-		user.getPerfis().add(p);
+		user.getUserProfiles().add(p);
 
-		usuarioRepository.save(user);
+		userRepository.save(user);
 
 		rotaRepository.save(r1);
 		rotaRepository.save(r2);
@@ -71,7 +71,7 @@ public class ApiApplication implements CommandLineRunner {
 
 		parametroRepository.save(p1);
 
-		usuarioRepository.save(user);
+		userRepository.save(user);
 	}
 
 }

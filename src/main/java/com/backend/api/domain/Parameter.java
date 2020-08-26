@@ -16,10 +16,10 @@ public class Parameter extends Base {
     protected Integer id;
 
     @NotNull
-    private String chave;
+    private String key;
 
     @NotNull
-    private String valor;
+    private String value;
 
     
     private String observacao;
@@ -27,27 +27,27 @@ public class Parameter extends Base {
     public Parameter() {
     }
 
-    public Parameter(Integer id, String chave, String valor, String observacao) {
+    public Parameter(Integer id, String key, String value, String observacao) {
         this.id = id;
-        this.chave = chave;
-        this.valor = valor;
+        this.key = key;
+        this.value = value;
         this.observacao = observacao;
     }
 
     public String getChave() {
-        return chave;
+        return key;
     }
 
-    public void setChave(String chave) {
-        this.chave = chave;
+    public void setChave(String key) {
+        this.key = key;
     }
 
     public String getValor() {
-        return valor;
+        return value;
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
+    public void setValor(String value) {
+        this.value = value;
     }
 
     public String getObservacao() {
@@ -93,7 +93,7 @@ public class Parameter extends Base {
 
     @Override
     public String toString() {
-        return "Parametro [chave=" + chave + ", id=" + id + ", observacao=" + observacao + ", valor=" + valor + "]";
+        return "Parametro [key=" + key + ", id=" + id + ", observacao=" + observacao + ", value=" + value + "]";
     }
 
   

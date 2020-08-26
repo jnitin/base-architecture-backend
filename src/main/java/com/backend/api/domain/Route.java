@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import com.backend.api.domain.enums.RouteType;
 
 @Entity
-public class Rota extends Base {
+public class Route extends Base {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,26 +20,26 @@ public class Rota extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    private String descricao;
-    private Integer tipo;
+    private String description;
+    private Integer type;
     private String url;
     private String method;
-    private String icone;
-    private Rota pai;
+    private String icon;
+    private Route father;
 
     @ManyToMany(mappedBy = "rotas")
-    private List<UserProfile> perfis = new ArrayList<>();
+    private List<UserProfile> profiles = new ArrayList<>();
 
-    public Rota() {
+    public Route() {
     }
 
-    public Rota(Integer id, String descricao, RouteType tipo, String url, String icone, Rota pai, String method) {
+    public Route(Integer id, String description, RouteType type, String url, String icon, Route father, String method) {
         this.id = id;
-        this.descricao = descricao;
-        this.tipo = tipo.getCod();
+        this.description = description;
+        this.type = type.getCod();
         this.url = url;
-        this.icone = icone;
-        this.pai = pai;
+        this.icon = icon;
+        this.father = father;
         this.method = method;
     }
 
@@ -59,20 +59,20 @@ public class Rota extends Base {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getdescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public RouteType getTipo() {
-        return RouteType.toEnum(tipo);
+        return RouteType.toEnum(type);
     }
 
-    public void setTipo(RouteType tipo) {
-        this.tipo = tipo.getCod();
+    public void setTipo(RouteType type) {
+        this.type = type.getCod();
     }
 
     public String getUrl() {
@@ -84,27 +84,27 @@ public class Rota extends Base {
     }
 
     public String getIcone() {
-        return icone;
+        return icon;
     }
 
-    public void setIcone(String icone) {
-        this.icone = icone;
+    public void setIcone(String icon) {
+        this.icon = icon;
     }
 
-    public Rota getPai() {
-        return pai;
+    public Route getPai() {
+        return father;
     }
 
-    public void setPai(Rota pai) {
-        this.pai = pai;
+    public void setPai(Route father) {
+        this.father = father;
     }
 
-    public List<UserProfile> getPerfis() {
-        return perfis;
+    public List<UserProfile> getUserProfiles() {
+        return profiles;
     }
 
-    public void setPerfis(List<UserProfile> perfis) {
-        this.perfis = perfis;
+    public void setUserProfiles(List<UserProfile> profiles) {
+        this.profiles = profiles;
     }
 
  
@@ -113,7 +113,7 @@ public class Rota extends Base {
 
     @Override
     public String toString() {
-        return "Rota [id=" + id + ", url=" + url + "]";
+        return "Route [id=" + id + ", url=" + url + "]";
     }
 
     @Override
@@ -133,7 +133,7 @@ public class Rota extends Base {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Rota other = (Rota) obj;
+        Route other = (Route) obj;
         if (method == null) {
             if (other.method != null)
                 return false;

@@ -22,12 +22,12 @@ public class UserSS implements UserDetails {
 	public UserSS() {
 	}
 	
-	public UserSS(Integer id, String email, String senha, Set<Profile> perfis) {
+	public UserSS(Integer id, String email, String senha, Set<Profile> profiles) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.senha = senha;
-		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
+		this.authorities = profiles.stream().map(x -> new SimpleGrantedAuthority(x.getdescription())).collect(Collectors.toList());
 	}
 
 	public Integer getId() {
@@ -70,7 +70,7 @@ public class UserSS implements UserDetails {
 	}
 	
 	public boolean hasRole(UserProfile perfil) {
-		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getdescription()));
 	}
 
 	@Override

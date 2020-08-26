@@ -1,28 +1,28 @@
 package com.backend.api.services;
 
-import com.backend.api.domain.Rota;
+import com.backend.api.domain.Route;
 import com.backend.api.dto.RouteDTO;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class RouteService extends CrudService<Rota, RouteDTO> {
+public class RouteService extends CrudService<Route, RouteDTO> {
 
 	@Override
-	public Rota fromDTO(RouteDTO dto) {
+	public Route fromDTO(RouteDTO dto) {
 		if (dto == null) {
 			return null;
 		}
-		final Rota obj = new Rota(null, dto.getDescricao(), dto.getTipo(), dto.getUrl(), dto.getIcone(), dto.getPai(), dto.getMethod());
+		final Route obj = new Route(null, dto.getdescription(), dto.getTipo(), dto.getUrl(), dto.getIcone(), dto.getPai(), dto.getMethod());
 		return obj;
 	}
 
 	@Override
-	public RouteDTO toDTO(Rota obj) {
+	public RouteDTO toDTO(Route obj) {
 		if (obj == null) {
 			return null;
 		}
-		final RouteDTO dto = new RouteDTO(obj.getDescricao(), obj.getTipo(), obj.getUrl(), obj.getIcone(), obj.getPai(), obj.getMethod());
+		final RouteDTO dto = new RouteDTO(obj.getdescription(), obj.getTipo(), obj.getUrl(), obj.getIcone(), obj.getPai(), obj.getMethod());
 		return dto;
 	}
 

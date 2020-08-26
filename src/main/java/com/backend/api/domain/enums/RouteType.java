@@ -7,19 +7,19 @@ public enum RouteType {
 	CRUD(3, "CRUD");
 
 	private Integer cod;
-	private String descricao;
+	private String description;
 
-	private RouteType(int cod, String descricao) {
+	private RouteType(int cod, String description) {
 		this.cod = cod;
-		this.descricao = descricao;
+		this.description = description;
 	}
 
 	public Integer getCod() {
 		return cod;
 	}
 
-	public String getDescricao () {
-		return descricao;
+	public String getdescription () {
+		return description;
 	}
 
 	public static RouteType toEnum(Integer cod) {

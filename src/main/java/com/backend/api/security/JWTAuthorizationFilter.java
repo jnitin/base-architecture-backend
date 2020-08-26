@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.backend.api.domain.UserProfile;
-import com.backend.api.domain.Rota;
+import com.backend.api.domain.Route;
 import com.backend.api.domain.User;
 import com.backend.api.domain.enums.RouteType;
 import com.backend.api.repositories.UserRepository;
@@ -26,16 +26,16 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private JWTUtil jwtUtil;
 
-	private UserRepository usuarioRepository;
+	private UserRepository userRepository;
 
 	private UserDetailsService userDetailsService;
 
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
-			UserDetailsService userDetailsService, UserRepository usuarioRepository) {
+			UserDetailsService userDetailsService, UserRepository userRepository) {
 		super(authenticationManager);
 		this.jwtUtil = jwtUtil;
 		this.userDetailsService = userDetailsService;
-		this.usuarioRepository = usuarioRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 				UserSS userSS = (UserSS) auth.getPrincipal();
 				Integer id = userSS.getId();
 
-				User user = usuarioRepository.findById(id).orElse(null);
+				User user = userRepository.findById(id).orElse(null);
 				String route = request.getRequestURI();
 				String method = request.getMethod();
 
@@ -62,11 +62,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 
 	private boolean isAllowedRoute(String route, String method, User user) {
-		Rota r = new Rota();
+		Route r = new Route();
 		r.setMethod(method);
 		r.setUrl(route);
-		for (UserProfile p : user.getPerfis()) {
-			List<Rota> rotas = p.getRotas().stream().filter(rota -> rota.getTipo().equals(RouteType.REQUISICAO)).collect(Collectors.toList());
+		for (UserProfile p : user.getUserProfiles()) {
+			List<Route> rotas = p.getRoutes().stream().filter(rota -> rota.getTipo().equals(RouteType.REQUISICAO)).collect(Collectors.toList());
 			if (rotas.contains(r)) {
 				return true;
 			}

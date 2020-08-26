@@ -2,26 +2,26 @@ package com.backend.api.dto;
 
 import java.io.Serializable;
 
-public class EnterpriseDTO implements Serializable {
+public class CompanyDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String nome;
+    private String name;
     private String cnpj;
 
-    public EnterpriseDTO(String nome, String cnpj) {
-        this.nome = nome;
+    public CompanyDTO(String name, String cnpj) {
+        this.name = name;
         this.cnpj = cnpj;
     }
 
-    public EnterpriseDTO() {
+    public CompanyDTO() {
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCnpj() {
@@ -34,7 +34,7 @@ public class EnterpriseDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "EmpresaDTO [cnpj=" + cnpj + ", nome=" + nome + "]";
+        return "EmpresaDTO [cnpj=" + cnpj + ", name=" + name + "]";
     }
 
 }

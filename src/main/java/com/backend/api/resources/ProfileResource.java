@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/perfis")
+@RequestMapping(value = "/profiles")
 public class ProfileResource extends CrudResource<UserProfile, ProfileDTO> {
 
 }

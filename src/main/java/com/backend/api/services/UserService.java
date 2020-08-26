@@ -18,8 +18,8 @@ public class UserService extends CrudService<User, UserDTO> {
 		if (dto == null) {
 			return null;
 		}
-		String senha = pe.encode(dto.getSenha());
-		final User obj = new User(null, dto.getNome(), dto.getEmail(), senha, dto.getSituacao());
+		String senha = pe.encode(dto.getPassword());
+		final User obj = new User(null, dto.getName(), dto.getEmail(), senha, dto.getSituation());
 		return obj;
 	}
 
@@ -28,7 +28,7 @@ public class UserService extends CrudService<User, UserDTO> {
 		if (obj == null) {
 			return null;
 		}
-		final UserDTO dto = new UserDTO(obj.getNome(), obj.getEmail(), obj.getSenha(), obj.getSituacao());
+		final UserDTO dto = new UserDTO(obj.getName(), obj.getEmail(), obj.getPassword(), obj.getSituation());
 		return dto;
 	}
 

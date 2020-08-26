@@ -5,23 +5,23 @@ import java.io.Serializable;
 public class ProfileDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String descricao;
+    private String description;
     private Integer nivel;
 
-    public ProfileDTO(String descricao, Integer nivel) {
-        this.descricao = descricao;
+    public ProfileDTO(String description, Integer nivel) {
+        this.description = description;
         this.nivel = nivel;
     }
 
     public ProfileDTO() {
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getdescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public Integer getNivel() {
@@ -34,7 +34,7 @@ public class ProfileDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "PerfilDTO [descricao=" + descricao + ", nivel=" + nivel + "]";
+        return "PerfilDTO [description=" + description + ", nivel=" + nivel + "]";
     }
 
     

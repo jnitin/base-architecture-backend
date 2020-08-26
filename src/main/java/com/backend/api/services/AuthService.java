@@ -14,7 +14,7 @@ import com.backend.api.services.exceptions.ObjectNotFoundException;
 public class AuthService {
 
 	@Autowired
-	private UserRepository usuarioRepository;
+	private UserRepository userRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder pe;
@@ -23,16 +23,16 @@ public class AuthService {
 	
 	public void sendNewPassword(String email) {
 		
-		User usuario = usuarioRepository.findByEmail(email);
-		if (usuario == null) {
+		User user = userRepository.findByEmail(email);
+		if (user == null) {
 			throw new ObjectNotFoundException("Email não encontrado");
 		}
 		
 		String newPass = newPassword();
-		usuario.setSenha(pe.encode(newPass));
+		user.setPassword(pe.encode(newPass));
 		
-		usuarioRepository.save(usuario);
-		// emailService.sendNewPasswordEmail(usuario, newPass);
+		userRepository.save(user);
+		// emailService.sendNewPasswordEmail(user, newPass);
 	}
 
 	private String newPassword() {

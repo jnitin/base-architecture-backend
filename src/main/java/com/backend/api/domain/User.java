@@ -31,7 +31,7 @@ public class User extends Base {
     protected Integer id;
 
     @NotNull
-    private String nome;
+    private String name;
 
     @NotNull
     private String email;
@@ -42,15 +42,15 @@ public class User extends Base {
     @NotNull
     private Integer situacao;
 
-    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
-    private List<UserProfile> perfis = new ArrayList<>();
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    private List<UserProfile> userProfiles = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "usuarios")
-    private List<Enterprise> empresas = new ArrayList<>();
+    @ManyToMany(mappedBy = "users")
+    private List<Company> companies = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "usuario_rotina", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
-    private List<Rotina> rotinas = new ArrayList<>();
+    @JoinTable(name = "user_rotina", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
+    private List<Routine> rotinas = new ArrayList<>();
 
     @ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PROFILES")
@@ -59,9 +59,9 @@ public class User extends Base {
     public User() {
     }
 
-    public User(Integer id, String nome, String email, String senha, UserSituation situacao) {
+    public User(Integer id, String name, String email, String senha, UserSituation situacao) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.email = email;
         this.senha = senha;
         this.situacao = situacao == null ? null : situacao.getCod();
@@ -85,12 +85,12 @@ public class User extends Base {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -101,49 +101,49 @@ public class User extends Base {
         this.email = email;
     }
 
-    public String getSenha() {
+    public String getPassword() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public void setPassword(String senha) {
         this.senha = senha;
     }
 
-    public UserSituation getSituacao() {
+    public UserSituation getSituation() {
         return UserSituation.toEnum(situacao);
     }
 
-    public void setSituacao(UserSituation situacao) {
+    public void setSituation(UserSituation situacao) {
         this.situacao = situacao.getCod();
     }
 
-    public List<UserProfile> getPerfis() {
-        return perfis;
+    public List<UserProfile> getUserProfiles() {
+        return userProfiles;
     }
 
-    public void setPerfis(List<UserProfile> perfis) {
-        this.perfis = perfis;
+    public void setUserProfiles(List<UserProfile> profiles) {
+        this.userProfiles = profiles;
     }
 
-    public List<Rotina> getRotinas() {
+    public List<Routine> getRoutines() {
         return rotinas;
     }
 
-    public void setRotinas(List<Rotina> rotinas) {
+    public void setRoutines(List<Routine> rotinas) {
         this.rotinas = rotinas;
     }
 
-    public List<Enterprise> getEmpresas() {
-        return empresas;
+    public List<Company> getEmpresas() {
+        return companies;
     }
 
-    public void setEmpresas(List<Enterprise> empresas) {
-        this.empresas = empresas;
+    public void setEmpresas(List<Company> companies) {
+        this.companies = companies;
     }
 
     @Override
     public String toString() {
-        return "Usuario [id=" + id + ", nome=" + nome + "]";
+        return "User [id=" + id + ", name=" + name + "]";
     }
 
     @Override

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Rotina extends Base {
+public class Routine extends Base {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,22 +18,22 @@ public class Rotina extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    private String descricao;
-    private Integer codigo;
+    private String description;
+    private Integer code;
 
     @ManyToMany(mappedBy = "rotinas")
-    private List<User> usuarios = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     @ManyToMany(mappedBy = "rotinas")
-    private List<UserProfile> perfis = new ArrayList<>();
+    private List<UserProfile> profiles = new ArrayList<>();
 
-    public Rotina() {
+    public Routine() {
     }
 
-    public Rotina(Integer id, String descricao, Integer codigo) {
+    public Routine(Integer id, String description, Integer code) {
         this.id = id;
-        this.descricao = descricao;
-        this.codigo = codigo;
+        this.description = description;
+        this.code = code;
     }
 
     public Integer getId() {
@@ -44,36 +44,36 @@ public class Rotina extends Base {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getdescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public Integer getCodigo() {
-        return codigo;
+        return code;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setCodigo(Integer code) {
+        this.code = code;
     }
 
-    public List<User> getUsuarios() {
-        return usuarios;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUsuarios(List<User> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
-    public List<UserProfile> getPerfis() {
-        return perfis;
+    public List<UserProfile> getUserProfiles() {
+        return profiles;
     }
 
-    public void setPerfis(List<UserProfile> perfis) {
-        this.perfis = perfis;
+    public void setUserProfiles(List<UserProfile> profiles) {
+        this.profiles = profiles;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Rotina extends Base {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Rotina other = (Rotina) obj;
+        Routine other = (Routine) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -103,7 +103,7 @@ public class Rotina extends Base {
 
     @Override
     public String toString() {
-        return "Rotina [codigo=" + codigo + ", descricao=" + descricao + ", id=" + id + "]";
+        return "Routine [code=" + code + ", description=" + description + ", id=" + id + "]";
     }
 
 }

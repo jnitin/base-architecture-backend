@@ -21,27 +21,27 @@ public class UserProfile extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    private String descricao;
+    private String description;
     private Integer nivel;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "perfil_rota", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "rota_id"))
-    private List<Rota> rotas = new ArrayList<>();
+    private List<Route> rotas = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "perfil_rotina", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
-    private List<Rotina> rotinas = new ArrayList<>();
+    private List<Routine> rotinas = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "perfil_usuario", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<User> usuarios = new ArrayList<>();
+    @JoinTable(name = "perfil_user", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users = new ArrayList<>();
 
     public UserProfile() {
     }
 
-    public UserProfile(Integer id, String descricao, Integer nivel) {
+    public UserProfile(Integer id, String description, Integer nivel) {
         this.id = id;
-        this.descricao = descricao;
+        this.description = description;
         this.nivel = nivel;
     }
 
@@ -53,12 +53,12 @@ public class UserProfile extends Base {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getdescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public Integer getNivel() {
@@ -69,28 +69,28 @@ public class UserProfile extends Base {
         this.nivel = nivel;
     }
 
-    public List<Rota> getRotas() {
+    public List<Route> getRoutes() {
         return rotas;
     }
 
-    public void setRotas(List<Rota> rotas) {
+    public void setRoutes(List<Route> rotas) {
         this.rotas = rotas;
     }
 
-    public List<Rotina> getRotinas() {
+    public List<Routine> getRoutines() {
         return rotinas;
     }
 
-    public void setRotinas(List<Rotina> rotinas) {
+    public void setRoutines(List<Routine> rotinas) {
         this.rotinas = rotinas;
     }
 
-    public List<User> getUsuarios() {
-        return usuarios;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUsuarios(List<User> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class UserProfile extends Base {
 
     @Override
     public String toString() {
-        return "Perfil [descricao=" + descricao + ", id=" + id + "]";
+        return "Perfil [description=" + description + ", id=" + id + "]";
     }
 
 }

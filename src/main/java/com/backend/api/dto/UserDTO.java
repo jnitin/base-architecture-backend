@@ -7,7 +7,7 @@ import com.backend.api.domain.enums.UserSituation;
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String nome;
+    private String name;
     private String email;
     private String senha;
     private Integer situacao;
@@ -15,19 +15,19 @@ public class UserDTO implements Serializable {
     public UserDTO() {
     }
 
-    public UserDTO(String nome, String email, String senha, UserSituation situacao) {
-        this.nome = nome;
+    public UserDTO(String name, String email, String senha, UserSituation situacao) {
+        this.name = name;
         this.email = email;
         this.senha = senha;
         this.situacao = situacao.getCod();
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -38,25 +38,25 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public String getSenha() {
+    public String getPassword() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public void setPassword(String senha) {
         this.senha = senha;
     }
 
-    public UserSituation getSituacao() {
+    public UserSituation getSituation() {
         return UserSituation.toEnum(situacao);
     }
 
-    public void setSituacao(UserSituation situacao) {
+    public void setSituation(UserSituation situacao) {
         this.situacao = situacao.getCod();
     }
 
     @Override
     public String toString() {
-        return "UsuarioDTO [nome=" + nome + "]";
+        return "UserDTO [name=" + name + "]";
     }
     
 
