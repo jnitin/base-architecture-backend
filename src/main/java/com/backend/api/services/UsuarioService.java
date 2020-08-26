@@ -3,17 +3,23 @@ package com.backend.api.services;
 import com.backend.api.domain.Usuario;
 import com.backend.api.dto.UsuarioDTO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsuarioService extends CrudService<Usuario, UsuarioDTO> {
+
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	@Override
 	public Usuario fromDTO(UsuarioDTO dto) {
 		if (dto == null) {
 			return null;
 		}
-		final Usuario obj = new Usuario(null, dto.getNome(), dto.getEmail(), dto.getSenha(), dto.getSituacao());
+		String senha = pe.encode(dto.getSenha());
+		final Usuario obj = new Usuario(null, dto.getNome(), dto.getEmail(), senha, dto.getSituacao());
 		return obj;
 	}
 

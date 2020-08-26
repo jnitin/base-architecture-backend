@@ -1,9 +1,15 @@
 package com.backend.api.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
+import com.backend.api.domain.enums.Profile;
 import com.backend.api.domain.enums.SituacaoUsuario;
 
 @Entity
@@ -46,6 +53,10 @@ public class Usuario extends Base {
 
     private List<Rotina> rotinas = new ArrayList<>();
 
+    @ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PROFILES")
+	private Set<Integer> profiles = new HashSet<>();
+
     public Usuario() {
     }
 
@@ -55,8 +66,18 @@ public class Usuario extends Base {
         this.email = email;
         this.senha = senha;
         this.situacao = situacao == null ? null : situacao.getCod();
+        addProfile(Profile.CLIENTE);
     }
 
+
+    public Set<Profile> getProfiles() {
+		return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addProfile(Profile profile) {
+		profiles.add(profile.getCod());
+    }
+    
     public Integer getId() {
         return id;
     }
