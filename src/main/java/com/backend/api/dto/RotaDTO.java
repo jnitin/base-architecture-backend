@@ -13,16 +13,28 @@ public class RotaDTO implements Serializable {
     private String url;
     private String icone;
     private Rota pai;
+    private String method;
 
     public RotaDTO() {
     }
 
-    public RotaDTO(String descricao, TipoRota tipo, String url, String icone, Rota pai) {
+    
+
+    public RotaDTO(String descricao, TipoRota tipo, String url, String icone, Rota pai, String method) {
         this.descricao = descricao;
         this.tipo = tipo.getCod();
         this.url = url;
         this.icone = icone;
         this.pai = pai;
+        this.method = method;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public String getDescricao() {

@@ -72,4 +72,9 @@ public class UserSS implements UserDetails {
 	public boolean hasRole(Perfil perfil) {
 		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
+
+	@Override
+	public String toString() {
+		return "UserSS [email=" + email + ", id=" + id + ", senha=" + senha + "]";
+	}
 }

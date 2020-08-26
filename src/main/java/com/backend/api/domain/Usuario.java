@@ -42,7 +42,7 @@ public class Usuario extends Base {
     @NotNull
     private Integer situacao;
 
-    @ManyToMany(mappedBy = "usuarios")
+    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
     private List<Perfil> perfis = new ArrayList<>();
 
     @ManyToMany(mappedBy = "usuarios")
@@ -50,7 +50,6 @@ public class Usuario extends Base {
 
     @ManyToMany
     @JoinTable(name = "usuario_rotina", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rotina_id"))
-
     private List<Rotina> rotinas = new ArrayList<>();
 
     @ElementCollection(fetch=FetchType.EAGER)

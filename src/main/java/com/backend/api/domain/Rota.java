@@ -23,6 +23,7 @@ public class Rota extends Base {
     private String descricao;
     private Integer tipo;
     private String url;
+    private String method;
     private String icone;
     private Rota pai;
 
@@ -32,13 +33,22 @@ public class Rota extends Base {
     public Rota() {
     }
 
-    public Rota(Integer id, String descricao, TipoRota tipo, String url, String icone, Rota pai) {
+    public Rota(Integer id, String descricao, TipoRota tipo, String url, String icone, Rota pai, String method) {
         this.id = id;
         this.descricao = descricao;
         this.tipo = tipo.getCod();
         this.url = url;
         this.icone = icone;
         this.pai = pai;
+        this.method = method;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public Integer getId() {
@@ -97,11 +107,21 @@ public class Rota extends Base {
         this.perfis = perfis;
     }
 
+ 
+
+
+
+    @Override
+    public String toString() {
+        return "Rota [id=" + id + ", url=" + url + "]";
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((method == null) ? 0 : method.hashCode());
+        result = prime * result + ((url == null) ? 0 : url.hashCode());
         return result;
     }
 
@@ -114,17 +134,17 @@ public class Rota extends Base {
         if (getClass() != obj.getClass())
             return false;
         Rota other = (Rota) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (method == null) {
+            if (other.method != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!method.equals(other.method))
+            return false;
+        if (url == null) {
+            if (other.url != null)
+                return false;
+        } else if (!url.matches(other.url))
             return false;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Rota [id=" + id + ", url=" + url + "]";
     }
 
 }

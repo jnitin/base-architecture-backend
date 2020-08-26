@@ -33,7 +33,6 @@ public class Base implements Serializable {
                 getters.put(key, m);
             } else if (m.getName().contains("set")) {
                 String key = m.getName().substring(3);
-                System.out.println(m.getName());
                 setters.put(key, m);
             }
         }
@@ -41,7 +40,6 @@ public class Base implements Serializable {
             try {
                 Object getterValue = getters.get(key).invoke(other);
                 if (getterValue != null) {
-                    System.out.println("-----> " + getterValue);
                     setters.get(key).invoke(this, getterValue);
                 }
             } catch (IllegalAccessException e) {

@@ -13,7 +13,7 @@ public class RotaService extends CrudService<Rota, RotaDTO> {
 		if (dto == null) {
 			return null;
 		}
-		final Rota obj = new Rota(null, dto.getDescricao(), dto.getTipo(), dto.getUrl(), dto.getIcone(), dto.getPai());
+		final Rota obj = new Rota(null, dto.getDescricao(), dto.getTipo(), dto.getUrl(), dto.getIcone(), dto.getPai(), dto.getMethod());
 		return obj;
 	}
 
@@ -22,7 +22,7 @@ public class RotaService extends CrudService<Rota, RotaDTO> {
 		if (obj == null) {
 			return null;
 		}
-		final RotaDTO dto = new RotaDTO(obj.getDescricao(), obj.getTipo(), obj.getUrl(), obj.getIcone(), obj.getPai());
+		final RotaDTO dto = new RotaDTO(obj.getDescricao(), obj.getTipo(), obj.getUrl(), obj.getIcone(), obj.getPai(), obj.getMethod());
 		return dto;
 	}
 
