@@ -41,7 +41,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-
+		System.out.println("nao");
 		String header = request.getHeader("Authorization");
 		if (header != null && header.startsWith("Bearer ")) {
 			UsernamePasswordAuthenticationToken auth = getAuthentication(header.substring(7));
@@ -62,11 +62,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 
 	private boolean isAllowedRoute(String route, String method, User user) {
+		System.out.println(route);
 		Route r = new Route();
 		r.setMethod(method);
 		r.setUrl(route);
 		for (UserProfile p : user.getUserProfiles()) {
-			List<Route> rotas = p.getRoutes().stream().filter(rota -> rota.getTipo().equals(RouteType.REQUISICAO)).collect(Collectors.toList());
+			List<Route> rotas = p.getRoutes().stream().filter(rota -> rota.getTipo().equals(RouteType.REQUISICAO))
+					.collect(Collectors.toList());
 			if (rotas.contains(r)) {
 				return true;
 			}

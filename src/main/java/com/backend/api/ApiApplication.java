@@ -44,34 +44,39 @@ public class ApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Parameter p1 = new Parameter(null, "key", "value", "Observação");
 
-		User user = new User(null, "Gabriel", "gabs", pe.encode("password"), UserSituation.ATIVO);
+		User user = new User(null, "Gabriel", "gabs", pe.encode("senha"), UserSituation.ATIVO);
 
 		UserProfile p = new UserProfile(null, "Administrador", 20);
 
 		Route r1 = new Route(null, "Teste", RouteType.REQUISICAO, "/parametros/[0-9]+", null, null, "GET");
-		Route r2 = new Route(null, "Teste2", RouteType.REQUISICAO, "/parametros/?", null, null, "GET");
+		Route r2 = new Route(null, "Teste2", RouteType.REQUISICAO, "/parametros/.?", null, null, "GET");
+		Route r3 = new Route(null, "Teste3", RouteType.REQUISICAO, "/parametros/", null, null, "POST");
+		Route r4 = new Route(null, "Teste4", RouteType.REQUISICAO, "/parametros/.?", null, null, "PUT");
+		Route r5 = new Route(null, "Teste5", RouteType.REQUISICAO, "/parametros/.?", null, null, "DELETE");
 
+		addRoute(p, r1);
+		addRoute(p, r2);
+		addRoute(p, r3);
+		addRoute(p, r4);
+		addRoute(p, r5);
 
-		p.getRoutes().add(r1);
-		p.getRoutes().add(r2);
 		p.getUsers().add(user);
-
-		r1.getUserProfiles().add(p);
-		r2.getUserProfiles().add(p);
 
 		user.getUserProfiles().add(p);
 
 		userRepository.save(user);
 
-		rotaRepository.save(r1);
-		rotaRepository.save(r2);
-
 		profileRepository.save(p);
-
 
 		parametroRepository.save(p1);
 
 		userRepository.save(user);
+	}
+
+	public void addRoute(UserProfile up, Route r) {
+		up.getRoutes().add(r);
+		r.getUserProfiles().add(up);
+		rotaRepository.save(r);
 	}
 
 }
