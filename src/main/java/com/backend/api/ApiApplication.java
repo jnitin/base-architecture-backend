@@ -48,17 +48,23 @@ public class ApiApplication implements CommandLineRunner {
 
 		UserProfile p = new UserProfile(null, "Administrador", 20);
 
-		Route r1 = new Route(null, "Teste", RouteType.REQUISICAO, "/parametros/[0-9]+", null, null, "GET");
-		Route r2 = new Route(null, "Teste2", RouteType.REQUISICAO, "/parametros/.?", null, null, "GET");
-		Route r3 = new Route(null, "Teste3", RouteType.REQUISICAO, "/parametros/", null, null, "POST");
-		Route r4 = new Route(null, "Teste4", RouteType.REQUISICAO, "/parametros/.?", null, null, "PUT");
-		Route r5 = new Route(null, "Teste5", RouteType.REQUISICAO, "/parametros/.?", null, null, "DELETE");
+		Route r1 = new Route(null, "Teste", RouteType.REQUISICAO, "/parametros/[0-9]+", null, null, "GET", null);
+		Route r2 = new Route(null, "Teste2", RouteType.REQUISICAO, "/parametros/?", null, null, "GET", null);
+		Route r3 = new Route(null, "Teste3", RouteType.REQUISICAO, "/parametros/?", null, null, "POST", null);
+		Route r4 = new Route(null, "Teste4", RouteType.REQUISICAO, "/parametros/[0-9]+", null, null, "PUT", null);
+		Route r5 = new Route(null, "Teste5", RouteType.REQUISICAO, "/parametros/[0-9]+", null, null, "DELETE", null);
+		Route r6 = new Route(null, "Teste6", RouteType.REQUISICAO, "/routes/menus/?", null, null, "GET", null);
+		Route home = new Route(null, "Home", RouteType.MENU, "Home", "mdi-cog", null, "GET", "Sistema");
+		Route account = new Route(null, "Minha Conta", RouteType.MENU, "Account", "mdi-account", null, "GET", "Sistema");
 
 		addRoute(p, r1);
 		addRoute(p, r2);
 		addRoute(p, r3);
 		addRoute(p, r4);
 		addRoute(p, r5);
+		addRoute(p, r6);
+		addRoute(p, home);
+		addRoute(p, account);
 
 		p.getUsers().add(user);
 
@@ -75,7 +81,7 @@ public class ApiApplication implements CommandLineRunner {
 
 	public void addRoute(UserProfile up, Route r) {
 		up.getRoutes().add(r);
-		r.getUserProfiles().add(up);
+		// r.getUserProfiles().add(up);
 		rotaRepository.save(r);
 	}
 

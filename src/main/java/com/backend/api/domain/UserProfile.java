@@ -26,7 +26,7 @@ public class UserProfile extends Base {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "profile_rota", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "rota_id"))
-    private List<Route> rotas = new ArrayList<>();
+    private List<Route> routes = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "profile_routine", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "routine_id"))
@@ -70,11 +70,11 @@ public class UserProfile extends Base {
     }
 
     public List<Route> getRoutes() {
-        return rotas;
+        return routes;
     }
 
-    public void setRoutes(List<Route> rotas) {
-        this.rotas = rotas;
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
     }
 
     public List<Routine> getRoutines() {

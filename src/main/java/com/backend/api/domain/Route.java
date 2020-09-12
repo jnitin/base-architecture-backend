@@ -25,15 +25,18 @@ public class Route extends Base {
     private String url;
     private String method;
     private String icon;
+    private String category;
     private Route father;
 
-    @ManyToMany(mappedBy = "rotas")
+    @ManyToMany(mappedBy = "routes")
     private List<UserProfile> profiles = new ArrayList<>();
 
     public Route() {
     }
 
-    public Route(Integer id, String description, RouteType type, String url, String icon, Route father, String method) {
+    
+
+    public Route(Integer id, String description, RouteType type, String url, String icon, Route father, String method, String category) {
         this.id = id;
         this.description = description;
         this.type = type.getCod();
@@ -41,6 +44,15 @@ public class Route extends Base {
         this.icon = icon;
         this.father = father;
         this.method = method;
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getMethod() {
