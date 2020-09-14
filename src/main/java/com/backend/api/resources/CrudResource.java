@@ -61,7 +61,7 @@ public class CrudResource<Bean extends Base, DTO> {
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ResponseEntity<Page<DTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
         Page<Bean> list = service.findPage(page, linesPerPage, orderBy, direction);

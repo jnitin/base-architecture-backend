@@ -18,19 +18,19 @@ public class ParameterDTO implements Serializable {
         this.note = note;
     }
 
-    public String getChave() {
+    public String getKey() {
         return key;
     }
 
-    public void setChave(String key) {
+    public void setKey(String key) {
         this.key = key;
     }
 
-    public String getValor() {
+    public String getValue() {
         return value;
     }
 
-    public void setValor(String value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

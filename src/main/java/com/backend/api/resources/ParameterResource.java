@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/parametros")
+@RequestMapping(value = "/parameters")
 public class ParameterResource extends CrudResource<Parameter, ParameterDTO> {
 
 }
