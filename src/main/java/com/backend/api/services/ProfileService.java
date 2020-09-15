@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfileService extends CrudService<UserProfile, ProfileDTO> {
 
+	public ProfileService() {
+		super(UserProfile.class, ProfileDTO.class);
+	}
+
 	@Override
 	public UserProfile fromDTO(ProfileDTO dto) {
 		if (dto == null) {

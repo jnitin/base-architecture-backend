@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService extends CrudService<User, UserDTO> {
 
+	public UserService() {
+		super(User.class, UserDTO.class);
+	}
+
 	@Autowired
 	private BCryptPasswordEncoder pe;
 

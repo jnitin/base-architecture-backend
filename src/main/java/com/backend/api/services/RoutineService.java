@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoutineService extends CrudService<Routine, RoutineDTO> {
 
+	public RoutineService() {
+		super(Routine.class, RoutineDTO.class);
+	}
+
 	@Override
 	public Routine fromDTO(RoutineDTO dto) {
 		if (dto == null) {

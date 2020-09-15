@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RouteResource extends CrudResource<Route, RouteDTO> {
 
    
-    public RouteResource() {
-        super(RouteDTO.class);
-    }
-
     @Autowired
     private RouteService routeService;
 

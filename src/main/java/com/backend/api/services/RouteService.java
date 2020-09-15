@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RouteService extends CrudService<Route, RouteDTO> {
 	
+	public RouteService() {
+		super(Route.class, RouteDTO.class);
+	}
+
 	@Autowired
 	private UserRepository userRepository;
 

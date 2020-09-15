@@ -1,7 +1,7 @@
 package com.backend.api.resources;
 
-import java.lang.reflect.Field;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,11 +24,6 @@ public class CrudResource<Bean extends Base, DTO> {
 
     @Autowired
     protected CrudService<Bean, DTO> service;
-
-    protected Class<DTO> clazz;
-    public CrudResource(Class<DTO> clazz) {
-        this.clazz = clazz;
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<DTO> find(@PathVariable Integer id) {
@@ -70,13 +65,16 @@ public class CrudResource<Bean extends Base, DTO> {
             @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+        if (Arrays.asList("ASC", "DESC").indexOf(direction) == -1) {
+            direction = "ASC";
+        }
+        if (service.getClassFields().indexOf(orderBy) == -1) {
+            orderBy = "id";
+        }
         Page<Bean> list = service.findPage(page, linesPerPage, orderBy, direction);
         Page<DTO> listDto = list.map(c -> service.toDTO(c));
-
-        for(Field f : clazz.getDeclaredFields()) {
-            String getter = Character.toUpperCase(f.getName().charAt(0)) + f.getName().substring(1);
-            System.out.println(getter);
-        }
         return ResponseEntity.ok().body(listDto);
+
     }
+
 }

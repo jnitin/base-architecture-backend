@@ -44,7 +44,7 @@ public class ApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Parameter p1 = new Parameter(null, "Maria da Silva", "valor1", "Observação");
 		Parameter p2 = new Parameter(null, "chave2", "valor2", "Observação 2");
-		Parameter p3 = new Parameter(null, "chave3", "valor3", "Observação 3");
+		Parameter p3 = new Parameter(null, "chave.3", "valor3", "Observação 3");
 
 		User user = new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ATIVO);
 

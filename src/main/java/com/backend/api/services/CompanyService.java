@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompanyService extends CrudService<Company, CompanyDTO> {
 
+	public CompanyService() {
+		super(Company.class, CompanyDTO.class);
+	}
+
 	@Override
 	public Company fromDTO(CompanyDTO dto) {
 		if (dto == null) {

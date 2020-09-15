@@ -10,8 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/routines")
 public class RoutineResource extends CrudResource<Routine, RoutineDTO> {
 
-    public RoutineResource() {
-        super(RoutineDTO.class);
-    }
-
 }

@@ -10,8 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/parameters")
 public class ParameterResource extends CrudResource<Parameter, ParameterDTO> {
 
-    public ParameterResource() {
-        super(ParameterDTO.class);
-    }
-
 }
