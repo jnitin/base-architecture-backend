@@ -10,4 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/companies")
 public class CompanyResource extends CrudResource<Company, CompanyDTO> {
 
+    public CompanyResource() {
+        super(CompanyDTO.class);
+    }
+
 }
