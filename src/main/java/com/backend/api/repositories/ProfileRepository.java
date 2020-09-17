@@ -3,10 +3,11 @@ package com.backend.api.repositories;
 import com.backend.api.domain.UserProfile;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProfileRepository extends JpaRepository<UserProfile, Integer>{
+public interface ProfileRepository extends JpaRepository<UserProfile, Integer>, JpaSpecificationExecutor<UserProfile>{
 
     
 }

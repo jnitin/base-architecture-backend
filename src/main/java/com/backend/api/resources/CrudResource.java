@@ -1,7 +1,6 @@
 package com.backend.api.resources;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,20 +60,13 @@ public class CrudResource<Bean extends Base, DTO> {
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ResponseEntity<Page<DTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
+    public ResponseEntity<Page<DTO>> search(@RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-        if (Arrays.asList("ASC", "DESC").indexOf(direction) == -1) {
-            direction = "ASC";
-        }
-        if (service.getClassFields().indexOf(orderBy) == -1) {
-            orderBy = "id";
-        }
-        Page<Bean> list = service.findPage(page, linesPerPage, orderBy, direction);
-        Page<DTO> listDto = list.map(c -> service.toDTO(c));
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "search", defaultValue = "") String search) {
+        Page<DTO> listDto = service.findPage(page, linesPerPage, orderBy, direction, search);
         return ResponseEntity.ok().body(listDto);
-
     }
 
 }

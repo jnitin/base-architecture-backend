@@ -44,7 +44,7 @@ public class ParameterDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ParametroDTO [key=" + key +  "]";
+        return "ParameterDTO [key=" + key +  "]";
     }
 
 }

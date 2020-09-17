@@ -93,7 +93,7 @@ public class Parameter extends Base {
 
     @Override
     public String toString() {
-        return "Parametro [key=" + key + ", id=" + id + ", note=" + note + ", value=" + value + "]";
+        return "Parameter [key=" + key + ", id=" + id + ", note=" + note + ", value=" + value + "]";
     }
 
   
