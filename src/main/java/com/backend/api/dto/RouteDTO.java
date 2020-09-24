@@ -8,6 +8,7 @@ import com.backend.api.domain.enums.RouteType;
 public class RouteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer id;
     private String description;
     private Integer type;
     private String url;
@@ -19,7 +20,8 @@ public class RouteDTO implements Serializable {
     public RouteDTO() {
     }
 
-    public RouteDTO(String description, RouteType type, String url, String icon, Route father, String method, String category) {
+    public RouteDTO(Integer id, String description, RouteType type, String url, String icon, Route father,
+            String method, String category) {
         this.description = description;
         this.type = type.getCod();
         this.url = url;
@@ -27,6 +29,14 @@ public class RouteDTO implements Serializable {
         this.father = father;
         this.method = method;
         this.category = category;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCategory() {

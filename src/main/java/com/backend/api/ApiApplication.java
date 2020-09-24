@@ -66,6 +66,7 @@ public class ApiApplication implements CommandLineRunner {
 		Route home = new Route(null, "Home", RouteType.MENU, "Home", "mdi-home", null, "GET", "Geral");
 		Route account = new Route(null, "Minha Conta", RouteType.MENU, "Account", "mdi-account", null, "GET", "Geral");
 		Route parameters = new Route(null, "Parâmetros", RouteType.MENU, "Parameters", "mdi-cog", null, "GET", "Sistema");
+		Route routes = new Route(null, "Rotas", RouteType.MENU, "Routes", "mdi-routes", null, "GET", "Sistema");
 		Route companies = new Route(null, "Empresas", RouteType.MENU, "Companies", "mdi-office-building", null, "GET", "Sistema");
 
 		addRoute(p, r1);
@@ -82,6 +83,7 @@ public class ApiApplication implements CommandLineRunner {
 		addRoute(p, account);
 		addRoute(p, parameters);
 		addRoute(p, companies);
+		addRoute(p, routes);
 
 		p.getUsers().add(user);
 

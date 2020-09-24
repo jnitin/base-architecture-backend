@@ -26,7 +26,7 @@ public class RouteService extends CrudService<Route, RouteDTO> {
 		if (dto == null) {
 			return null;
 		}
-		final Route obj = new Route(null, dto.getDescription(), dto.getTipo(), dto.getUrl(), dto.getIcone(), dto.getPai(), dto.getMethod(), dto.getCategory());
+		final Route obj = new Route(dto.getId(), dto.getDescription(), dto.getTipo(), dto.getUrl(), dto.getIcone(), dto.getPai(), dto.getMethod(), dto.getCategory());
 		return obj;
 	}
 
@@ -35,7 +35,7 @@ public class RouteService extends CrudService<Route, RouteDTO> {
 		if (obj == null) {
 			return null;
 		}
-		final RouteDTO dto = new RouteDTO(obj.getDescription(), obj.getTipo(), obj.getUrl(), obj.getIcone(), obj.getPai(), obj.getMethod(), obj.getCategory());
+		final RouteDTO dto = new RouteDTO(obj.getId(), obj.getDescription(), obj.getTipo(), obj.getUrl(), obj.getIcone(), obj.getPai(), obj.getMethod(), obj.getCategory());
 		return dto;
 	}
 
