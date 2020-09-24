@@ -3,7 +3,6 @@ package com.backend.api.dto;
 import java.io.Serializable;
 
 import com.backend.api.domain.Route;
-import com.backend.api.domain.enums.RouteType;
 
 public class RouteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -20,15 +19,16 @@ public class RouteDTO implements Serializable {
     public RouteDTO() {
     }
 
-    public RouteDTO(Integer id, String description, RouteType type, String url, String icon, Route father,
+    public RouteDTO(Integer id, String description, Integer type, String url, String icon, Route father,
             String method, String category) {
         this.description = description;
-        this.type = type.getCod();
+        this.type = type;
         this.url = url;
         this.icon = icon;
         this.father = father;
         this.method = method;
         this.category = category;
+        this.id = id;
     }
 
     public Integer getId() {
@@ -63,12 +63,12 @@ public class RouteDTO implements Serializable {
         this.description = description;
     }
 
-    public RouteType getTipo() {
-        return RouteType.toEnum(type);
+    public Integer getType() {
+        return type;
     }
 
-    public void setTipo(RouteType type) {
-        this.type = type.getCod();
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getUrl() {
@@ -79,19 +79,19 @@ public class RouteDTO implements Serializable {
         this.url = url;
     }
 
-    public String getIcone() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcone(String icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
-    public Route getPai() {
+    public Route getFather() {
         return father;
     }
 
-    public void setPai(Route father) {
+    public void setFather(Route father) {
         this.father = father;
     }
 

@@ -65,7 +65,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		r.setMethod(method);
 		r.setUrl(route);
 		for (UserProfile p : user.getUserProfiles()) {
-			List<Route> routes = p.getRoutes().stream().filter(rota -> rota.getTipo().equals(RouteType.REQUISICAO))
+			List<Route> routes = p.getRoutes().stream().filter(rota -> rota.getType().equals(RouteType.REQUISICAO))
 					.collect(Collectors.toList());
 			if (routes.contains(r)) {
 				return true;

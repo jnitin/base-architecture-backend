@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.backend.api.domain.Route;
+import com.backend.api.domain.enums.RouteType;
 import com.backend.api.dto.RouteDTO;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.security.UserSS;
@@ -26,7 +27,7 @@ public class RouteService extends CrudService<Route, RouteDTO> {
 		if (dto == null) {
 			return null;
 		}
-		final Route obj = new Route(dto.getId(), dto.getDescription(), dto.getTipo(), dto.getUrl(), dto.getIcone(), dto.getPai(), dto.getMethod(), dto.getCategory());
+		final Route obj = new Route(dto.getId(), dto.getDescription(), RouteType.toEnum(dto.getType()), dto.getUrl(), dto.getIcon(), dto.getFather(), dto.getMethod(), dto.getCategory());
 		return obj;
 	}
 
@@ -35,7 +36,7 @@ public class RouteService extends CrudService<Route, RouteDTO> {
 		if (obj == null) {
 			return null;
 		}
-		final RouteDTO dto = new RouteDTO(obj.getId(), obj.getDescription(), obj.getTipo(), obj.getUrl(), obj.getIcone(), obj.getPai(), obj.getMethod(), obj.getCategory());
+		final RouteDTO dto = new RouteDTO(obj.getId(), obj.getDescription(), obj.getType().getCod(), obj.getUrl(), obj.getIcon(), obj.getFather(), obj.getMethod(), obj.getCategory());
 		return dto;
 	}
 

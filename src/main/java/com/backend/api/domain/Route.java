@@ -79,11 +79,11 @@ public class Route extends Base {
         this.description = description;
     }
 
-    public RouteType getTipo() {
+    public RouteType getType() {
         return RouteType.toEnum(type);
     }
 
-    public void setTipo(RouteType type) {
+    public void setType(RouteType type) {
         this.type = type.getCod();
     }
 
@@ -95,19 +95,19 @@ public class Route extends Base {
         this.url = url;
     }
 
-    public String getIcone() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcone(String icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
-    public Route getPai() {
+    public Route getFather() {
         return father;
     }
 
-    public void setPai(Route father) {
+    public void setFather(Route father) {
         this.father = father;
     }
 
