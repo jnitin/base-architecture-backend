@@ -42,9 +42,12 @@ public class ApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Parameter p1 = new Parameter(null, "Maria da Silva", "Nome dela", "Observação");
-		Parameter p2 = new Parameter(null, "chave2", "valor2", "Observação 2");
-		Parameter p3 = new Parameter(null, "chave.3", "valor3", "Observação 3");
+		Parameter p1 = new Parameter(null, "Maria da Silva", "69999955478", "Porto Velho");
+		Parameter p2 = new Parameter(null, "Maria das graças", "69815254789", "Porto Velho");
+		Parameter p3 = new Parameter(null, "Carlos Alberto", "69554758963", "Ariquemes");
+		Parameter p4 = new Parameter(null, "Paulo Cesar", "41814578956", "Curitiba");
+		Parameter p5 = new Parameter(null, "José Bonifácio", "41556657842", "Pinhais");
+		Parameter p6 = new Parameter(null, "Euclides da Cunha", "45458569856", "Florianópolis");
 
 		User user = new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ATIVO);
 
@@ -57,8 +60,13 @@ public class ApiApplication implements CommandLineRunner {
 		Route r5 = new Route(null, "Teste5", RouteType.REQUISICAO, "/parameters/[0-9]+", null, null, "DELETE", null);
 		Route r6 = new Route(null, "Teste6", RouteType.REQUISICAO, "/routes/menus/?", null, null, "GET", null);
 		Route r7 = new Route(null, "Teste6", RouteType.REQUISICAO, "/parameters/page/?", null, null, "GET", null);
-		Route home = new Route(null, "Home", RouteType.MENU, "Home", "mdi-cog", null, "GET", "Sistema");
-		Route account = new Route(null, "Minha Conta", RouteType.MENU, "Account", "mdi-account", null, "GET", "Sistema");
+		Route rAllGet = new Route(null, "Teste6", RouteType.REQUISICAO, "/.*", null, null, "GET", null);
+		Route rAllPost = new Route(null, "Teste6", RouteType.REQUISICAO, "/.*", null, null, "POST", null);
+		Route rAllPut = new Route(null, "Teste6", RouteType.REQUISICAO, "/.*", null, null, "PUT", null);
+		Route home = new Route(null, "Home", RouteType.MENU, "Home", "mdi-home", null, "GET", "Geral");
+		Route account = new Route(null, "Minha Conta", RouteType.MENU, "Account", "mdi-account", null, "GET", "Geral");
+		Route parameters = new Route(null, "Parâmetros", RouteType.MENU, "Parameters", "mdi-cog", null, "GET", "Sistema");
+		Route companies = new Route(null, "Empresas", RouteType.MENU, "Companies", "mdi-office-building", null, "GET", "Sistema");
 
 		addRoute(p, r1);
 		addRoute(p, r2);
@@ -67,8 +75,13 @@ public class ApiApplication implements CommandLineRunner {
 		addRoute(p, r5);
 		addRoute(p, r6);
 		addRoute(p, r7);
+		addRoute(p, rAllGet);
+		addRoute(p, rAllPost);
+		addRoute(p, rAllPut);
 		addRoute(p, home);
 		addRoute(p, account);
+		addRoute(p, parameters);
+		addRoute(p, companies);
 
 		p.getUsers().add(user);
 
@@ -81,6 +94,9 @@ public class ApiApplication implements CommandLineRunner {
 		parametroRepository.save(p1);
 		parametroRepository.save(p2);
 		parametroRepository.save(p3);
+		parametroRepository.save(p4);
+		parametroRepository.save(p5);
+		parametroRepository.save(p6);
 
 		userRepository.save(user);
 	}

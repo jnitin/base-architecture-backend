@@ -7,9 +7,11 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import com.backend.api.domain.Base;
+import com.backend.api.services.exceptions.DataIntegrityException;
 import com.backend.api.services.exceptions.ObjectNotFoundException;
 import com.backend.api.utils.CrudSpecificationBuilder;
 
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,7 +57,12 @@ public abstract class CrudService<Bean extends Base, DTO> {
 
     public Bean insert(final Bean obj) {
         obj.setId(null);
-        return this.repo.save(obj);
+        try {
+            return this.repo.save(obj);
+
+        } catch(ConstraintViolationException e) {
+            throw new DataIntegrityException("Erro ao salvar registro no sistema, algum campo está preenchido incorretamente");
+        }
     }
 
     public void delete(final Integer id) {

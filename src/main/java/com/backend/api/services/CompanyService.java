@@ -17,7 +17,7 @@ public class CompanyService extends CrudService<Company, CompanyDTO> {
 		if (dto == null) {
 			return null;
 		}
-		final Company obj = new Company(null, dto.getName(), dto.getCnpj());
+		final Company obj = new Company(dto.getId(), dto.getName(), dto.getCnpj());
 		return obj;
 	}
 
@@ -26,7 +26,7 @@ public class CompanyService extends CrudService<Company, CompanyDTO> {
 		if (obj == null) {
 			return null;
 		}
-		final CompanyDTO dto = new CompanyDTO(obj.getName(), obj.getCnpj());
+		final CompanyDTO dto = new CompanyDTO(obj.getId(), obj.getName(), obj.getCnpj());
 		return dto;
 	}
 
