@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -23,12 +24,15 @@ public class Company extends Base {
 
     @NotNull
     private String name;
-    
+
     private String cnpj;
 
     @ManyToMany
     @JoinTable(name = "company_user", joinColumns = @JoinColumn(name = "company_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "company")
+    private List<Parameter> parameters = new ArrayList<>();
 
     public Company() {
     }
@@ -71,6 +75,14 @@ public class Company extends Base {
         this.id = id;
     }
 
+    public List<Parameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(List<Parameter> parameters) {
+        this.parameters = parameters;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -98,7 +110,7 @@ public class Company extends Base {
 
     @Override
     public String toString() {
-        return "Empresa [id=" + id + ", name=" + name + "]";
+        return "Company [id=" + id + ", name=" + name + "]";
     }
 
 }

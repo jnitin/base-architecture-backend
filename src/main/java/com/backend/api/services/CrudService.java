@@ -3,15 +3,16 @@ package com.backend.api.services;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 import com.backend.api.domain.Base;
 import com.backend.api.services.exceptions.DataIntegrityException;
 import com.backend.api.services.exceptions.ObjectNotFoundException;
 import com.backend.api.utils.CrudSpecificationBuilder;
 
-import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +39,10 @@ public abstract class CrudService<Bean extends Base, DTO> {
     protected Class<DTO> dtoClass;
 
     protected Class<Bean> beanClass;
+
+    public List<DTO> toDTO(List<Bean> beans) {
+        return beans.stream().map(bean -> toDTO(bean)).collect(Collectors.toList());
+    }
 
     public CrudService(final Class<Bean> beanClass, final Class<DTO> dtoClass) {
         this.dtoClass = dtoClass;

@@ -133,11 +133,11 @@ public class User extends Base {
         this.routines = routines;
     }
 
-    public List<Company> getEmpresas() {
+    public List<Company> getCompanies() {
         return companies;
     }
 
-    public void setEmpresas(List<Company> companies) {
+    public void setCompanies(List<Company> companies) {
         this.companies = companies;
     }
 

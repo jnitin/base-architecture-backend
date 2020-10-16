@@ -1,11 +1,13 @@
 package com.backend.api;
 
+import com.backend.api.domain.Company;
 import com.backend.api.domain.Parameter;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.domain.Route;
 import com.backend.api.domain.User;
 import com.backend.api.domain.enums.UserSituation;
 import com.backend.api.domain.enums.RouteType;
+import com.backend.api.repositories.CompanyRepository;
 import com.backend.api.repositories.ParameterRepository;
 import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.RouteRepository;
@@ -36,22 +38,32 @@ public class ApiApplication implements CommandLineRunner {
 
 	@Autowired
 	private ProfileRepository profileRepository;
+
+	@Autowired
+	private CompanyRepository companyRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		Parameter p1 = new Parameter(null, "Maria da Silva", "69999955478", "Porto Velho");
-		Parameter p2 = new Parameter(null, "Maria das graças", "69815254789", "Porto Velho");
-		Parameter p3 = new Parameter(null, "Carlos Alberto", "69554758963", "Ariquemes");
-		Parameter p4 = new Parameter(null, "Paulo Cesar", "41814578956", "Curitiba");
-		Parameter p5 = new Parameter(null, "José Bonifácio", "41556657842", "Pinhais");
-		Parameter p6 = new Parameter(null, "Euclides da Cunha", "45458569856", "Florianópolis");
-
 		User user = new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ATIVO);
 
+		Company c = new Company(null, "Zamp", "12345678912");
+		Company c2 = new Company(null, "Zamp2", "12345678912f");
+		companyRepository.save(c);
+		companyRepository.save(c2);
+
+		Parameter p1 = new Parameter(null, "Maria da Silva", "69999955478", "Porto Velho", c);
+		Parameter p2 = new Parameter(null, "Maria das graças", "69815254789", "Porto Velho", c);
+		Parameter p3 = new Parameter(null, "Carlos Alberto", "69554758963", "Ariquemes", c);
+		Parameter p4 = new Parameter(null, "Paulo Cesar", "41814578956", "Curitiba", c);
+		Parameter p5 = new Parameter(null, "José Bonifácio", "41556657842", "Pinhais", c);
+		Parameter p6 = new Parameter(null, "Euclides da Cunha", "45458569856", "Florianópolis", c);
+
 		UserProfile p = new UserProfile(null, "Administrador", 20);
+		UserProfile pro2 = new UserProfile(null, "Atendente", 2);
 
 		Route r1 = new Route(null, "Teste", RouteType.REQUISICAO, "/parameters/[0-9]+", null, null, "GET", null);
 		Route r2 = new Route(null, "Teste2", RouteType.REQUISICAO, "/parameters/?", null, null, "GET", null);
@@ -65,9 +77,11 @@ public class ApiApplication implements CommandLineRunner {
 		Route rAllPut = new Route(null, "Teste6", RouteType.REQUISICAO, "/.*", null, null, "PUT", null);
 		Route home = new Route(null, "Home", RouteType.MENU, "Home", "mdi-home", null, "GET", "Geral");
 		Route account = new Route(null, "Minha Conta", RouteType.MENU, "Account", "mdi-account", null, "GET", "Geral");
+		Route profiles = new Route(null, "Perfis", RouteType.MENU, "Profiles", "mdi-account-box-multiple", null, "GET", "Sistema");
 		Route parameters = new Route(null, "Parâmetros", RouteType.MENU, "Parameters", "mdi-cog", null, "GET", "Sistema");
 		Route routes = new Route(null, "Rotas", RouteType.MENU, "Routes", "mdi-routes", null, "GET", "Sistema");
-		Route companies = new Route(null, "Empresas", RouteType.MENU, "Companies", "mdi-office-building", null, "GET", "Sistema");
+		Route companies = new Route(null, "Empresas", RouteType.MENU, "Companies", "mdi-office-building", null, "GET",
+				"Sistema");
 
 		addRoute(p, r1);
 		addRoute(p, r2);
@@ -79,6 +93,7 @@ public class ApiApplication implements CommandLineRunner {
 		addRoute(p, rAllGet);
 		addRoute(p, rAllPost);
 		addRoute(p, rAllPut);
+		addRoute(p, profiles);
 		addRoute(p, home);
 		addRoute(p, account);
 		addRoute(p, parameters);
@@ -92,6 +107,7 @@ public class ApiApplication implements CommandLineRunner {
 		userRepository.save(user);
 
 		profileRepository.save(p);
+		profileRepository.save(pro2);
 
 		parametroRepository.save(p1);
 		parametroRepository.save(p2);
@@ -101,11 +117,20 @@ public class ApiApplication implements CommandLineRunner {
 		parametroRepository.save(p6);
 
 		userRepository.save(user);
+
+		user.getCompanies().add(c);
+		user.getCompanies().add(c2);
+
+		c.getUsers().add(user);
+		c2.getUsers().add(user);
+
+		userRepository.save(user);
+		companyRepository.save(c);
+		companyRepository.save(c2);
 	}
 
 	public void addRoute(UserProfile up, Route r) {
 		up.getRoutes().add(r);
-		// r.getUserProfiles().add(up);
 		rotaRepository.save(r);
 	}
 

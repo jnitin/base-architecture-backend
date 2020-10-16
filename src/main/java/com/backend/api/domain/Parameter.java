@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -21,17 +23,21 @@ public class Parameter extends Base {
     @NotNull
     private String value;
 
-    
     private String note;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     public Parameter() {
     }
 
-    public Parameter(Integer id, String key, String value, String note) {
+    public Parameter(Integer id, String key, String value, String note, Company company) {
         this.id = id;
         this.key = key;
         this.value = value;
         this.note = note;
+        this.company = company;
     }
 
     public String getKey() {
@@ -74,6 +80,14 @@ public class Parameter extends Base {
         this.id = id;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -96,5 +110,4 @@ public class Parameter extends Base {
         return "Parameter [key=" + key + ", id=" + id + ", note=" + note + ", value=" + value + "]";
     }
 
-  
 }

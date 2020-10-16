@@ -44,7 +44,7 @@ public class CompanyDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "EmpresaDTO [cnpj=" + cnpj + ", name=" + name + "]";
+        return "CompanyDTO [cnpj=" + cnpj + ", name=" + name + "]";
     }
 
 }
