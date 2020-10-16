@@ -34,7 +34,7 @@ public class ApiApplication implements CommandLineRunner {
 	private BCryptPasswordEncoder pe;
 
 	@Autowired
-	private RouteRepository rotaRepository;
+	private RouteRepository routeRepository;
 
 	@Autowired
 	private ProfileRepository profileRepository;
@@ -79,7 +79,7 @@ public class ApiApplication implements CommandLineRunner {
 		Route account = new Route(null, "Minha Conta", RouteType.MENU, "Account", "mdi-account", null, "GET", "Geral");
 		Route profiles = new Route(null, "Perfis", RouteType.MENU, "Profiles", "mdi-account-box-multiple", null, "GET", "Sistema");
 		Route parameters = new Route(null, "Parâmetros", RouteType.MENU, "Parameters", "mdi-cog", null, "GET", "Sistema");
-		Route routes = new Route(null, "Rotas", RouteType.MENU, "Routes", "mdi-routes", null, "GET", "Sistema");
+		Route routes = new Route(null, "Routes", RouteType.MENU, "Routes", "mdi-routes", null, "GET", "Sistema");
 		Route companies = new Route(null, "Empresas", RouteType.MENU, "Companies", "mdi-office-building", null, "GET",
 				"Sistema");
 
@@ -131,7 +131,7 @@ public class ApiApplication implements CommandLineRunner {
 
 	public void addRoute(UserProfile up, Route r) {
 		up.getRoutes().add(r);
-		rotaRepository.save(r);
+		routeRepository.save(r);
 	}
 
 }

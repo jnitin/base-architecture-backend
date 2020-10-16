@@ -25,7 +25,7 @@ public class UserProfile extends Base {
     private Integer level;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "profile_rota", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "rota_id"))
+    @JoinTable(name = "profile_route", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "route_id"))
     private List<Route> routes = new ArrayList<>();
 
     @ManyToMany
