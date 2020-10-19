@@ -1,7 +1,7 @@
 package com.backend.api.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,15 +26,15 @@ public class UserProfile extends Base {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "profile_route", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "route_id"))
-    private List<Route> routes = new ArrayList<>();
+    private Set<Route> routes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "profile_routine", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "routine_id"))
-    private List<Routine> routines = new ArrayList<>();
+    private Set<Routine> routines = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "profile_user", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 
     public UserProfile() {
     }
@@ -69,27 +69,27 @@ public class UserProfile extends Base {
         this.level = level;
     }
 
-    public List<Route> getRoutes() {
+    public Set<Route> getRoutes() {
         return routes;
     }
 
-    public void setRoutes(List<Route> routes) {
+    public void setRoutes(Set<Route> routes) {
         this.routes = routes;
     }
 
-    public List<Routine> getRoutines() {
+    public Set<Routine> getRoutines() {
         return routines;
     }
 
-    public void setRoutines(List<Routine> routines) {
+    public void setRoutines(Set<Routine> routines) {
         this.routines = routines;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 

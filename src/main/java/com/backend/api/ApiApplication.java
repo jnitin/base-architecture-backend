@@ -72,14 +72,15 @@ public class ApiApplication implements CommandLineRunner {
 		Route r5 = new Route(null, "Teste5", RouteType.REQUISICAO, "/parameters/[0-9]+", null, null, "DELETE", null);
 		Route r6 = new Route(null, "Teste6", RouteType.REQUISICAO, "/routes/menus/?", null, null, "GET", null);
 		Route r7 = new Route(null, "Teste6", RouteType.REQUISICAO, "/parameters/page/?", null, null, "GET", null);
-		Route rAllGet = new Route(null, "Teste6", RouteType.REQUISICAO, "/.*", null, null, "GET", null);
-		Route rAllPost = new Route(null, "Teste6", RouteType.REQUISICAO, "/.*", null, null, "POST", null);
-		Route rAllPut = new Route(null, "Teste6", RouteType.REQUISICAO, "/.*", null, null, "PUT", null);
+		Route rAllGet = new Route(null, "GET ALL", RouteType.REQUISICAO, "/.*", null, null, "GET", null);
+		Route rAllPost = new Route(null, "POST ALL", RouteType.REQUISICAO, "/.*", null, null, "POST", null);
+		Route rAllPut = new Route(null, "PUT ALL", RouteType.REQUISICAO, "/.*", null, null, "PUT", null);
+		Route rAllDelete = new Route(null, "DELETE ALL", RouteType.REQUISICAO, "/.*", null, null, "DELETE", null);
 		Route home = new Route(null, "Home", RouteType.MENU, "Home", "mdi-home", null, "GET", "Geral");
 		Route account = new Route(null, "Minha Conta", RouteType.MENU, "Account", "mdi-account", null, "GET", "Geral");
 		Route profiles = new Route(null, "Perfis", RouteType.MENU, "Profiles", "mdi-account-box-multiple", null, "GET", "Sistema");
 		Route parameters = new Route(null, "Parâmetros", RouteType.MENU, "Parameters", "mdi-cog", null, "GET", "Sistema");
-		Route routes = new Route(null, "Routes", RouteType.MENU, "Routes", "mdi-routes", null, "GET", "Sistema");
+		Route routes = new Route(null, "Rotas", RouteType.MENU, "Routes", "mdi-routes", null, "GET", "Sistema");
 		Route companies = new Route(null, "Empresas", RouteType.MENU, "Companies", "mdi-office-building", null, "GET",
 				"Sistema");
 
@@ -93,6 +94,7 @@ public class ApiApplication implements CommandLineRunner {
 		addRoute(p, rAllGet);
 		addRoute(p, rAllPost);
 		addRoute(p, rAllPut);
+		addRoute(p, rAllDelete);
 		addRoute(p, profiles);
 		addRoute(p, home);
 		addRoute(p, account);

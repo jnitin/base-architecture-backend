@@ -1,15 +1,18 @@
 package com.backend.api.services;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.backend.api.domain.Route;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.domain.enums.RouteType;
 import com.backend.api.dto.RouteDTO;
+import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.RouteRepository;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.security.UserSS;
+import com.backend.api.services.exceptions.ObjectNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +29,9 @@ public class RouteService extends CrudService<Route, RouteDTO> {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private ProfileRepository profileRepository;
 
 	@Autowired
 	private RouteRepository routeRepository;
@@ -59,8 +65,24 @@ public class RouteService extends CrudService<Route, RouteDTO> {
 		return convertedList;
 	}
 
-	public Page<UserProfile> getProfiles(Integer id, Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<UserProfile> getProfiles(Integer id, Integer page, Integer linesPerPage, String orderBy,
+			String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return routeRepository.getProfiles(id, pageRequest);
+	}
+
+	public void insertProfiles(Integer routeId, List<Integer> profileIds) {
+		Route r = repo.findById(routeId).orElseThrow(() -> new ObjectNotFoundException("Rota não encontrada"));
+		Set<UserProfile> profiles = profileRepository.findAllById(profileIds).stream().collect(Collectors.toSet());
+		r.setUserProfiles(profiles);
+		repo.save(r);
+	}
+
+	public void deleteProfile(Integer id, Integer profileId) {
+		Route r = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException("Rota não encontrada"));
+		UserProfile profile = profileRepository.findById(profileId).orElseThrow(() -> new ObjectNotFoundException("Perfil não encontrado"));
+		r.getUserProfiles().remove(profile);
+		profile.getRoutes().remove(r);
+		repo.save(r);
 	}
 }

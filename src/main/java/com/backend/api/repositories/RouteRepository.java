@@ -18,4 +18,7 @@ public interface RouteRepository extends JpaRepository<Route, Integer>, JpaSpeci
   @Transactional()
   @Query("SELECT p from Route r JOIN r.profiles p WHERE r.id = :routeId")
   public Page<UserProfile> getProfiles(@Param("routeId") Integer routeId, Pageable pageable);
+
+  // @Query("SELECT p from Route r JOIN r.profiles p WHERE r.id = :routeId")
+  // public void insertProfiles(@Param("ids") List<Integer> profileIds);
 }

@@ -1,5 +1,6 @@
 package com.backend.api.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import com.backend.api.domain.Route;
@@ -10,12 +11,15 @@ import com.backend.api.services.RouteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/routes")
@@ -38,8 +42,21 @@ public class RouteResource extends CrudResource<Route, RouteDTO> {
             @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-        Page<ProfileDTO> profiles = routeService.getProfiles(id, page, linesPerPage, orderBy, direction).map(profile -> profileService.toDTO(profile));
+        Page<ProfileDTO> profiles = routeService.getProfiles(id, page, linesPerPage, orderBy, direction)
+                .map(profile -> profileService.toDTO(profile));
         return ResponseEntity.ok().body(profiles);
+    }
+
+    @RequestMapping(value = "/profiles/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Page<ProfileDTO>> addProfiles(@PathVariable Integer id, @RequestBody List<Integer> ids) {
+        this.routeService.insertProfiles(id, ids);
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/profiles/{id}/{profileId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Page<ProfileDTO>> deleteProfile(@PathVariable Integer id, @PathVariable Integer profileId) {
+        this.routeService.deleteProfile(id, profileId);
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -1,7 +1,7 @@
 package com.backend.api.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +29,7 @@ public class Route extends Base {
     private Route father;
 
     @ManyToMany(mappedBy = "routes")
-    private List<UserProfile> profiles = new ArrayList<>();
+    private Set<UserProfile> profiles = new HashSet<>();
 
     public Route() {
     }
@@ -111,12 +111,13 @@ public class Route extends Base {
         this.father = father;
     }
 
-    public List<UserProfile> getUserProfiles() {
+    public Set<UserProfile> getUserProfiles() {
         return profiles;
     }
 
-    public void setUserProfiles(List<UserProfile> profiles) {
+    public void setUserProfiles(Set<UserProfile> profiles) {
         this.profiles = profiles;
+        profiles.forEach(profile -> profile.getRoutes().add(this));
     }
 
     @Override
