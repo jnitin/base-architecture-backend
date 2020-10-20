@@ -71,6 +71,10 @@ public class RouteService extends CrudService<Route, RouteDTO> {
 		return routeRepository.getProfiles(id, pageRequest);
 	}
 
+	public List<UserProfile> getProfiles(Integer id) {
+		return routeRepository.getProfiles(id);
+	}
+
 	public void insertProfiles(Integer routeId, List<Integer> profileIds) {
 		Route r = repo.findById(routeId).orElseThrow(() -> new ObjectNotFoundException("Rota não encontrada"));
 		Set<UserProfile> profiles = profileRepository.findAllById(profileIds).stream().collect(Collectors.toSet());
@@ -85,4 +89,5 @@ public class RouteService extends CrudService<Route, RouteDTO> {
 		profile.getRoutes().remove(r);
 		repo.save(r);
 	}
+
 }

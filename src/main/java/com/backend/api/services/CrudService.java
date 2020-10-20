@@ -65,8 +65,9 @@ public abstract class CrudService<Bean extends Base, DTO> {
         try {
             return this.repo.save(obj);
 
-        } catch(ConstraintViolationException e) {
-            throw new DataIntegrityException("Erro ao salvar registro no sistema, algum campo está preenchido incorretamente");
+        } catch (ConstraintViolationException e) {
+            throw new DataIntegrityException(
+                    "Erro ao salvar registro no sistema, algum campo está preenchido incorretamente");
         }
     }
 
@@ -75,9 +76,8 @@ public abstract class CrudService<Bean extends Base, DTO> {
 
     }
 
-    public Page<DTO> findPage(final Integer page, final Integer linesPerPage, final String orderBy,
-            final String direction, final String search) {
-        CrudSpecificationBuilder<Bean> builder = new CrudSpecificationBuilder<>();
+    private  Page<DTO> findPage(final Integer page, final Integer linesPerPage, final String orderBy,
+            final String direction, final String search, CrudSpecificationBuilder<Bean> builder) {
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>|=|%)(\\w+?)(,|\\|)");
         Matcher matcher = pattern.matcher(search + ",");
         while (matcher.find()) {
@@ -89,6 +89,20 @@ public abstract class CrudService<Bean extends Base, DTO> {
 
         Page<DTO> listDto = list.map(c -> toDTO(c));
         return listDto;
+    }
+
+    public Page<DTO> findPage(final Integer page, final Integer linesPerPage, final String orderBy,
+            final String direction, final String search, List<Bean> notIn, String key) {
+        CrudSpecificationBuilder<Bean> builder = new CrudSpecificationBuilder<>();
+        builder.with(notIn, key);
+        return findPage(page, linesPerPage, orderBy, direction, search, builder);
+    }
+
+    public Page<DTO> findPage(final Integer page, final Integer linesPerPage, final String orderBy,
+            final String direction, final String search) {
+        CrudSpecificationBuilder<Bean> builder = new CrudSpecificationBuilder<>();
+        return findPage(page, linesPerPage, orderBy, direction, search, builder);
+
     }
 
     public List<Bean> findAll() {

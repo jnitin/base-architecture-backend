@@ -1,5 +1,8 @@
 package com.backend.api.utils;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -30,7 +33,16 @@ public class CrudSpecification<Bean> implements Specification<Bean> {
       throw new DataIntegrityException("Campo (" + criteria.getKey() + ") do filtro não encontrado");
     }
     final String key = criteria.getKey();
+
+    // Caso haja uma lista de ids no criteria em notIn, vai retornar um query
+    // filtrada sem aqueles ids
+    if (criteria.getNotIn() != null) {
+      Predicate predicate = root.in(criteria.getNotIn()).not();
+      return builder.and(predicate);
+    }
+
     final String value = criteria.getValue().toString();
+
     switch (criteria.getOperation()) {
       case ">":
         return builder.greaterThanOrEqualTo(root.<String>get(key), value);
@@ -38,8 +50,7 @@ public class CrudSpecification<Bean> implements Specification<Bean> {
         return builder.lessThanOrEqualTo(root.<String>get(key), value);
       case ":": // Contains
         if (root.get(key).getJavaType() == String.class) {
-          return builder.like(builder.upper(root.<String>get(key)),
-              "%" + value.toUpperCase() + "%");
+          return builder.like(builder.upper(root.<String>get(key)), "%" + value.toUpperCase() + "%");
         } else {
           return builder.equal(root.get(key), criteria.getValue());
         }
@@ -51,8 +62,7 @@ public class CrudSpecification<Bean> implements Specification<Bean> {
         }
       case "%": // Starts With
         if (root.get(key).getJavaType() == String.class) {
-          return builder.like(builder.upper(root.<String>get(key)),
-              value.toUpperCase() + "%");
+          return builder.like(builder.upper(root.<String>get(key)), value.toUpperCase() + "%");
         }
     }
     return null;

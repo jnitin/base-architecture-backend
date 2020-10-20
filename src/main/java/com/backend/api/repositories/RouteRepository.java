@@ -1,5 +1,7 @@
 package com.backend.api.repositories;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import com.backend.api.domain.Route;
@@ -19,6 +21,8 @@ public interface RouteRepository extends JpaRepository<Route, Integer>, JpaSpeci
   @Query("SELECT p from Route r JOIN r.profiles p WHERE r.id = :routeId")
   public Page<UserProfile> getProfiles(@Param("routeId") Integer routeId, Pageable pageable);
 
-  // @Query("SELECT p from Route r JOIN r.profiles p WHERE r.id = :routeId")
-  // public void insertProfiles(@Param("ids") List<Integer> profileIds);
+  @Transactional()
+  @Query("SELECT p from Route r JOIN r.profiles p WHERE r.id = :routeId")
+  public List<UserProfile> getProfiles(@Param("routeId") Integer id);
+
 }

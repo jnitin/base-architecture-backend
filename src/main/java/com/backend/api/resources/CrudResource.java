@@ -30,7 +30,7 @@ public class CrudResource<Bean extends Base, DTO> {
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "findall" ,method = RequestMethod.GET)
     public ResponseEntity<List<DTO>> findAll() {
         List<Bean> list = service.findAll();
         List<DTO> listDto = list.stream().map(obj -> service.toDTO(obj)).collect(Collectors.toList());
@@ -59,7 +59,7 @@ public class CrudResource<Bean extends Base, DTO> {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    @RequestMapping( method = RequestMethod.GET)
     public ResponseEntity<Page<DTO>> search(@RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,

@@ -19,6 +19,11 @@ public class CrudSpecificationBuilder<Bean> {
     return this;
   }
 
+  public CrudSpecificationBuilder<Bean> with(List<Bean> notIn, String key) {
+    params.add(new SearchCriteria(notIn, key));
+    return this;
+  }
+
   public Specification<Bean> build() {
     if (params.size() == 0) {
       return null;
