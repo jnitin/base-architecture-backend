@@ -33,7 +33,16 @@ public class RouteResource extends CrudResource<Route, RouteDTO> {
         return ResponseEntity.ok().body(routeService.getMenus());
     }
 
-    @RequestMapping(value = "/profiles/{id}/page", method = RequestMethod.GET)
+    /**
+     * 
+     * @param id
+     * @param page
+     * @param linesPerPage
+     * @param orderBy
+     * @param direction
+     * @return Lista de Profiles de uma rota
+     */
+    @RequestMapping(value = "/{id}/profiles/page", method = RequestMethod.GET)
     public ResponseEntity<Page<ProfileDTO>> getRoutes(@PathVariable Integer id,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
@@ -44,13 +53,19 @@ public class RouteResource extends CrudResource<Route, RouteDTO> {
         return ResponseEntity.ok().body(profiles);
     }
 
-    @RequestMapping(value = "/profiles/{id}", method = RequestMethod.POST)
+    /** Vincula um perfil a uma rota (pelo id da rota)
+     * 
+     * @param id
+     * @param ids
+     * @return 
+     */
+    @RequestMapping(value = "/{id}/profiles", method = RequestMethod.POST)
     public ResponseEntity<Page<ProfileDTO>> addProfiles(@PathVariable Integer id, @RequestBody List<Integer> ids) {
         this.routeService.insertProfiles(id, ids);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/profiles/{id}/{profileId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/profiles/{profileId}", method = RequestMethod.DELETE)
     public ResponseEntity<Page<ProfileDTO>> deleteProfile(@PathVariable Integer id, @PathVariable Integer profileId) {
         this.routeService.deleteProfile(id, profileId);
         return ResponseEntity.ok().build();
