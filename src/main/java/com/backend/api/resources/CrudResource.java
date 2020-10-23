@@ -39,6 +39,7 @@ public class CrudResource<Bean extends Base, DTO> {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody DTO objDto) {
+        System.out.println("Ah não");
         Bean obj = service.fromDTO(objDto);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();

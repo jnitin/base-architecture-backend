@@ -1,8 +1,6 @@
 package com.backend.api.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,10 +21,6 @@ public class User extends Base {
 
     private static final long serialVersionUID = 1L;
 
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // protected Integer id;
-
     @NotNull
     private String name;
 
@@ -40,14 +34,14 @@ public class User extends Base {
     private Integer situation;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    private List<UserProfile> userProfiles = new ArrayList<>();
+    private Set<UserProfile> userProfiles = new HashSet<>();
 
     @ManyToMany(mappedBy = "users")
-    private List<Company> companies = new ArrayList<>();
+    private Set<Company> companies = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_routine", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "routine_id"))
-    private List<Routine> routines = new ArrayList<>();
+    private Set<Routine> routines = new HashSet<>();
 
     @ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PROFILES")
@@ -114,27 +108,27 @@ public class User extends Base {
         this.situation = situation.getCod();
     }
 
-    public List<UserProfile> getUserProfiles() {
+    public Set<UserProfile> getUserProfiles() {
         return userProfiles;
     }
 
-    public void setUserProfiles(List<UserProfile> profiles) {
+    public void setUserProfiles(Set<UserProfile> profiles) {
         this.userProfiles = profiles;
     }
 
-    public List<Routine> getRoutines() {
+    public Set<Routine> getRoutines() {
         return routines;
     }
 
-    public void setRoutines(List<Routine> routines) {
+    public void setRoutines(Set<Routine> routines) {
         this.routines = routines;
     }
 
-    public List<Company> getCompanies() {
+    public Set<Company> getCompanies() {
         return companies;
     }
 
-    public void setCompanies(List<Company> companies) {
+    public void setCompanies(Set<Company> companies) {
         this.companies = companies;
     }
 

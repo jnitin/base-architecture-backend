@@ -10,6 +10,7 @@ import com.backend.api.dto.RouteDTO;
 import com.backend.api.services.LinkableService;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.RouteService;
+import com.backend.api.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,9 @@ public class ProfileResource extends CrudResource<UserProfile, ProfileDTO> {
 
   @Autowired
   ProfileService profileService;
+
+  @Autowired
+  UserService userService;
 
   LinkableService<UserProfile, Route> routeLinkableService;
 
@@ -109,7 +113,7 @@ public class ProfileResource extends CrudResource<UserProfile, ProfileDTO> {
    * @return
    */
   @RequestMapping(value = "/unlinked-routes/{id}", method = RequestMethod.GET)
-  public Page<ProfileDTO> findRouteUnlinkedProfiles(@PathVariable Integer id,
+  public Page<ProfileDTO> findProfileUnlinkedRoutes(@PathVariable Integer id,
       @RequestParam(value = "page", defaultValue = "0") Integer page,
       @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
       @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
@@ -119,5 +123,18 @@ public class ProfileResource extends CrudResource<UserProfile, ProfileDTO> {
     final List<UserProfile> notIn = routeService.getProfiles(id);
 
     return service.findPage(page, linesPerPage, orderBy, direction, search, notIn, "routes");
+  }
+
+  @RequestMapping(value = "/unlinked-users/{id}", method = RequestMethod.GET)
+  public Page<ProfileDTO> findProfileUnlinkedUsers(@PathVariable Integer id,
+      @RequestParam(value = "page", defaultValue = "0") Integer page,
+      @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
+      @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
+      @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+      @RequestParam(value = "search", defaultValue = "") String search) {
+
+    final List<UserProfile> notIn = userService.getUserProfiles(id);
+
+    return service.findPage(page, linesPerPage, orderBy, direction, search, notIn, "users");
   }
 }

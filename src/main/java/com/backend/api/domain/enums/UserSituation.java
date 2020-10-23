@@ -2,8 +2,8 @@ package com.backend.api.domain.enums;
 
 public enum UserSituation {
 
-	ATIVO(1, "Ativo"),
-	INATIVO(2, "Inativo");
+	ACTIVE(1, "Ativo"),
+	INACTIVE(2, "Inativo");
 
 	private Integer cod;
 	private String description;

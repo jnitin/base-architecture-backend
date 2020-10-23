@@ -48,7 +48,7 @@ public class ApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user = new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ATIVO);
+		User user = new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ACTIVE);
 
 		Company c = new Company(null, "Zamp", "12345678912");
 		Company c2 = new Company(null, "Zamp2", "12345678912f");
@@ -77,7 +77,7 @@ public class ApiApplication implements CommandLineRunner {
 		Route rAllPut = new Route(null, "PUT ALL", RouteType.REQUISICAO, "/.*", null, null, "PUT", null);
 		Route rAllDelete = new Route(null, "DELETE ALL", RouteType.REQUISICAO, "/.*", null, null, "DELETE", null);
 		Route home = new Route(null, "Home", RouteType.MENU, "Home", "mdi-home", null, "GET", "Geral");
-		Route account = new Route(null, "Minha Conta", RouteType.MENU, "Account", "mdi-account", null, "GET", "Geral");
+		Route account = new Route(null, "Usuários", RouteType.MENU, "Users", "mdi-account", null, "GET", "Sistema");
 		Route profiles = new Route(null, "Perfis", RouteType.MENU, "Profiles", "mdi-account-box-multiple", null, "GET", "Sistema");
 		Route parameters = new Route(null, "Parâmetros", RouteType.MENU, "Parameters", "mdi-cog", null, "GET", "Sistema");
 		Route routes = new Route(null, "Rotas", RouteType.MENU, "Routes", "mdi-routes", null, "GET", "Sistema");
