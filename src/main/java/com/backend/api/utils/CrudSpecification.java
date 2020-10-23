@@ -1,8 +1,5 @@
 package com.backend.api.utils;
 
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;

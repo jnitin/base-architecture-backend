@@ -4,9 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.backend.api.domain.enums.RouteType;
@@ -16,9 +13,9 @@ public class Route extends Base {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer id;
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // protected Integer id;
 
     private String description;
     private Integer type;
@@ -122,7 +119,7 @@ public class Route extends Base {
 
     @Override
     public String toString() {
-        return "Route [id=" + id + ", url=" + url + "]";
+        return "Route [id=" + id + ", url=" + url + "]" + profiles;
     }
 
     @Override
