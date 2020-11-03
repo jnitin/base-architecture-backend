@@ -4,9 +4,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import com.backend.api.domain.Route;
+import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.ProfileDTO;
 import com.backend.api.dto.RouteDTO;
+import com.backend.api.dto.UserDTO;
 import com.backend.api.services.LinkableService;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.RouteService;
@@ -37,21 +39,6 @@ public class ProfileResource extends CrudResource<UserProfile, ProfileDTO> {
 
   LinkableService<UserProfile, Route> routeLinkableService;
 
-  /**
-   * Lista perfis de uma rota
-   * 
-   * @param id
-   * @param page
-   * @param linesPerPage
-   * @param orderBy
-   * @param direction
-   * @return
-   * @throws InvocationTargetException
-   * @throws IllegalArgumentException
-   * @throws IllegalAccessException
-   * @throws SecurityException
-   * @throws NoSuchMethodException
-   */
   @RequestMapping(value = "/{id}/routes", method = RequestMethod.GET)
   public ResponseEntity<Page<RouteDTO>> getRoutes(@PathVariable Integer id,
       @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -65,18 +52,6 @@ public class ProfileResource extends CrudResource<UserProfile, ProfileDTO> {
     return ResponseEntity.ok().body(routes);
   }
 
-  /**
-   * Vincula um perfil a uma rota (pelo id da rota)
-   * 
-   * @param id
-   * @param ids
-   * @return
-   * @throws InvocationTargetException
-   * @throws IllegalArgumentException
-   * @throws IllegalAccessException
-   * @throws SecurityException
-   * @throws NoSuchMethodException
-   */
   @RequestMapping(value = "/{id}/routes", method = RequestMethod.POST)
   public ResponseEntity<Void> addRoutes(@PathVariable Integer id, @RequestBody List<Integer> ids)
       throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
@@ -86,18 +61,42 @@ public class ProfileResource extends CrudResource<UserProfile, ProfileDTO> {
     return ResponseEntity.ok().build();
   }
 
-  /**
-   * Apaga um vínculo entre rota e perfil (pelo id da rota)
-   * 
-   * @param id
-   * @param routeId
-   * @return
-   */
   @RequestMapping(value = "/{id}/routes/{routeId}", method = RequestMethod.DELETE)
   public ResponseEntity<Void> deleteRoute(@PathVariable Integer id, @PathVariable Integer routeId)
       throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
       InvocationTargetException {
     new LinkableService<UserProfile, Route>(service, routeService).delete(id, routeId, "getRoutes", "getUserProfiles",
+        "Perfil não encontrado", "Rota não encontrada");
+    return ResponseEntity.ok().build();
+  }
+
+  @RequestMapping(value = "/{id}/users", method = RequestMethod.GET)
+  public ResponseEntity<Page<UserDTO>> getUsers(@PathVariable Integer id,
+      @RequestParam(value = "page", defaultValue = "0") Integer page,
+      @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
+      @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
+      @RequestParam(value = "direction", defaultValue = "ASC") String direction) throws NoSuchMethodException,
+      SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    Page<UserDTO> users = new LinkableService<UserProfile, User>(service, userService)
+        .getLinkedRecords(id, "getUsers", page, linesPerPage, orderBy, direction)
+        .map(user -> userService.toDTO(user));
+    return ResponseEntity.ok().body(users);
+  }
+
+  @RequestMapping(value = "/{id}/users", method = RequestMethod.POST)
+  public ResponseEntity<Void> addUsers(@PathVariable Integer id, @RequestBody List<Integer> ids)
+      throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+      InvocationTargetException {
+    new LinkableService<UserProfile, User>(service, userService).insert(id, ids, "getUsers", "getUserProfiles",
+        "Perfil não encontrado");
+    return ResponseEntity.ok().build();
+  }
+
+  @RequestMapping(value = "/{id}/users/{userId}", method = RequestMethod.DELETE)
+  public ResponseEntity<Void> deleteUser(@PathVariable Integer id, @PathVariable Integer userId)
+      throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+      InvocationTargetException {
+    new LinkableService<UserProfile, User>(service, userService).delete(id, userId, "getUsers", "getUserProfiles",
         "Perfil não encontrado", "Rota não encontrada");
     return ResponseEntity.ok().build();
   }

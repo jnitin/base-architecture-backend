@@ -3,6 +3,7 @@ package com.backend.api.services;
 import java.util.List;
 
 import com.backend.api.domain.Route;
+import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.ProfileDTO;
 import com.backend.api.repositories.ProfileRepository;
@@ -50,6 +51,14 @@ public class ProfileService extends CrudService<UserProfile, ProfileDTO> {
 
 	public List<Route> getRoutes(Integer id) {
 		return profileRepository.getRoutes(id);
+	}
+
+	public Page<User> getUsers(Integer id, PageRequest pageRequest) {
+		return profileRepository.getUsers(id, pageRequest);
+	}
+
+	public List<User> getUsers(Integer id) {
+		return profileRepository.getUsers(id);
 	}
 
 }

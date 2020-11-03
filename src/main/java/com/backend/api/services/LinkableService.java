@@ -62,6 +62,7 @@ public class LinkableService<A extends Base, B extends Base> {
   public Page<B> getLinkedRecords(Integer id, String repositoryGetter, Integer page, Integer linesPerPage,
       String orderBy, String direction) throws NoSuchMethodException, SecurityException, IllegalAccessException,
       IllegalArgumentException, InvocationTargetException {
+    orderBy = "x." + orderBy;
     PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
     Method m = serviceA.getClass().getMethod(repositoryGetter, Integer.class, PageRequest.class);
     return (Page<B>) m.invoke(serviceA, id, pageRequest);

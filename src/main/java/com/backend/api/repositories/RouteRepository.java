@@ -18,11 +18,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Integer>, JpaSpecificationExecutor<Route> {
   @Transactional()
-  @Query("SELECT p from Route r JOIN r.profiles p WHERE r.id = :routeId")
+  @Query("SELECT x from Route r JOIN r.profiles x WHERE r.id = :routeId")
   public Page<UserProfile> getProfiles(@Param("routeId") Integer routeId, Pageable pageable);
 
   @Transactional()
-  @Query("SELECT p from Route r JOIN r.profiles p WHERE r.id = :routeId")
+  @Query("SELECT x from Route r JOIN r.profiles x WHERE r.id = :routeId")
   public List<UserProfile> getProfiles(@Param("routeId") Integer id);
 
 }

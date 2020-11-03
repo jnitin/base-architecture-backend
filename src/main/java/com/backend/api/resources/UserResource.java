@@ -79,13 +79,6 @@ public class UserResource extends CrudResource<User, UserDTO> {
     return ResponseEntity.ok().build();
   }
 
-   /**
-   * Apaga um vínculo entre usuário e perfil (pelo id do perfil)
-   * 
-   * @param id
-   * @param routeId
-   * @return
-   */
   @RequestMapping(value = "/{id}/profiles/{profileId}", method = RequestMethod.DELETE)
   public ResponseEntity<Void> deleteProfile(@PathVariable Integer id, @PathVariable Integer profileId)
       throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
@@ -94,4 +87,18 @@ public class UserResource extends CrudResource<User, UserDTO> {
         "Usuário não encontrado", "Perfil não encontrado");
     return ResponseEntity.ok().build();
   }
+
+  @RequestMapping(value = "/unlinked-profiles/{id}", method = RequestMethod.GET)
+  public Page<UserDTO> findProfileUnlinkedProfiles(@PathVariable Integer id,
+      @RequestParam(value = "page", defaultValue = "0") Integer page,
+      @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
+      @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
+      @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+      @RequestParam(value = "search", defaultValue = "") String search) {
+
+    final List<User> notIn = profileService.getUsers(id);
+
+    return service.findPage(page, linesPerPage, orderBy, direction, search, notIn, "profiles");
+  }
+
 }

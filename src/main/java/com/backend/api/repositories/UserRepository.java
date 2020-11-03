@@ -25,10 +25,11 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     public List<Route> getMenus(@Param("userId") Integer userId);
 
     @Transactional()
-    @Query("SELECT p FROM User u join u.userProfiles p WHERE u.id = :userId")
+    @Query("SELECT x FROM User u join u.userProfiles x WHERE u.id = :userId")
 	public List<UserProfile> getUserProfiles(@Param("userId") Integer id);
 
     @Transactional()
-    @Query("SELECT p FROM User u join u.userProfiles p WHERE u.id = :userId")
+    
+    @Query("SELECT x FROM User u join u.userProfiles x WHERE u.id = :userId")
 	public Page<UserProfile> getUserProfiles(@Param("userId") Integer id, Pageable pageRequest);
 }
