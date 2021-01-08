@@ -1,8 +1,8 @@
 package com.backend.api.dto;
 
-import java.io.Serializable;
-
 import com.backend.api.domain.enums.UserSituation;
+
+import java.io.Serializable;
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;

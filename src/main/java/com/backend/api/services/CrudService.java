@@ -1,18 +1,9 @@
 package com.backend.api.services;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
-
 import com.backend.api.domain.Base;
 import com.backend.api.services.exceptions.DataIntegrityException;
 import com.backend.api.services.exceptions.ObjectNotFoundException;
 import com.backend.api.utils.CrudSpecificationBuilder;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +11,13 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public abstract class CrudService<Bean extends Base, DTO> {
 

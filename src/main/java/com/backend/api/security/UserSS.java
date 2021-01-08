@@ -1,15 +1,14 @@
 package com.backend.api.security;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.backend.api.domain.UserProfile;
 import com.backend.api.domain.enums.Profile;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserSS implements UserDetails {
 	private static final long serialVersionUID = 1L;

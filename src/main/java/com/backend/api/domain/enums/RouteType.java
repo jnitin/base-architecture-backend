@@ -6,10 +6,10 @@ public enum RouteType {
 	REQUISICAO(2, "Requisição"),
 	CRUD(3, "CRUD");
 
-	private Integer cod;
-	private String description;
+	private final Integer cod;
+	private final String description;
 
-	private RouteType(int cod, String description) {
+	RouteType(int cod, String description) {
 		this.cod = cod;
 		this.description = description;
 	}

@@ -1,16 +1,15 @@
 package com.backend.api.resources;
 
-import javax.servlet.http.HttpServletResponse;
-
+import com.backend.api.security.JWTUtil;
+import com.backend.api.security.UserSS;
+import com.backend.api.services.UserSSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.api.security.JWTUtil;
-import com.backend.api.security.UserSS;
-import com.backend.api.services.UserSSService;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/auth")

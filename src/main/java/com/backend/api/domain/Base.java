@@ -1,14 +1,9 @@
 package com.backend.api.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
 
 
 @MappedSuperclass

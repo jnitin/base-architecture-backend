@@ -1,12 +1,11 @@
 package com.backend.api.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.backend.api.domain.enums.RouteType;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-
-import com.backend.api.domain.enums.RouteType;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Route extends Base {
@@ -146,11 +145,8 @@ public class Route extends Base {
         } else if (!method.equals(other.method))
             return false;
         if (url == null) {
-            if (other.url != null)
-                return false;
-        } else if (!url.matches(other.url))
-            return false;
-        return true;
+            return other.url == null;
+        } else return url.matches(other.url);
     }
 
 }

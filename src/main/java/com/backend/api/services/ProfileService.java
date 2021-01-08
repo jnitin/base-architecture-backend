@@ -1,18 +1,17 @@
 package com.backend.api.services;
 
-import java.util.List;
-
 import com.backend.api.domain.Route;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.ProfileDTO;
 import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.RouteRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProfileService extends CrudService<UserProfile, ProfileDTO> {

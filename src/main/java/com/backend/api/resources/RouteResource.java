@@ -1,8 +1,5 @@
 package com.backend.api.resources;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-
 import com.backend.api.domain.Route;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.ProfileDTO;
@@ -10,16 +7,13 @@ import com.backend.api.dto.RouteDTO;
 import com.backend.api.services.LinkableService;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.RouteService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/routes")

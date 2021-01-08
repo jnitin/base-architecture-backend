@@ -1,18 +1,17 @@
 package com.backend.api.services;
 
+import com.backend.api.domain.Base;
+import com.backend.api.services.exceptions.ObjectNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.backend.api.domain.Base;
-import com.backend.api.services.exceptions.ObjectNotFoundException;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class LinkableService<A extends Base, B extends Base> {

@@ -5,10 +5,10 @@ public enum UserSituation {
 	ACTIVE(1, "Ativo"),
 	INACTIVE(2, "Inativo");
 
-	private Integer cod;
-	private String description;
+	private final Integer cod;
+	private final String description;
 
-	private UserSituation(int cod, String description) {
+	UserSituation(int cod, String description) {
 		this.cod = cod;
 		this.description = description;
 	}

@@ -1,20 +1,13 @@
 package com.backend.api.domain;
 
+import com.backend.api.domain.enums.Profile;
+import com.backend.api.domain.enums.UserSituation;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotNull;
-
-import com.backend.api.domain.enums.Profile;
-import com.backend.api.domain.enums.UserSituation;
 
 @Entity
 public class User extends Base {
@@ -45,7 +38,7 @@ public class User extends Base {
 
     @ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PROFILES")
-	private Set<Integer> profiles = new HashSet<>();
+	private final Set<Integer> profiles = new HashSet<>();
 
     public User() {
     }
@@ -155,11 +148,8 @@ public class User extends Base {
             return false;
         User other = (User) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
 }

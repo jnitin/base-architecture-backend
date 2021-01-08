@@ -1,8 +1,5 @@
 package com.backend.api.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.backend.api.domain.Route;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.domain.enums.RouteType;
@@ -10,11 +7,13 @@ import com.backend.api.dto.RouteDTO;
 import com.backend.api.repositories.RouteRepository;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.security.UserSS;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RouteService extends CrudService<Route, RouteDTO> {

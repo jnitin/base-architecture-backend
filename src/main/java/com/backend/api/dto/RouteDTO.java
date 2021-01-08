@@ -1,8 +1,8 @@
 package com.backend.api.dto;
 
-import java.io.Serializable;
-
 import com.backend.api.domain.Route;
+
+import java.io.Serializable;
 
 public class RouteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -130,11 +130,8 @@ public class RouteDTO implements Serializable {
         } else if (!type.equals(other.type))
             return false;
         if (url == null) {
-            if (other.url != null)
-                return false;
-        } else if (!url.equals(other.url))
-            return false;
-        return true;
+            return other.url == null;
+        } else return url.equals(other.url);
     }
 
 }

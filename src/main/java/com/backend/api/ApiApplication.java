@@ -1,18 +1,9 @@
 package com.backend.api;
 
-import com.backend.api.domain.Company;
-import com.backend.api.domain.Parameter;
-import com.backend.api.domain.UserProfile;
-import com.backend.api.domain.Route;
-import com.backend.api.domain.User;
-import com.backend.api.domain.enums.UserSituation;
+import com.backend.api.domain.*;
 import com.backend.api.domain.enums.RouteType;
-import com.backend.api.repositories.CompanyRepository;
-import com.backend.api.repositories.ParameterRepository;
-import com.backend.api.repositories.ProfileRepository;
-import com.backend.api.repositories.RouteRepository;
-import com.backend.api.repositories.UserRepository;
-
+import com.backend.api.domain.enums.UserSituation;
+import com.backend.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

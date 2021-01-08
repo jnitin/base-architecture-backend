@@ -1,13 +1,12 @@
 package com.backend.api.utils;
 
+import com.backend.api.services.exceptions.DataIntegrityException;
+import org.springframework.data.jpa.domain.Specification;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import com.backend.api.services.exceptions.DataIntegrityException;
-
-import org.springframework.data.jpa.domain.Specification;
 
 public class CrudSpecification<Bean> implements Specification<Bean> {
 
@@ -42,12 +41,12 @@ public class CrudSpecification<Bean> implements Specification<Bean> {
 
     switch (criteria.getOperation()) {
       case ">":
-        return builder.greaterThanOrEqualTo(root.<String>get(key), value);
+        return builder.greaterThanOrEqualTo(root.get(key), value);
       case "<":
-        return builder.lessThanOrEqualTo(root.<String>get(key), value);
+        return builder.lessThanOrEqualTo(root.get(key), value);
       case ":": // Contains
         if (root.get(key).getJavaType() == String.class) {
-          return builder.like(builder.upper(root.<String>get(key)), "%" + value.toUpperCase() + "%");
+          return builder.like(builder.upper(root.get(key)), "%" + value.toUpperCase() + "%");
         } else {
           return builder.equal(root.get(key), criteria.getValue());
         }
@@ -59,7 +58,7 @@ public class CrudSpecification<Bean> implements Specification<Bean> {
         }
       case "%": // Starts With
         if (root.get(key).getJavaType() == String.class) {
-          return builder.like(builder.upper(root.<String>get(key)), value.toUpperCase() + "%");
+          return builder.like(builder.upper(root.get(key)), value.toUpperCase() + "%");
         }
     }
     return null;

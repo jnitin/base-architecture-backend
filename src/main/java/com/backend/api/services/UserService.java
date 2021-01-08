@@ -1,20 +1,18 @@
 package com.backend.api.services;
 
-import java.util.List;
-
-import javax.validation.ConstraintViolationException;
-
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.UserDTO;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.services.exceptions.DataIntegrityException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 @Service
 public class UserService extends CrudService<User, UserDTO> {

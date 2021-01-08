@@ -1,10 +1,9 @@
 package com.backend.api.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Routine extends Base {
@@ -91,11 +90,8 @@ public class Routine extends Base {
             return false;
         Routine other = (Routine) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
     @Override

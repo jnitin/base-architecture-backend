@@ -1,14 +1,13 @@
 package com.backend.api.services;
 
-import java.util.List;
-
 import com.backend.api.domain.Company;
 import com.backend.api.dto.CompanyDTO;
 import com.backend.api.repositories.CompanyRepository;
 import com.backend.api.security.UserSS;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CompanyService extends CrudService<Company, CompanyDTO> {

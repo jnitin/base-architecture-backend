@@ -1,14 +1,13 @@
 package com.backend.api.services;
 
-import java.util.Random;
-
+import com.backend.api.domain.User;
+import com.backend.api.repositories.UserRepository;
+import com.backend.api.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.backend.api.domain.User;
-import com.backend.api.repositories.UserRepository;
-import com.backend.api.services.exceptions.ObjectNotFoundException;
+import java.util.Random;
 
 @Service
 public class AuthService {
@@ -19,7 +18,7 @@ public class AuthService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
-	private Random rand = new Random();
+	private final Random rand = new Random();
 	
 	public void sendNewPassword(String email) {
 		
