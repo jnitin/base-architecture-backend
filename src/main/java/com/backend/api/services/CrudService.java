@@ -1,16 +1,16 @@
 package com.backend.api.services;
 
 import com.backend.api.domain.Base;
+import com.backend.api.pagination.Searchable;
 import com.backend.api.services.exceptions.DataIntegrityException;
 import com.backend.api.services.exceptions.ObjectNotFoundException;
 import com.backend.api.utils.CrudSpecificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
@@ -19,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+@RestController
 public abstract class CrudService<Bean extends Base, DTO> {
 
     @Autowired
@@ -39,7 +40,7 @@ public abstract class CrudService<Bean extends Base, DTO> {
     protected Class<Bean> beanClass;
 
     public List<DTO> toDTO(List<Bean> beans) {
-        return beans.stream().map(bean -> toDTO(bean)).collect(Collectors.toList());
+        return beans.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public CrudService(final Class<Bean> beanClass, final Class<DTO> dtoClass) {
@@ -54,8 +55,7 @@ public abstract class CrudService<Bean extends Base, DTO> {
     }
 
     public Bean find(final Integer id) {
-        final Bean obj = this.repo.findById(id).orElseThrow(() -> new ObjectNotFoundException("Item não encontrado."));
-        return obj;
+        return this.repo.findById(id).orElseThrow(() -> new ObjectNotFoundException("Item não encontrado."));
     }
 
     public Bean insert(final Bean obj) {
@@ -74,33 +74,31 @@ public abstract class CrudService<Bean extends Base, DTO> {
 
     }
 
-    private  Page<DTO> findPage(final Integer page, final Integer linesPerPage, final String orderBy,
-            final String direction, final String search, CrudSpecificationBuilder<Bean> builder) {
+    private Page<DTO> findPage(final Searchable searchable, CrudSpecificationBuilder<Bean> builder) {
+        final String search = searchable.getSearch();
+
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>|=|%)(\\w+?)(,|\\|)");
         Matcher matcher = pattern.matcher(search + ",");
+
         while (matcher.find()) {
             builder.with(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
         }
-        final PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-        Specification<Bean> spec = builder.build();
-        Page<Bean> list = executor.findAll(spec, pageRequest);
 
-        Page<DTO> listDto = list.map(c -> toDTO(c));
-        return listDto;
+        Specification<Bean> spec = builder.build();
+        Page<Bean> list = executor.findAll(spec, searchable.getPageable());
+
+        return list.map(this::toDTO);
     }
 
-    public Page<DTO> findPage(final Integer page, final Integer linesPerPage, final String orderBy,
-            final String direction, final String search, List<Bean> notIn, String key) {
+    public Page<DTO> findPage(final Searchable searchable, List<Bean> notIn, String key) {
         CrudSpecificationBuilder<Bean> builder = new CrudSpecificationBuilder<>();
         builder.with(notIn, key);
-        return findPage(page, linesPerPage, orderBy, direction, search, builder);
+        return findPage(searchable, builder);
     }
 
-    public Page<DTO> findPage(final Integer page, final Integer linesPerPage, final String orderBy,
-            final String direction, final String search) {
+    public Page<DTO> findPage(final Searchable searchable) {
         CrudSpecificationBuilder<Bean> builder = new CrudSpecificationBuilder<>();
-        return findPage(page, linesPerPage, orderBy, direction, search, builder);
-
+        return findPage(searchable, builder);
     }
 
     public List<Bean> findAll() {

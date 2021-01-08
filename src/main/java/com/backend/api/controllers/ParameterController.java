@@ -1,4 +1,4 @@
-package com.backend.api.resources;
+package com.backend.api.controllers;
 
 import com.backend.api.domain.Parameter;
 import com.backend.api.dto.ParameterDTO;
@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/parameters")
-public class ParameterResource extends CrudResource<Parameter, ParameterDTO> {
+public class ParameterController extends CrudController<Parameter, ParameterDTO> {
 
 }

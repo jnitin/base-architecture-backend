@@ -1,9 +1,11 @@
-package com.backend.api.resources;
+package com.backend.api.controllers;
 
 import com.backend.api.domain.Route;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.ProfileDTO;
 import com.backend.api.dto.RouteDTO;
+import com.backend.api.pagination.Pageable;
+import com.backend.api.pagination.Searchable;
 import com.backend.api.services.LinkableService;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.RouteService;
@@ -17,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/routes")
-public class RouteResource extends CrudResource<Route, RouteDTO> {
+public class RouteController extends CrudController<Route, RouteDTO> {
 
     @Autowired
     private RouteService routeService;
@@ -30,47 +32,16 @@ public class RouteResource extends CrudResource<Route, RouteDTO> {
         return ResponseEntity.ok().body(routeService.getMenus());
     }
 
-    /**
-     * Lista perfis de uma rota
-     * 
-     * @param id
-     * @param page
-     * @param linesPerPage
-     * @param orderBy
-     * @param direction
-     * @return
-     * @throws InvocationTargetException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     * @throws SecurityException
-     * @throws NoSuchMethodException
-     */
     @RequestMapping(value = "/{id}/profiles", method = RequestMethod.GET)
-    public ResponseEntity<Page<ProfileDTO>> getProfiles(@PathVariable Integer id,
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
-            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction) throws NoSuchMethodException,
+    public ResponseEntity<Page<ProfileDTO>> getProfiles(@PathVariable Integer id, Pageable pageable) throws NoSuchMethodException,
             SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 
-        Page<ProfileDTO> profiles = new LinkableService<Route, UserProfile>(service, profileService).getLinkedRecords(id, "getProfiles", page, linesPerPage, orderBy, direction)
+        Page<ProfileDTO> profiles = new LinkableService<Route, UserProfile>(service, profileService).getLinkedRecords(id, "getProfiles", pageable)
                 .map(profile -> profileService.toDTO(profile));
         return ResponseEntity.ok().body(profiles);
     }
 
-    /**
-     * Vincula um perfil a uma rota (pelo id da rota)
-     * 
-     * @param id
-     * @param ids
-     * @return
-     * @throws InvocationTargetException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     * @throws SecurityException
-     * @throws NoSuchMethodException
-     */
     @RequestMapping(value = "/{id}/profiles", method = RequestMethod.POST)
     public ResponseEntity<Void> addProfiles(@PathVariable Integer id, @RequestBody List<Integer> ids)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
@@ -80,18 +51,6 @@ public class RouteResource extends CrudResource<Route, RouteDTO> {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Apaga um vínculo entre rota e perfil (pelo id da rota)
-     * 
-     * @param id
-     * @param profileId
-     * @return
-     * @throws InvocationTargetException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     * @throws SecurityException
-     * @throws NoSuchMethodException
-     */
     @RequestMapping(value = "/{id}/profiles/{profileId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteProfile(@PathVariable Integer id, @PathVariable Integer profileId)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
@@ -102,16 +61,10 @@ public class RouteResource extends CrudResource<Route, RouteDTO> {
     }
 
     @RequestMapping(value = "/unlinked-profiles/{id}", method = RequestMethod.GET)
-    public Page<RouteDTO> findRouteUnlinkedProfiles(@PathVariable Integer id,
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "15") Integer linesPerPage,
-            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-            @RequestParam(value = "search", defaultValue = "") String search) {
-
+    public Page<RouteDTO> findRouteUnlinkedProfiles(@PathVariable Integer id, Searchable searchable) {
         final List<Route> notIn = profileService.getRoutes(id);
 
-        return service.findPage(page, linesPerPage, orderBy, direction, search, notIn, "profiles");
+        return service.findPage(searchable, notIn, "profiles");
     }
 
 }
