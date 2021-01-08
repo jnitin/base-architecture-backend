@@ -1,4 +1,4 @@
-package com.backend.api.resources;
+package com.backend.api.controllers;
 
 import com.backend.api.domain.Company;
 import com.backend.api.dto.CompanyDTO;
@@ -13,15 +13,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/companies")
-public class CompanyResource extends CrudResource<Company, CompanyDTO> {
+public class CompanyController extends CrudController<Company, CompanyDTO> {
 
-  @Autowired
-  protected CompanyService service;
-    
-  @RequestMapping(method = RequestMethod.GET, value = "/menus")
-  public ResponseEntity<List<CompanyDTO>> menus() {
-    List<CompanyDTO> obj = service.getMenus();
-    return ResponseEntity.ok().body(obj);
-  }
+    @Autowired
+    protected CompanyService service;
+
+    @RequestMapping(method = RequestMethod.GET, value = "/menus")
+    public ResponseEntity<List<CompanyDTO>> menus() {
+        List<CompanyDTO> obj = service.getMenus();
+        return ResponseEntity.ok().body(obj);
+    }
 
 }

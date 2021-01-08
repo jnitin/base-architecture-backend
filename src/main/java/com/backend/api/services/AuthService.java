@@ -3,25 +3,26 @@ package com.backend.api.services;
 import com.backend.api.domain.User;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.services.exceptions.ObjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
+
 @Service
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class AuthService {
 
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private BCryptPasswordEncoder pe;
-	
+	private final UserRepository userRepository;
+
+	private final BCryptPasswordEncoder pe;
+
 	private final Random rand = new Random();
-	
+
 	public void sendNewPassword(String email) {
-		
+
 		User user = userRepository.findByEmail(email);
 		if (user == null) {
 			throw new ObjectNotFoundException("Email não encontrado");

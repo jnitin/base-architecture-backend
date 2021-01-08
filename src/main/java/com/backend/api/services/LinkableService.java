@@ -1,6 +1,7 @@
 package com.backend.api.services;
 
 import com.backend.api.domain.Base;
+import com.backend.api.pagination.Pageable;
 import com.backend.api.services.exceptions.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,9 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class LinkableService<A extends Base, B extends Base> {
@@ -36,7 +37,7 @@ public class LinkableService<A extends Base, B extends Base> {
       throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
       InvocationTargetException {
     A a = repoA.findById(id).orElseThrow(() -> new ObjectNotFoundException(erro));
-    Set<B> setB = repoB.findAllById(ids).stream().collect(Collectors.toSet());
+    Set<B> setB = new HashSet<>(repoB.findAllById(ids));
     Method m = a.getClass().getMethod(getterA);
     ((Set<B>) m.invoke(a)).addAll(setB);
 
@@ -48,8 +49,8 @@ public class LinkableService<A extends Base, B extends Base> {
   }
 
   public void delete(Integer id, Integer id2, String getterA, String getterB, String erro1, String erro2)
-      throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-      InvocationTargetException {
+          throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+          InvocationTargetException {
     A a = repoA.findById(id).orElseThrow(() -> new ObjectNotFoundException(erro1));
     B b = repoB.findById(id2).orElseThrow(() -> new ObjectNotFoundException(erro2));
 
@@ -58,12 +59,15 @@ public class LinkableService<A extends Base, B extends Base> {
     repoA.save(a);
   }
 
-  public Page<B> getLinkedRecords(Integer id, String repositoryGetter, Integer page, Integer linesPerPage,
-      String orderBy, String direction) throws NoSuchMethodException, SecurityException, IllegalAccessException,
-      IllegalArgumentException, InvocationTargetException {
-    orderBy = "x." + orderBy;
+  public Page<B> getLinkedRecords(Integer id, String serviceGetter, Pageable pageable) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+          IllegalArgumentException, InvocationTargetException {
+    Integer page = pageable.getPage();
+    Integer linesPerPage = pageable.getLinesPerPage();
+    String orderBy = "x." + pageable.getOrderBy();
+    String direction = pageable.getDirection().toString();
     PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-    Method m = serviceA.getClass().getMethod(repositoryGetter, Integer.class, PageRequest.class);
+
+    Method m = serviceA.getClass().getMethod(serviceGetter, Integer.class, PageRequest.class);
     return (Page<B>) m.invoke(serviceA, id, pageRequest);
   }
 }
