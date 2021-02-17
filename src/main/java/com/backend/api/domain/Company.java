@@ -12,7 +12,7 @@ public class Company extends Base {
 
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // protected Integer id;
+    // protected Long id;
 
     @NotNull
     private String name;
@@ -37,7 +37,7 @@ public class Company extends Base {
         this.users = users;
     }
 
-    public Company(Integer id, String name, String cnpj) {
+    public Company(Long id, String name, String cnpj) {
         this.id = id;
         this.name = name;
         this.cnpj = cnpj;
@@ -59,11 +59,11 @@ public class Company extends Base {
         this.cnpj = cnpj;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,67 +1,74 @@
 package com.backend.api.controllers;
 
 import com.backend.api.domain.Base;
-import com.backend.api.pagination.Searchable;
+import com.backend.api.mapper.DataMapper;
+import com.backend.api.pagination.Filter;
+import com.backend.api.pagination.Pageable;
 import com.backend.api.services.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.lang.reflect.ParameterizedType;
 
-public class CrudController<Bean extends Base, DTO> {
 
+public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, FilterDto extends Filter> {
     @Autowired
-    protected CrudService<Bean, DTO> service;
+    private CrudService<Bean, CreateDto, ReadDto, UpdateDto, FilterDto> service;
+    @Autowired
+    protected DataMapper mapper;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<DTO> find(@PathVariable Integer id) {
-        DTO obj = service.toDTO(service.find(id));
-        return ResponseEntity.ok().body(obj);
+    private final Class<ReadDto> readDtoClass;
+
+    public CrudController() {
+        this.readDtoClass = (Class<ReadDto>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+                .getActualTypeArguments()[2];
+//        this.readDtoClass = readDtoClass;
     }
 
-    @RequestMapping(value = "findall", method = RequestMethod.GET)
-    public ResponseEntity<List<DTO>> findAll() {
-        List<Bean> list = service.findAll();
-        List<DTO> listDto = list.stream().map(obj -> service.toDTO(obj)).collect(Collectors.toList());
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ReadDto> find(@PathVariable Long id) {
+        Bean bean = service.findById(id);
+        ReadDto dto = mapper.mapTo(bean, readDtoClass);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Page<ReadDto>> listAll(Pageable pageable, FilterDto filter) {
+        Page<ReadDto> listDto = service.findAll(pageable, filter);
         return ResponseEntity.ok().body(listDto);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@Valid @RequestBody DTO objDto) {
-        System.out.println("Ah não");
-        Bean obj = service.fromDTO(objDto);
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Void> insert(@Valid @RequestBody CreateDto createDto) {
+        final var entity = service.create(createDto);
+        return ResponseEntity.created(createLocation(entity.getId()).toUri()).build();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@Valid @RequestBody DTO objDTO, @PathVariable Integer id) {
-        Bean obj = service.fromDTO(objDTO);
-        obj.setId(id);
-        service.update(obj);
-        return ResponseEntity.noContent().build();
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable("id") Long id, @RequestBody @Valid UpdateDto updateDto) {
+        service.update(id, updateDto);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Long id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<DTO>> search(Searchable searchable) {
-        Page<DTO> listDto = service.findPage(searchable);
-        return ResponseEntity.ok().body(listDto);
+    protected UriComponents createLocation(Long id) {
+        ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
+        return builder.path("/").path(String.valueOf(id)).build();
     }
+
 
 }

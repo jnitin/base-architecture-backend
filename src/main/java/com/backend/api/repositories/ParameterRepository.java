@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ParameterRepository extends JpaRepository<Parameter, Integer>, JpaSpecificationExecutor<Parameter> {
+public interface ParameterRepository extends JpaRepository<Parameter, Long>, JpaSpecificationExecutor<Parameter> {
 
-    Optional<Parameter> findById(Integer id);
+    Optional<Parameter> findById(Long id);
 }

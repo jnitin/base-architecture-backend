@@ -44,7 +44,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			UsernamePasswordAuthenticationToken auth = getAuthentication(header.substring(7));
 			if (auth != null) {
 				UserSS userSS = (UserSS) auth.getPrincipal();
-				Integer id = userSS.getId();
+				Long id = userSS.getId();
 
 				User user = userRepository.findById(id).orElse(null);
 				String route = request.getRequestURI();

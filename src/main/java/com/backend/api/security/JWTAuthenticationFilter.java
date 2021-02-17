@@ -1,6 +1,6 @@
 package com.backend.api.security;
 
-import com.backend.api.dto.CredentialsDTO;
+import com.backend.api.dto.create.CreateCredentialsDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +34,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws AuthenticationException {
 
         try {
-            CredentialsDTO creds = new ObjectMapper().readValue(req.getInputStream(), CredentialsDTO.class);
+            CreateCredentialsDto creds = new ObjectMapper().readValue(req.getInputStream(), CreateCredentialsDto.class);
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(),
                     creds.getPassword(), new ArrayList<>());
 
@@ -47,7 +47,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
-            Authentication auth) throws IOException, ServletException {
+            Authentication auth) {
 
         String username = ((UserSS) auth.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(username);
@@ -59,7 +59,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         @Override
         public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                AuthenticationException exception) throws IOException, ServletException {
+                AuthenticationException exception) throws IOException {
             response.setStatus(401);
             response.setContentType("application/json");
             response.getWriter().append(json());

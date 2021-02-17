@@ -11,7 +11,7 @@ public class UserProfile extends Base {
 
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // protected Integer id;
+    // protected Long id;
 
     private String description;
     private Integer level;
@@ -31,17 +31,17 @@ public class UserProfile extends Base {
     public UserProfile() {
     }
 
-    public UserProfile(Integer id, String description, Integer level) {
+    public UserProfile(Long id, String description, Integer level) {
         this.id = id;
         this.description = description;
         this.level = level;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

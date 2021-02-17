@@ -93,6 +93,17 @@
 			<artifactId>surefire-booter</artifactId>
 			<version>2.22.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper-module-jsr310</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

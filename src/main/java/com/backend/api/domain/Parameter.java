@@ -12,7 +12,7 @@ public class Parameter extends Base {
 
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // protected Integer id;
+    // protected Long id;
 
     @NotNull
     private String key;
@@ -29,7 +29,7 @@ public class Parameter extends Base {
     public Parameter() {
     }
 
-    public Parameter(Integer id, String key, String value, String note, Company company) {
+    public Parameter(Long id, String key, String value, String note, Company company) {
         this.id = id;
         this.key = key;
         this.value = value;
@@ -69,11 +69,11 @@ public class Parameter extends Base {
         return result;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

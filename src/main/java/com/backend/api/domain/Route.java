@@ -14,7 +14,7 @@ public class Route extends Base {
 
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // protected Integer id;
+    // protected Long id;
 
     private String description;
     private Integer type;
@@ -32,7 +32,7 @@ public class Route extends Base {
 
     
 
-    public Route(Integer id, String description, RouteType type, String url, String icon, Route father, String method, String category) {
+    public Route(Long id, String description, RouteType type, String url, String icon, Route father, String method, String category) {
         this.id = id;
         this.description = description;
         this.type = type.getCod();
@@ -59,11 +59,11 @@ public class Route extends Base {
         this.method = method;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

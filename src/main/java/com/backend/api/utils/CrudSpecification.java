@@ -1,6 +1,6 @@
 package com.backend.api.utils;
 
-import com.backend.api.services.exceptions.DataIntegrityException;
+import com.backend.api.exceptions.DataIntegrityException;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

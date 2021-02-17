@@ -12,7 +12,7 @@ public class Routine extends Base {
 
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // protected Integer id;
+    // protected Long id;
 
     private String description;
     private Integer code;
@@ -26,17 +26,17 @@ public class Routine extends Base {
     public Routine() {
     }
 
-    public Routine(Integer id, String description, Integer code) {
+    public Routine(Long id, String description, Integer code) {
         this.id = id;
         this.description = description;
         this.code = code;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class UserSS implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
+	private Long id;
 	private String email;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
@@ -21,7 +21,7 @@ public class UserSS implements UserDetails {
 	public UserSS() {
 	}
 	
-	public UserSS(Integer id, String email, String password, Set<Profile> profiles) {
+	public UserSS(Long id, String email, String password, Set<Profile> profiles) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -29,7 +29,7 @@ public class UserSS implements UserDetails {
 		this.authorities = profiles.stream().map(x -> new SimpleGrantedAuthority(x.getDescription())).collect(Collectors.toList());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	

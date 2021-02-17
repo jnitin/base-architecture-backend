@@ -1,4 +1,4 @@
-package com.backend.api.services.exceptions;
+package com.backend.api.exceptions;
 
 public class DataIntegrityException extends RuntimeException{
 

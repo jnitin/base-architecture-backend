@@ -1,6 +1,7 @@
 package com.backend.api;
 
 import com.backend.api.domain.*;
+import com.backend.api.domain.enums.Profile;
 import com.backend.api.domain.enums.RouteType;
 import com.backend.api.domain.enums.UserSituation;
 import com.backend.api.repositories.*;
@@ -38,8 +39,16 @@ public class ApiApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
-		User user = new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ACTIVE);
+	public void run(String... args) {
+		User user = User.
+				builder()
+				.name("Gabriel")
+				.email("admin")
+				.password(pe.encode("admin"))
+				.situation(UserSituation.ACTIVE)
+				.build();
+		user.addProfile(Profile.CLIENTE);
+				//new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ACTIVE);
 
 		Company c = new Company(null, "Zamp", "12345678912");
 		Company c2 = new Company(null, "Zamp2", "12345678912f");

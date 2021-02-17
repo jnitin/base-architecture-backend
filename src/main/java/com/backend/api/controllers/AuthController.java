@@ -2,7 +2,7 @@ package com.backend.api.controllers;
 
 import com.backend.api.security.JWTUtil;
 import com.backend.api.security.UserSS;
-import com.backend.api.services.UserSSService;
+import com.backend.api.services.impl.UserSSServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class AuthController {
 
     @RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
     public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
-        UserSS user = UserSSService.authenticated();
+        UserSS user = UserSSServiceImpl.authenticated();
         assert user != null;
         String token = jwtUtil.generateToken(user.getUsername());
         response.addHeader("Authorization", "Bearer " + token);

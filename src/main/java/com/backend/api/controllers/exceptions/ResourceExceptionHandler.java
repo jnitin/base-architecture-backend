@@ -1,7 +1,7 @@
 package com.backend.api.controllers.exceptions;
 
-import com.backend.api.services.exceptions.DataIntegrityException;
-import com.backend.api.services.exceptions.ObjectNotFoundException;
+import com.backend.api.exceptions.DataIntegrityException;
+import com.backend.api.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

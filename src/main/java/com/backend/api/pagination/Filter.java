@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Searchable extends Pageable {
+public class Filter extends Pageable {
     private String search;
 }
