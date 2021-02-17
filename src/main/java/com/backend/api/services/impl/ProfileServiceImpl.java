@@ -47,7 +47,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     public Page<Route> getRoutes(Long id, Pageable pageable) {
-        return profileRepository.getRoutes(id, pageable);
+        return profileRepository.getRoutes(id, pageable.getPageable());
     }
 
     public List<Route> getRoutes(Long id) {
@@ -55,7 +55,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     public Page<User> getUsers(Long id, Pageable pageable) {
-        return profileRepository.getUsers(id, pageable);
+        return profileRepository.getUsers(id, pageable.getPageable());
     }
 
     public List<User> getUsers(Long id) {

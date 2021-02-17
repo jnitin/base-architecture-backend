@@ -4,9 +4,8 @@ import com.backend.api.domain.User;
 import com.backend.api.dto.create.CreateUserDto;
 import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.pagination.Filter;
+import com.backend.api.services.ProfileService;
 import com.backend.api.services.UserService;
-import com.backend.api.services.impl.ProfileServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,11 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/users")
 public class UserController extends CrudController<User, CreateUserDto, ReadUserDto, Object, Filter> {
 
-    @Autowired
-    ProfileServiceImpl profileServiceImpl;
+    private final ProfileService profileService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(ProfileService profileService, UserService userService) {
+        super(userService);
+        this.profileService = profileService;
+        this.userService = userService;
+    }
 
 
 //    @RequestMapping(method = RequestMethod.POST)

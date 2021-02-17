@@ -3,6 +3,8 @@ package com.backend.api.services.impl;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateUserDto;
+import com.backend.api.dto.read.ReadUserDto;
+import com.backend.api.mapper.DataMapper;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.exceptions.DataIntegrityException;
 import com.backend.api.services.UserService;
@@ -21,13 +23,14 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 	private final BCryptPasswordEncoder pe;
 	private final UserRepository userRepository;
+	private final DataMapper mapper;
 
 	public List<UserProfile> getUserProfiles(Long id) {
 		return userRepository.getUserProfiles(id);
 	}
 
 	public Page<UserProfile> getUserProfiles(Long id, Pageable pageable) {
-		return userRepository.getUserProfiles(id, pageable);
+		return userRepository.getUserProfiles(id, pageable.getPageable());
 	}
 
 	@Override
@@ -58,7 +61,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Page<Object> findAll(Pageable pageable) {
-		return null;
+	public Page<ReadUserDto> findAll(Pageable pageable) {
+		final var users = userRepository.findAll(pageable.getPageable());
+		return mapper.mapAllTo(users, ReadUserDto.class);
 	}
 }

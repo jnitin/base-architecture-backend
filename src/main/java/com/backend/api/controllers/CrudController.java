@@ -5,6 +5,8 @@ import com.backend.api.mapper.DataMapper;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import com.backend.api.services.CrudService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,18 +18,18 @@ import org.springframework.web.util.UriComponents;
 import javax.validation.Valid;
 import java.lang.reflect.ParameterizedType;
 
-
 public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, FilterDto extends Filter> {
-    @Autowired
-    private CrudService<Bean, CreateDto, ReadDto, UpdateDto, FilterDto> service;
+
+    protected final CrudService<Bean, CreateDto, ReadDto, UpdateDto, FilterDto> service;
     @Autowired
     protected DataMapper mapper;
 
     private final Class<ReadDto> readDtoClass;
 
-    public CrudController() {
+    public CrudController(CrudService service) {
         this.readDtoClass = (Class<ReadDto>) ((ParameterizedType) this.getClass().getGenericSuperclass())
                 .getActualTypeArguments()[2];
+        this.service = service;
 //        this.readDtoClass = readDtoClass;
     }
 
@@ -42,6 +44,7 @@ public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, Fi
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Page<ReadDto>> listAll(Pageable pageable, FilterDto filter) {
+        System.out.println("oioi");
         Page<ReadDto> listDto = service.findAll(pageable, filter);
         return ResponseEntity.ok().body(listDto);
     }

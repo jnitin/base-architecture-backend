@@ -4,7 +4,7 @@ import com.backend.api.domain.Route;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import org.springframework.data.domain.Page;
-import com.backend.api.pagination.Pageable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

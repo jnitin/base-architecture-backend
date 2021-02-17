@@ -55,7 +55,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     public Page<UserProfile> getProfiles(Long id, Pageable pageable) {
-        return routeRepository.getProfiles(id, pageable);
+        return routeRepository.getProfiles(id, pageable.getPageable());
     }
 
     public List<UserProfile> getProfiles(Long id) {

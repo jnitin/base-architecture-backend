@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashSet;
+
 @SpringBootApplication
 @RequestMapping(name = "/api")
 public class ApiApplication implements CommandLineRunner {
@@ -46,6 +48,8 @@ public class ApiApplication implements CommandLineRunner {
 				.email("admin")
 				.password(pe.encode("admin"))
 				.situation(UserSituation.ACTIVE)
+				.userProfiles(new HashSet<>())
+				.companies(new HashSet<>())
 				.build();
 		user.addProfile(Profile.CLIENTE);
 				//new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ACTIVE);
@@ -104,6 +108,7 @@ public class ApiApplication implements CommandLineRunner {
 
 		p.getUsers().add(user);
 
+
 		user.getUserProfiles().add(p);
 
 		userRepository.save(user);
@@ -117,8 +122,6 @@ public class ApiApplication implements CommandLineRunner {
 		parametroRepository.save(p4);
 		parametroRepository.save(p5);
 		parametroRepository.save(p6);
-
-		userRepository.save(user);
 
 		user.getCompanies().add(c);
 		user.getCompanies().add(c2);

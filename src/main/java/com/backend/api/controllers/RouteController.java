@@ -6,7 +6,6 @@ import com.backend.api.dto.read.ReadRouteDto;
 import com.backend.api.pagination.Filter;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.RouteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,11 +17,15 @@ import java.util.List;
 @RequestMapping(value = "/routes")
 public class RouteController extends CrudController<Route, CreateRouteDto, ReadRouteDto, Object, Filter> {
 
-    @Autowired
-    private RouteService routeService;
+    private final RouteService routeService;
 
-    @Autowired
-    private ProfileService profileService;
+    private final ProfileService profileService;
+
+    public RouteController(RouteService routeService, RouteService routeService1, ProfileService profileService) {
+        super(routeService);
+        this.routeService = routeService1;
+        this.profileService = profileService;
+    }
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/menus")

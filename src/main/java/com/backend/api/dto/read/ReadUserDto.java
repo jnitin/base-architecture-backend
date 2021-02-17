@@ -1,5 +1,6 @@
 package com.backend.api.dto.read;
 
+import com.backend.api.domain.enums.UserSituation;
 import lombok.*;
 
 import java.io.Serializable;
@@ -16,5 +17,5 @@ public class ReadUserDto implements Serializable {
     private String name;
     private String email;
     private String password;
-    private Integer situation;
+    private UserSituation situation;
 }

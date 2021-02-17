@@ -4,6 +4,8 @@ import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.pagination.Filter;
+import com.backend.api.services.CrudService;
+import com.backend.api.services.ProfileService;
 import com.backend.api.services.impl.RouteServiceImpl;
 import com.backend.api.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/profiles")
 public class ProfileController extends CrudController<UserProfile, CreateProfileDto, ReadProfileDto, Object, Filter> {
 
-    @Autowired
-    private  RouteServiceImpl routeServiceImpl;
-
-    @Autowired
-    private  UserServiceImpl userServiceImpl;
+    public ProfileController(ProfileService profileService) {
+        super(profileService);
+    }
 
 //    @GetMapping("/{id}/routes")
 //    public ResponseEntity<Page<CreateRouteDto>> getRoutes(@PathVariable Long id, Pageable pageable) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
