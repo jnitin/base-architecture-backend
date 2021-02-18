@@ -4,7 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
@@ -12,9 +12,10 @@ import java.io.Serializable;
 @ToString
 @Setter
 public class AddressDto implements Serializable {
-    private Long id;
-    private String name;
-    private String email;
-    private String password;
-    private Integer situation;
+    private String cep;
+    private String logradouro;
+    private String complemento;
+    private String bairro;
+    private String localidade;
+    private String uf;
 }

@@ -5,8 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 
 @Getter
 @Setter
