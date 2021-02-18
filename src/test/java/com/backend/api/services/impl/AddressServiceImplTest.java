@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
@@ -23,7 +25,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith({
         MockitoExtension.class
 })
-//@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AddressServiceImplTest {
 
     @InjectMocks
@@ -65,6 +67,12 @@ public class AddressServiceImplTest {
 
         given(addressRepositoryMock.findAddressByCep(cep))
                 .willReturn(Optional.empty());
+
+        when(restTemplateMock.getForObject(
+                anyString(),
+                any())
+        )
+                .thenThrow(new RuntimeException());
 
         assertThrows(ObjectNotFoundException.class,
                 () -> addressServiceMock.findByCep(cep)

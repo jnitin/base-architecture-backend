@@ -35,8 +35,7 @@ public class AddressServiceImpl implements AddressService {
                 final AddressDto dto = restTemplate.getForObject("https://viacep.com.br/ws/" + cep + "/json/", AddressDto.class);
 
                 fromApi = create(dto);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (RuntimeException e) {
                 throw new ObjectNotFoundException("Não foi possível encontrar o CEP desejado.");
             }
             return fromApi;
