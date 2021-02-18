@@ -1,6 +1,5 @@
-package com.backend.api.dto.read;
+package com.backend.api.dto;
 
-import com.backend.api.domain.enums.UserSituation;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,10 +11,10 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 @Setter
-public class ReadUserDto implements Serializable {
+public class AddressDto implements Serializable {
     private Long id;
     private String name;
     private String email;
     private String password;
-    private UserSituation situation;
+    private Integer situation;
 }

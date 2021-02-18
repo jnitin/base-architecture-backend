@@ -1,14 +1,10 @@
 package com.backend.api.repositories;
 
-import com.backend.api.domain.Parameter;
+import com.backend.api.domain.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface ParameterRepository extends JpaRepository<Parameter, Long>, JpaSpecificationExecutor<Parameter> {
-
-    Optional<Parameter> findById(Long id);
+public interface AddressRepository extends JpaRepository<Address, Long>, JpaSpecificationExecutor<Address> {
 }
