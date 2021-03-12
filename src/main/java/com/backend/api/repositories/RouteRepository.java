@@ -17,11 +17,9 @@ import java.util.List;
 
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Long>, JpaSpecificationExecutor<Route> {
-  @Transactional()
   @Query("SELECT x from Route r JOIN r.profiles x WHERE r.id = :routeId")
   Page<UserProfile> getProfiles(@Param("routeId") Long routeId, Pageable pageable);
 
-  @Transactional()
   @Query("SELECT x from Route r JOIN r.profiles x WHERE r.id = :routeId")
   List<UserProfile> getProfiles(@Param("routeId") Long id);
 

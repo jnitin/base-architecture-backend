@@ -16,9 +16,6 @@ import java.util.stream.Collectors;
 @Setter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends Base {
-
-    private static final long serialVersionUID = 1L;
-
     @NotNull
     private String name;
 
@@ -47,15 +44,6 @@ public class User extends Base {
 
     public User() {
     }
-
-//    public User(Long id, String name, String email, String password, UserSituation situation) {
-//        this.id = id;
-//        this.name = name;
-//        this.email = email;
-//        this.password = password;
-//        this.situation = situation;
-//        addProfile(Profile.CLIENTE);
-//    }
 
 
     public Set<Profile> getProfiles() {

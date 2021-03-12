@@ -12,131 +12,148 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @SpringBootApplication
 @RequestMapping(name = "/api")
 public class ApiApplication implements CommandLineRunner {
 
-	@Autowired
-	ParameterRepository parametroRepository;
+    @Autowired
+    ParameterRepository parametroRepository;
 
-	@Autowired
-	UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
-	@Autowired
-	private BCryptPasswordEncoder pe;
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
-	@Autowired
-	private RouteRepository routeRepository;
+    @Autowired
+    private RouteRepository routeRepository;
 
-	@Autowired
-	private ProfileRepository profileRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
-	@Autowired
-	private CompanyRepository companyRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ApiApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) {
-		User user = User.
-				builder()
-				.name("Gabriel")
-				.email("admin")
-				.password(pe.encode("admin"))
-				.situation(UserSituation.ACTIVE)
-				.userProfiles(new HashSet<>())
-				.companies(new HashSet<>())
+    @Override
+    public void run(String... args) {
+        User user = User.
+                builder()
+                .name("Gabriel")
+                .email("admin")
+                .password(pe.encode("admin"))
+                .situation(UserSituation.ACTIVE)
+                .userProfiles(new HashSet<>())
+                .companies(new HashSet<>())
+                .build();
+        user.addProfile(Profile.CLIENTE);
+
+        userRepository.save(user);
+
+        Company c = Company
+                .builder()
+                .name("Zamp")
+                .cnpj("12345678912")
+                .users(new HashSet<>())
+                .build();
+
+        Company c2 = Company
+                .builder()
+                .name("Zamp2")
+                .cnpj("1234567891f")
+                .users(new HashSet<>())
+                .build();
+        companyRepository.save(c);
+        companyRepository.save(c2);
+
+        Parameter p1 = new Parameter("Maria da Silva", "69999955478", "Porto Velho", c);
+        Parameter p2 = new Parameter("Maria das graças", "69815254789", "Porto Velho", c);
+        Parameter p3 = new Parameter("Carlos Alberto", "69554758963", "Ariquemes", c);
+        Parameter p4 = new Parameter("Paulo Cesar", "41814578956", "Curitiba", c);
+        Parameter p5 = new Parameter("José Bonifácio", "41556657842", "Pinhais", c);
+        Parameter p6 = new Parameter("Euclides da Cunha", "45458569856", "Florianópolis", c);
+
+        UserProfile p = UserProfile
+				.builder()
+				.description("Administrador")
+				.level(20)
+				.users(new HashSet<>())
 				.build();
-		user.addProfile(Profile.CLIENTE);
-				//new User(null, "Gabriel", "admin", pe.encode("admin"), UserSituation.ACTIVE);
-
-		Company c = new Company(null, "Zamp", "12345678912");
-		Company c2 = new Company(null, "Zamp2", "12345678912f");
-		companyRepository.save(c);
-		companyRepository.save(c2);
-
-		Parameter p1 = new Parameter(null, "Maria da Silva", "69999955478", "Porto Velho", c);
-		Parameter p2 = new Parameter(null, "Maria das graças", "69815254789", "Porto Velho", c);
-		Parameter p3 = new Parameter(null, "Carlos Alberto", "69554758963", "Ariquemes", c);
-		Parameter p4 = new Parameter(null, "Paulo Cesar", "41814578956", "Curitiba", c);
-		Parameter p5 = new Parameter(null, "José Bonifácio", "41556657842", "Pinhais", c);
-		Parameter p6 = new Parameter(null, "Euclides da Cunha", "45458569856", "Florianópolis", c);
-
-		UserProfile p = new UserProfile(null, "Administrador", 20);
-		UserProfile pro2 = new UserProfile(null, "Atendente", 2);
-
-		Route r1 = new Route(null, "Teste", RouteType.REQUISICAO, "/parameters/[0-9]+", null, null, "GET", null);
-		Route r2 = new Route(null, "Teste2", RouteType.REQUISICAO, "/parameters/?", null, null, "GET", null);
-		Route r3 = new Route(null, "Teste3", RouteType.REQUISICAO, "/parameters/?", null, null, "POST", null);
-		Route r4 = new Route(null, "Teste4", RouteType.REQUISICAO, "/parameters/[0-9]+", null, null, "PUT", null);
-		Route r5 = new Route(null, "Teste5", RouteType.REQUISICAO, "/parameters/[0-9]+", null, null, "DELETE", null);
-		Route r6 = new Route(null, "Teste6", RouteType.REQUISICAO, "/routes/menus/?", null, null, "GET", null);
-		Route r7 = new Route(null, "Teste6", RouteType.REQUISICAO, "/parameters/page/?", null, null, "GET", null);
-		Route rAllGet = new Route(null, "GET ALL", RouteType.REQUISICAO, "/.*", null, null, "GET", null);
-		Route rAllPost = new Route(null, "POST ALL", RouteType.REQUISICAO, "/.*", null, null, "POST", null);
-		Route rAllPut = new Route(null, "PUT ALL", RouteType.REQUISICAO, "/.*", null, null, "PUT", null);
-		Route rAllDelete = new Route(null, "DELETE ALL", RouteType.REQUISICAO, "/.*", null, null, "DELETE", null);
-		Route home = new Route(null, "Home", RouteType.MENU, "Home", "mdi-home", null, "GET", "Geral");
-		Route account = new Route(null, "Usuários", RouteType.MENU, "Users", "mdi-account", null, "GET", "Sistema");
-		Route profiles = new Route(null, "Perfis", RouteType.MENU, "Profiles", "mdi-account-box-multiple", null, "GET", "Sistema");
-		Route parameters = new Route(null, "Parâmetros", RouteType.MENU, "Parameters", "mdi-cog", null, "GET", "Sistema");
-		Route routes = new Route(null, "Rotas", RouteType.MENU, "Routes", "mdi-routes", null, "GET", "Sistema");
-		Route companies = new Route(null, "Empresas", RouteType.MENU, "Companies", "mdi-office-building", null, "GET",
-				"Sistema");
-
-		addRoute(p, r1);
-		addRoute(p, r2);
-		addRoute(p, r3);
-		addRoute(p, r4);
-		addRoute(p, r5);
-		addRoute(p, r6);
-		addRoute(p, r7);
-		addRoute(p, rAllGet);
-		addRoute(p, rAllPost);
-		addRoute(p, rAllPut);
-		addRoute(p, rAllDelete);
-		addRoute(p, profiles);
-		addRoute(p, home);
-		addRoute(p, account);
-		addRoute(p, parameters);
-		addRoute(p, companies);
-		addRoute(p, routes);
-
 		p.getUsers().add(user);
 
 
-		user.getUserProfiles().add(p);
+		UserProfile pro2 = UserProfile
+				.builder()
+				.description("Atendente")
+				.level(2)
+				.build();
 
-		userRepository.save(user);
+		Set<Route> routes = createRoutes();
 
-		profileRepository.save(p);
-		profileRepository.save(pro2);
+        routeRepository.saveAll(routes);
 
-		parametroRepository.save(p1);
-		parametroRepository.save(p2);
-		parametroRepository.save(p3);
-		parametroRepository.save(p4);
-		parametroRepository.save(p5);
-		parametroRepository.save(p6);
+        p.setRoutes(routes);
 
-		user.getCompanies().add(c);
-		user.getCompanies().add(c2);
+        profileRepository.save(p);
+        profileRepository.save(pro2);
 
-		c.getUsers().add(user);
-		c2.getUsers().add(user);
+        parametroRepository.saveAll(List.of(p1, p2, p3, p4, p5, p6));
 
-		userRepository.save(user);
-		companyRepository.save(c);
-		companyRepository.save(c2);
-	}
+        c.getUsers().add(user);
+        c2.getUsers().add(user);
 
-	public void addRoute(UserProfile up, Route r) {
-		up.getRoutes().add(r);
-		routeRepository.save(r);
-	}
+        companyRepository.save(c);
+        companyRepository.save(c2);
+    }
+
+    private HashSet<Route> createRoutes() {
+        final var routes = new HashSet<Route>();
+        routes.add(createReq("Teste", "/parameters/[0-9]+", "GET"));
+        routes.add(createReq("Teste2", "/parameters/?", "GET"));
+        routes.add(createReq("Teste3", "/parameters/?", "POST"));
+        routes.add(createReq("Teste4", "/parameters/[0-9]+", "PUT"));
+        routes.add(createReq("Teste5", "/parameters/[0-9]+", "DELETE"));
+        routes.add(createReq("Teste6", "/routes/menus/?", "GET"));
+        routes.add(createReq("Teste6", "/parameters/page/?", "GET"));
+        routes.add(createReq("GET ALL", "/.*", "GET"));
+        routes.add(createReq("POST ALL", "/.*", "POST"));
+        routes.add(createReq("PUT ALL", "/.*", "PUT"));
+        routes.add(createReq("DELETE ALL", "/.*", "DELETE"));
+        routes.add(createMenu("Home", "Home", "mdi-home", "Geral"));
+        routes.add(createMenu("Usuários", "Users", "mdi-account", "Sistema"));
+        routes.add(createMenu("Perfis", "Profiles", "mdi-account-box-multiple", "Sistema"));
+        routes.add(createMenu("Parâmetros", "Parameters", "mdi-cog", "Sistema"));
+        routes.add(createMenu("Rotas", "Routes", "mdi-routes", "Sistema"));
+        routes.add(createMenu("Empresas", "Companies", "mdi-office-building", "Sistema"));
+        return routes;
+    }
+
+    public static Route createReq(String description, String url, String method) {
+        return Route.builder()
+                .description(description)
+                .url(url)
+                .method(method)
+                .type(RouteType.REQUISICAO)
+                .build();
+    }
+
+    public static Route createMenu(String description, String url, String icon, String category) {
+        return Route.builder()
+                .description(description)
+                .url(url)
+                .method("GET")
+                .type(RouteType.MENU)
+                .icon(icon)
+                .category(category)
+                .build();
+    }
 
 }

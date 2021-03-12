@@ -18,8 +18,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     User findByEmail(String email);
 
-    @Transactional()
-    @Query("SELECT DISTINCT r FROM User u join u.userProfiles p join p.routes r  WHERE u.id = :userId AND r.type =  1 ORDER BY r.description")
+    @Query("SELECT DISTINCT r FROM User u join u.userProfiles p join p.routes r  WHERE u.id = :userId AND r.type = 'MENU'  ORDER BY r.description")
     List<Route> getMenus(@Param("userId") Long userId);
 
     @Transactional()
