@@ -3,6 +3,7 @@ package com.backend.api.controllers;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
 import com.backend.api.dto.read.ReadProfileDto;
+import com.backend.api.dto.update.UpdateProfileDto;
 import com.backend.api.pagination.Filter;
 import com.backend.api.services.CrudService;
 import com.backend.api.services.ProfileService;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/profiles")
-public class ProfileController extends CrudController<UserProfile, CreateProfileDto, ReadProfileDto, Object, Filter> {
+public class ProfileController extends CrudController<UserProfile, CreateProfileDto, ReadProfileDto, UpdateProfileDto, Filter> {
 
     public ProfileController(ProfileService profileService) {
         super(profileService);

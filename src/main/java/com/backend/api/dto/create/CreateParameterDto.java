@@ -11,8 +11,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class CreateParameterDto implements Serializable {
-    private Long id;
-    private Integer company;
+    private Long companyId;
     private String key;
     private String value;
     private String note;

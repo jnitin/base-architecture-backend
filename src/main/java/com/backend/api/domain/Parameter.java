@@ -1,5 +1,6 @@
 package com.backend.api.domain;
 
+import com.backend.api.dto.update.UpdateParameterDto;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -25,5 +26,12 @@ public class Parameter extends Base {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    public void update(UpdateParameterDto dto, Company c) {
+        this.company = c;
+        this.key = dto.getKey();
+        this.value = dto.getValue();
+        this.note = dto.getNote();
+    }
 
 }

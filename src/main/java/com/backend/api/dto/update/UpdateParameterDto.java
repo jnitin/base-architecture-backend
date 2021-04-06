@@ -1,4 +1,4 @@
-package com.backend.api.dto.read;
+package com.backend.api.dto.update;
 
 import lombok.*;
 
@@ -10,9 +10,10 @@ import java.io.Serializable;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class ReadParameterDto implements Serializable {
+@Setter
+public class UpdateParameterDto implements Serializable {
     private Long id;
-    private Integer companyId;
+    private Long companyId;
     private String key;
     private String value;
     private String note;

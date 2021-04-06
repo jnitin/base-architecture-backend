@@ -20,6 +20,9 @@ public interface CrudService<Bean extends Base, CreateDto, ReadDto, UpdateDto, F
     default Page<ReadDto> findAll(Pageable pageable, FilterDto filter) {
         return findAll(pageable);
     }
+
+    Bean toEntity (CreateDto dto);
+
 //    @Autowired
 //    public JpaRepository<Bean, Integer> repo;
 //

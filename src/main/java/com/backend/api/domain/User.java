@@ -53,7 +53,5 @@ public class User extends Base {
 	public void addProfile(Profile profile) {
 		profiles.add(profile.getCod());
     }
-    
-
 
 }

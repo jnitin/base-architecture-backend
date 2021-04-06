@@ -1,4 +1,4 @@
-package com.backend.api.dto.create;
+package com.backend.api.dto.update;
 
 import com.backend.api.domain.enums.RouteType;
 import lombok.*;
@@ -11,13 +11,12 @@ import java.io.Serializable;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class CreateRouteDto implements Serializable {
-    private Long id;
+@Setter
+public class UpdateRouteDto implements Serializable {
     private String description;
     private RouteType type;
     private String url;
     private String icon;
-    private CreateRouteDto father;
     private String method;
     private String category;
 }

@@ -1,16 +1,21 @@
 package com.backend.api.controllers;
 
 import com.backend.api.domain.Base;
+import com.backend.api.domain.User;
 import com.backend.api.mapper.DataMapper;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
+import com.backend.api.security.UserSS;
 import com.backend.api.services.CrudService;
+import com.backend.api.services.impl.UserSSServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
@@ -30,7 +35,6 @@ public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, Fi
         this.readDtoClass = (Class<ReadDto>) ((ParameterizedType) this.getClass().getGenericSuperclass())
                 .getActualTypeArguments()[2];
         this.service = service;
-//        this.readDtoClass = readDtoClass;
     }
 
     @GetMapping("/{id}")
@@ -44,7 +48,6 @@ public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, Fi
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Page<ReadDto>> listAll(Pageable pageable, FilterDto filter) {
-        System.out.println("oioi");
         Page<ReadDto> listDto = service.findAll(pageable, filter);
         return ResponseEntity.ok().body(listDto);
     }
@@ -58,7 +61,7 @@ public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, Fi
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("id") Long id, @RequestBody @Valid UpdateDto updateDto) {
+    public void update(@PathVariable("id") Long id, @Valid @RequestBody UpdateDto updateDto) {
         service.update(id, updateDto);
     }
 

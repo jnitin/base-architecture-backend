@@ -1,6 +1,7 @@
 package com.backend.api.domain;
 
 import com.backend.api.domain.enums.RouteType;
+import com.backend.api.dto.update.UpdateRouteDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,15 @@ public class Route extends Base {
 
     @ManyToMany(mappedBy = "routes")
     private Set<UserProfile> profiles;
+
+    public void update(UpdateRouteDto dto) {
+        description = dto.getDescription();
+        type = dto.getType();
+        url = dto.getUrl();
+        icon = dto.getIcon();
+        method = dto.getMethod();
+        category = dto.getCategory();
+    }
 
     @Override
     public boolean equals(Object obj) {

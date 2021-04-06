@@ -5,8 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 
 @Getter
 @Setter
@@ -14,7 +12,8 @@ import java.util.HashMap;
 public class Base implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @Version

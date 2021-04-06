@@ -3,6 +3,7 @@ package com.backend.api.controllers;
 import com.backend.api.domain.Route;
 import com.backend.api.dto.create.CreateRouteDto;
 import com.backend.api.dto.read.ReadRouteDto;
+import com.backend.api.dto.update.UpdateRouteDto;
 import com.backend.api.pagination.Filter;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.RouteService;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/routes")
-public class RouteController extends CrudController<Route, CreateRouteDto, ReadRouteDto, Object, Filter> {
+public class RouteController extends CrudController<Route, CreateRouteDto, ReadRouteDto, UpdateRouteDto, Filter> {
 
     private final RouteService routeService;
 

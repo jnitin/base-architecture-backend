@@ -4,6 +4,8 @@ import com.backend.api.domain.Route;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
+import com.backend.api.dto.read.ReadProfileDto;
+import com.backend.api.dto.update.UpdateProfileDto;
 import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.RouteRepository;
 import com.backend.api.services.ProfileService;
@@ -37,12 +39,17 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public void update(Long id, Object o) {
+    public void update(Long id, UpdateProfileDto dto) {
 
     }
 
     @Override
-    public Page<Object> findAll(Pageable pageable) {
+    public Page<ReadProfileDto> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public UserProfile toEntity(CreateProfileDto createProfileDto) {
         return null;
     }
 

@@ -16,9 +16,6 @@ public class Pageable {
     private Integer linesPerPage = 15;
 
     public PageRequest getPageable(PaginationPropertyMapper mapper) {
-        if (page > 0)
-            page = page - 1;
-
         if (StringUtils.isNotBlank(orderBy)) {
             return PageRequest.of(page, linesPerPage, Sort.by(getDirection(), mapper.interpolatePropertyPath(orderBy)));
         }

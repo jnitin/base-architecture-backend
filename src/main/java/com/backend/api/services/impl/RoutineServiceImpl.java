@@ -2,6 +2,8 @@ package com.backend.api.services.impl;
 
 import com.backend.api.domain.Routine;
 import com.backend.api.dto.create.CreateRoutineDto;
+import com.backend.api.dto.read.ReadRoutineDto;
+import com.backend.api.dto.update.UpdateRoutineDto;
 import com.backend.api.repositories.RoutineRepository;
 import com.backend.api.services.RoutineService;
 import lombok.AccessLevel;
@@ -31,12 +33,17 @@ public class RoutineServiceImpl implements RoutineService {
     }
 
     @Override
-    public void update(Long id, Object o) {
+    public void update(Long id, UpdateRoutineDto dto) {
 
     }
 
     @Override
-    public Page<Object> findAll(Pageable pageable) {
+    public Page<ReadRoutineDto> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public Routine toEntity(CreateRoutineDto createRoutineDto) {
         return null;
     }
 }
