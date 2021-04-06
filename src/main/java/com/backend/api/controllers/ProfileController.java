@@ -5,11 +5,7 @@ import com.backend.api.dto.create.CreateProfileDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.update.UpdateProfileDto;
 import com.backend.api.pagination.Filter;
-import com.backend.api.services.CrudService;
 import com.backend.api.services.ProfileService;
-import com.backend.api.services.impl.RouteServiceImpl;
-import com.backend.api.services.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

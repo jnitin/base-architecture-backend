@@ -26,7 +26,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company create(CreateCompanyDto createCompanyDto) {
-        return null;
+        final var company = toEntity(createCompanyDto);
+        companyRepository.save(company);
+        return company;
     }
 
     @Override
@@ -42,17 +44,24 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void update(Long id, UpdateCompanyDto dto) {
-
+        final var company = findById(id);
+        company.update(dto);
+        companyRepository.save(company);
     }
 
     @Override
     public Page<ReadCompanyDto> findAll(Pageable pageable) {
-        return null;
+        final var companies = companyRepository.findAll(pageable.getPageable());
+        return mapper.mapAllTo(companies, ReadCompanyDto.class);
     }
 
     @Override
     public Company toEntity(CreateCompanyDto createCompanyDto) {
-        return null;
+        return Company
+                .builder()
+                .name(createCompanyDto.getName())
+                .cnpj(createCompanyDto.getCnpj())
+                .build();
     }
 
     @Override
