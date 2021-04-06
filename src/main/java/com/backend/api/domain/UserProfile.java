@@ -1,5 +1,6 @@
 package com.backend.api.domain;
 
+import com.backend.api.dto.update.UpdateProfileDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,5 +28,10 @@ public class UserProfile extends Base {
     @ManyToMany
     @JoinTable(name = "profile_user", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
+
+    public void update(UpdateProfileDto dto) {
+        description = dto.getDescription();
+        level = dto.getLevel();
+    }
 
 }

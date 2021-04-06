@@ -21,7 +21,7 @@ public class User extends Base {
 
     @NotNull
     private String email;
-    
+
     @NotNull
     private String password;
 
@@ -38,20 +38,32 @@ public class User extends Base {
     @JoinTable(name = "user_routine", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "routine_id"))
     private Set<Routine> routines;
 
-    @ElementCollection(fetch=FetchType.EAGER)
-	@CollectionTable(name="PROFILES")
-	private final Set<Integer> profiles = new HashSet<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PROFILES")
+    private final Set<Integer> profiles = new HashSet<>();
 
     public User() {
     }
 
 
     public Set<Profile> getProfiles() {
-		return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
-	}
-	
-	public void addProfile(Profile profile) {
-		profiles.add(profile.getCod());
+        return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addProfile(Profile profile) {
+        profiles.add(profile.getCod());
+    }
+
+    public UserProfile getMaxUserProfileLevel() {
+        UserProfile ret = null;
+        int max = 0;
+        for (UserProfile up : userProfiles) {
+            if (up.getLevel() > max) {
+                ret = up;
+                max = up.getLevel();
+            }
+        }
+        return ret;
     }
 
 }

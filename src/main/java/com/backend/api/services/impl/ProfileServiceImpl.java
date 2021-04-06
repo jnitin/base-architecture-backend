@@ -6,9 +6,12 @@ import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.update.UpdateProfileDto;
+import com.backend.api.exceptions.ObjectNotFoundException;
+import com.backend.api.mapper.DataMapper;
 import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.RouteRepository;
 import com.backend.api.services.ProfileService;
+import com.backend.api.services.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,12 +23,18 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProfileServiceImpl implements ProfileService {
+    private final UserService userService;
     private final ProfileRepository profileRepository;
     private final RouteRepository routeRepository;
+    private final DataMapper mapper;
 
     @Override
     public UserProfile create(CreateProfileDto createProfileDto) {
-        return null;
+        validate(createProfileDto.getLevel());
+
+        final var profile = toEntity(createProfileDto);
+        profileRepository.save(profile);
+        return profile;
     }
 
     @Override
@@ -35,22 +44,32 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public UserProfile findById(Long id) {
-        return null;
+        return profileRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Perfil não encontrado"));
     }
 
     @Override
     public void update(Long id, UpdateProfileDto dto) {
+        validate(dto.getLevel());
+        final var profile = findById(id);
+        profile.update(dto);
+        profileRepository.save(profile);
 
     }
 
     @Override
     public Page<ReadProfileDto> findAll(Pageable pageable) {
-        return null;
+        final var profiles = profileRepository.findAll(pageable.getPageable());
+        return mapper.mapAllTo(profiles, ReadProfileDto.class);
     }
 
     @Override
     public UserProfile toEntity(CreateProfileDto createProfileDto) {
-        return null;
+        return UserProfile
+                .builder()
+                .description(createProfileDto.getDescription())
+                .level(createProfileDto.getLevel())
+                .build();
     }
 
     public Page<Route> getRoutes(Long id, Pageable pageable) {
@@ -67,5 +86,12 @@ public class ProfileServiceImpl implements ProfileService {
 
     public List<User> getUsers(Long id) {
         return profileRepository.getUsers(id);
+    }
+
+    private void validate(Integer level) {
+        final var loggedInUser = userService.getLoggedInUser();
+        if (loggedInUser.getMaxUserProfileLevel().getLevel() < level) {
+            throw new RuntimeException("Não é possivel criar um perfil com nível maior que o seu.");
+        }
     }
 }
