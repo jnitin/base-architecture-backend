@@ -7,14 +7,18 @@ import com.backend.api.dto.create.CreateProfileDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.update.UpdateProfileDto;
 import com.backend.api.pagination.Filter;
-import org.springframework.data.domain.Page;
 import com.backend.api.pagination.Pageable;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ProfileService extends CrudService<UserProfile, CreateProfileDto, ReadProfileDto, UpdateProfileDto, Filter> {
-    Page<Route> getRoutes(Long id, Pageable pageable);
-    List<Route> getRoutes(Long id);
-    Page<User> getUsers(Long id, Pageable pageable);
-    List<User> getUsers(Long id);
+    Page<Route> findLinkedRoutes(Long id, Pageable pageable);
+
+    Page<Route> findUnlinkedRoutes(Long id, Pageable pageable);
+
+    Page<User> findUnlinkedUsers(Long id, Pageable pageable);
+
+    List<UserProfile> findByIds(List<Long> ids);
+
 }

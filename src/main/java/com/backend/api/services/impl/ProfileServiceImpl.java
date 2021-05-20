@@ -5,6 +5,8 @@ import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
 import com.backend.api.dto.read.ReadProfileDto;
+import com.backend.api.dto.read.ReadRouteDto;
+import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateProfileDto;
 import com.backend.api.exceptions.ObjectNotFoundException;
 import com.backend.api.mapper.DataMapper;
@@ -72,21 +74,27 @@ public class ProfileServiceImpl implements ProfileService {
                 .build();
     }
 
-    public Page<Route> getRoutes(Long id, Pageable pageable) {
-        return profileRepository.getRoutes(id, pageable.getPageable());
+    @Override
+    public Page<Route> findLinkedRoutes(Long id, Pageable pageable) {
+        return profileRepository.findLinkedRoutes(id, pageable.getPageable());
     }
 
-    public List<Route> getRoutes(Long id) {
-        return profileRepository.getRoutes(id);
+    @Override
+    public Page<Route> findUnlinkedRoutes(Long id, Pageable pageable) {
+        return profileRepository.findUnlinkedRoutes(id, pageable.getPageable());
     }
 
-    public Page<User> getUsers(Long id, Pageable pageable) {
-        return profileRepository.getUsers(id, pageable.getPageable());
+    @Override
+    public Page<User> findUnlinkedUsers(Long id, Pageable pageable) {
+        return profileRepository.findUnlinkedUsers(id, pageable.getPageable());
+
     }
 
-    public List<User> getUsers(Long id) {
-        return profileRepository.getUsers(id);
+    @Override
+    public List<UserProfile> findByIds(List<Long> ids) {
+        return profileRepository.findByIds(ids);
     }
+
 
     private void validate(Integer level) {
         final var loggedInUser = userService.getLoggedInUser();

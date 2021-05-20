@@ -3,7 +3,9 @@ package com.backend.api.repositories;
 import com.backend.api.domain.Route;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
+import com.backend.api.domain.enums.Profile;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -29,4 +31,8 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     
     @Query("SELECT x FROM User u join u.userProfiles x WHERE u.id = :userId")
     Page<UserProfile> getUserProfiles(@Param("userId") Long id, Pageable pageRequest);
+
+
+    @Query("SELECT p from UserProfile p LEFT JOIN p.users u  WHERE u.id <> :userId OR u.id IS NULL" )
+    Page<UserProfile> findUnlinkedProfiles(@Param("userId") Long id, Pageable pageable);
 }

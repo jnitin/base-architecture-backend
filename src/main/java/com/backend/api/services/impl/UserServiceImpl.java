@@ -2,6 +2,7 @@ package com.backend.api.services.impl;
 
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
+import com.backend.api.domain.enums.Profile;
 import com.backend.api.domain.enums.UserSituation;
 import com.backend.api.dto.create.CreateUserDto;
 import com.backend.api.dto.read.ReadUserDto;
@@ -29,11 +30,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final DataMapper mapper;
 
-    public List<UserProfile> getUserProfiles(Long id) {
+    public List<UserProfile> findProfilesById(Long id) {
         return userRepository.getUserProfiles(id);
     }
 
-    public Page<UserProfile> getUserProfiles(Long id, Pageable pageable) {
+    public Page<UserProfile> findProfilesById(Long id, Pageable pageable) {
         return userRepository.getUserProfiles(id, pageable.getPageable());
     }
 
@@ -41,6 +42,11 @@ public class UserServiceImpl implements UserService {
     public User getLoggedInUser() {
         UserSS user = UserSSServiceImpl.authenticated();
         return findById(user.getId());
+    }
+
+    @Override
+    public Page<UserProfile> findUnlinkedProfiles(Long id, Pageable pageable) {
+        return userRepository.findUnlinkedProfiles(id, pageable.getPageable());
     }
 
     @Override

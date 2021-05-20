@@ -7,14 +7,17 @@ import com.backend.api.dto.read.ReadRouteDto;
 import com.backend.api.dto.update.UpdateRouteDto;
 import com.backend.api.exceptions.ObjectNotFoundException;
 import com.backend.api.mapper.DataMapper;
+import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.RouteRepository;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.security.UserSS;
+import com.backend.api.services.ProfileService;
 import com.backend.api.services.RouteService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import com.backend.api.pagination.Pageable;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +28,8 @@ public class RouteServiceImpl implements RouteService {
 
     final DataMapper mapper;
     final RouteRepository routeRepository;
+    final ProfileRepository profileRepository;
+    final ProfileService profileService;
     private final UserRepository userRepository;
 
     @Override
@@ -55,7 +60,6 @@ public class RouteServiceImpl implements RouteService {
         routeRepository.save(route);
     }
 
-
     @Override
     public Page<ReadRouteDto> findAll(Pageable pageable) {
         final var routes = routeRepository.findAll(pageable.getPageable());
@@ -83,11 +87,26 @@ public class RouteServiceImpl implements RouteService {
         return routes;
     }
 
-    public Page<UserProfile> getProfiles(Long id, Pageable pageable) {
-        return routeRepository.getProfiles(id, pageable.getPageable());
+    @Override
+    public Page<UserProfile> findProfiles(Long id, Pageable pageable) {
+        return routeRepository.findProfiles(id, pageable.getPageable());
     }
 
-    public List<UserProfile> getProfiles(Long id) {
-        return routeRepository.getProfiles(id);
+    @Override
+    public Page<UserProfile> findUnlinkedProfiles(Long id, Pageable pageable) {
+        return routeRepository.findUnlinkedProfiles(id, pageable.getPageable());
     }
+
+    @Override
+    public void linkProfiles(Long id, List<Long> ids) {
+        final Route route = findById(id);
+        final List<UserProfile> profiles = profileService.findByIds(ids);
+
+        profiles.forEach(profile -> {
+            profile.getRoutes().add(route);
+        });
+        profileRepository.saveAll(profiles);
+    }
+
+
 }

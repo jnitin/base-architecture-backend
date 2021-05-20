@@ -16,6 +16,5 @@ public class ReadUserDto implements Serializable {
     private Long id;
     private String name;
     private String email;
-    private String password;
     private UserSituation situation;
 }

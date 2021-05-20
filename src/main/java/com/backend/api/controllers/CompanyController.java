@@ -26,10 +26,10 @@ public class CompanyController extends CrudController<Company, CreateCompanyDto,
         this.userService = userService;
     }
 
-    @GetMapping("/menus")
-    public List<ReadCompanyDto> getMenus() {
-        return mapper.mapAllTo(
-                companyService.getMenus(userService.getLoggedInUser()),
-                ReadCompanyDto.class);
-    }
+//    @GetMapping("/menus")
+//    public List<ReadCompanyDto> getMenus() {
+//        return mapper.mapAllTo(
+//                companyService.getMenus(userService.getLoggedInUser()),
+//                ReadCompanyDto.class);
+//    }
 }

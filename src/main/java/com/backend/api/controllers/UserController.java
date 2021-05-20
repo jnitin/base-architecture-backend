@@ -2,10 +2,16 @@ package com.backend.api.controllers;
 
 import com.backend.api.domain.User;
 import com.backend.api.dto.create.CreateUserDto;
+import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.pagination.Filter;
+import com.backend.api.pagination.Pageable;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,14 +41,11 @@ public class UserController extends CrudController<User, CreateUserDto, ReadUser
 //    }
 
 
-//    @RequestMapping(value = "/{id}/profiles", method = RequestMethod.GET)
-//    public ResponseEntity<Page<CreateProfileDto>> getUserProfiles(@PathVariable Long id, Pageable pageable) throws NoSuchMethodException,
-//            SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-//        Page<CreateProfileDto> profiles = new LinkableService<User, UserProfile>(service, profileServiceImpl)
-//                .getLinkedRecords(id, "getUserProfiles", pageable)
-//                .map(profile -> profileServiceImpl.toDTO(profile));
-//        return ResponseEntity.ok().body(profiles);
-//    }
+    @GetMapping(value = "/{id}/profiles")
+    public ResponseEntity<Page<ReadProfileDto>> getUserProfiles(@PathVariable Long id, Pageable pageable)  {
+        Page<ReadProfileDto> profiles = mapper.mapAllTo(userService.findProfilesById(id, pageable), ReadProfileDto.class);
+        return ResponseEntity.ok().body(profiles);
+    }
 
 //    @RequestMapping(value = "/{id}/profiles", method = RequestMethod.POST)
 //    public ResponseEntity<Void> addUserProfiles(@PathVariable Long id, @RequestBody List<Integer> ids)
@@ -62,12 +65,9 @@ public class UserController extends CrudController<User, CreateUserDto, ReadUser
 //        return ResponseEntity.ok().build();
 //    }
 
-//    @RequestMapping(value = "/unlinked-profiles/{id}", method = RequestMethod.GET)
-//    public Page<CreateUserDto> findProfileUnlinkedProfiles(@PathVariable Long id, Filter filter) {
-//
-//        final List<User> notIn = profileServiceImpl.getUsers(id);
-//
-//        return service.findPage(filter, notIn, "profiles");
-//    }
+    @GetMapping(value = "/{id}/unlinked-profiles")
+    public Page<ReadProfileDto> findUnlinkedProfiles(@PathVariable Long id, Pageable pageable) {
+        return mapper.mapAllTo(userService.findUnlinkedProfiles(id, pageable), ReadProfileDto.class);
+    }
 
 }

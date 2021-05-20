@@ -2,15 +2,16 @@ package com.backend.api.controllers;
 
 import com.backend.api.domain.Route;
 import com.backend.api.dto.create.CreateRouteDto;
+import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.read.ReadRouteDto;
 import com.backend.api.dto.update.UpdateRouteDto;
 import com.backend.api.pagination.Filter;
+import com.backend.api.pagination.Pageable;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.RouteService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,26 +36,18 @@ public class RouteController extends CrudController<Route, CreateRouteDto, ReadR
         return ResponseEntity.ok().body(mapper.mapAllTo(menus, CreateRouteDto.class));
     }
 
-//    @RequestMapping(value = "/{id}/profiles", method = RequestMethod.GET)
-//    public ResponseEntity<Page<CreateProfileDto>> getProfiles(@PathVariable Long id, Pageable pageable) throws NoSuchMethodException,
-//            SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-//
-//
-//        Page<CreateProfileDto> profiles = new LinkableService<Route, UserProfile>(service, profileService).getLinkedRecords(id, "getProfiles", pageable)
-//                .map(profile -> profileService.toDTO(profile));
-//        return ResponseEntity.ok().body(profiles);
-//    }
+    @RequestMapping(value = "/{id}/profiles", method = RequestMethod.GET)
+    public Page<ReadProfileDto> getProfiles(@PathVariable Long id, Pageable pageable) {
+        return mapper.mapAllTo(routeService.findProfiles(id, pageable), ReadProfileDto.class);
+    }
 
-//    @RequestMapping(value = "/{id}/profiles", method = RequestMethod.POST)
-//    public ResponseEntity<Void> addProfiles(@PathVariable Long id, @RequestBody List<Integer> ids)
-//            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-//            InvocationTargetException {
-//        new LinkableService<Route, UserProfile>(service, profileService).insert(id, ids, "getUserProfiles", "getRoutes",
-//                "Rota não encontrada");
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping(value = "/{id}/profiles")
+    public ResponseEntity<Void> addProfiles(@PathVariable Long id, @RequestBody List<Long> ids) {
+        routeService.linkProfiles(id, ids);
+        return ResponseEntity.ok().build();
+    }
 
-//    @RequestMapping(value = "/{id}/profiles/{profileId}", method = RequestMethod.DELETE)
+    //    @RequestMapping(value = "/{id}/profiles/{profileId}", method = RequestMethod.DELETE)
 //    public ResponseEntity<Void> deleteProfile(@PathVariable Long id, @PathVariable Integer profileId)
 //            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
 //            InvocationTargetException {
@@ -63,11 +56,13 @@ public class RouteController extends CrudController<Route, CreateRouteDto, ReadR
 //        return ResponseEntity.ok().build();
 //    }
 //
-//    @RequestMapping(value = "/unlinked-profiles/{id}", method = RequestMethod.GET)
-//    public Page<CreateRouteDto> findRouteUnlinkedProfiles(@PathVariable Long id, Filter filter) {
-//        final List<Route> notIn = profileService.getRoutes(id);
-//
-//        return service.findPage(filter, notIn, "profiles");
-//    }
+    @GetMapping(value = "/{id}/unlinked-profiles")
+    public Page<ReadProfileDto> getUnlinkedProfiles(@PathVariable Long id, Pageable pageable) {
+        return mapper.mapAllTo(routeService.findUnlinkedProfiles(id, pageable), ReadProfileDto.class);
+    }
+
+    public Page<ReadRouteDto> findRouteUnlinkedProfiles(@PathVariable Long id, Pageable pageable) {
+        return mapper.mapAllTo(profileService.findUnlinkedRoutes(id, pageable), ReadRouteDto.class);
+    }
 
 }

@@ -14,7 +14,9 @@ import java.util.List;
 public interface RouteService extends CrudService<Route, CreateRouteDto, ReadRouteDto, UpdateRouteDto, Filter> {
     List<Route> getMenus();
 
-    Page<UserProfile> getProfiles(Long id, Pageable pageable);
+    Page<UserProfile> findProfiles(Long id, Pageable pageable);
 
-    List<UserProfile> getProfiles(Long id);
+    Page<UserProfile> findUnlinkedProfiles(Long id, Pageable pageable);
+
+    void linkProfiles(Long id, List<Long> ids);
 }
