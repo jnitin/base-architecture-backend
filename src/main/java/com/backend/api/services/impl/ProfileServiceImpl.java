@@ -95,6 +95,11 @@ public class ProfileServiceImpl implements ProfileService {
         return profileRepository.findByIds(ids);
     }
 
+    @Override
+    public void saveProfiles(List<UserProfile> profiles) {
+        profileRepository.saveAll(profiles);
+    }
+
 
     private void validate(Integer level) {
         final var loggedInUser = userService.getLoggedInUser();

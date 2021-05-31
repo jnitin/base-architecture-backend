@@ -9,9 +9,11 @@ import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateUserDto;
 import com.backend.api.exceptions.ObjectNotFoundException;
 import com.backend.api.mapper.DataMapper;
+import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.exceptions.DataIntegrityException;
 import com.backend.api.security.UserSS;
+import com.backend.api.services.ProfileService;
 import com.backend.api.services.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder pe;
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
     private final DataMapper mapper;
 
     public List<UserProfile> findProfilesById(Long id) {
@@ -47,6 +50,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserProfile> findUnlinkedProfiles(Long id, Pageable pageable) {
         return userRepository.findUnlinkedProfiles(id, pageable.getPageable());
+    }
+
+    @Override
+    public void addProfilesToUser(Long id, List<Long> ids) {
+        final User user = findById(id);
+        final List<UserProfile> profiles = profileRepository.findByIds(ids);
+        profiles.forEach(profile -> profile.getUsers().add(user));
+        profileRepository.saveAll(profiles);
+    }
+
+    @Override
+    public void deleteProfile(Long id, Long profileId) {
+        final User user = findById(id);
+        final UserProfile profile = profileRepository.findById(profileId)
+                .orElseThrow(() -> new ObjectNotFoundException("Perfil não "));
+        profile.getUsers().remove(user);
+        profileRepository.save(profile);
     }
 
     @Override

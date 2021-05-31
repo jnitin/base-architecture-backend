@@ -35,4 +35,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @Query("SELECT p from UserProfile p LEFT JOIN p.users u  WHERE u.id <> :userId OR u.id IS NULL" )
     Page<UserProfile> findUnlinkedProfiles(@Param("userId") Long id, Pageable pageable);
+
 }

@@ -21,4 +21,7 @@ public interface ProfileService extends CrudService<UserProfile, CreateProfileDt
 
     List<UserProfile> findByIds(List<Long> ids);
 
+    void saveProfiles(List<UserProfile> profiles);
+
+
 }

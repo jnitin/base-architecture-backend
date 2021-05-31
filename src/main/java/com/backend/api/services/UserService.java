@@ -20,4 +20,8 @@ public interface UserService extends CrudService<User, CreateUserDto, ReadUserDt
     User getLoggedInUser();
 
     Page<UserProfile> findUnlinkedProfiles(Long id, Pageable pageable);
+
+    void addProfilesToUser(Long id, List<Long> ids);
+
+    void deleteProfile(Long id, Long profileId);
 }
