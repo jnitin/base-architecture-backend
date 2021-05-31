@@ -12,6 +12,7 @@ import com.backend.api.exceptions.ObjectNotFoundException;
 import com.backend.api.mapper.DataMapper;
 import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.RouteRepository;
+import com.backend.api.repositories.UserRepository;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.UserService;
 import lombok.AccessLevel;
@@ -20,12 +21,16 @@ import org.springframework.data.domain.Page;
 import com.backend.api.pagination.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProfileServiceImpl implements ProfileService {
     private final UserService userService;
+    private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
     private final RouteRepository routeRepository;
     private final DataMapper mapper;
@@ -98,6 +103,45 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void saveProfiles(List<UserProfile> profiles) {
         profileRepository.saveAll(profiles);
+    }
+
+    @Override
+    public Page<User> findProfileUsers(Long id, Pageable pageable) {
+        return profileRepository.findUsersById(id, pageable.getPageable());
+    }
+
+    @Override
+    public void saveRoutes(Long id, List<Long> ids) {
+        final UserProfile profile = findById(id);
+        final Set<Route> routes = new HashSet<>(routeRepository.findAllById(ids));
+        profile.getRoutes().addAll(routes);
+        profileRepository.save(profile);
+    }
+
+    @Override
+    public void deleteRoute(Long id, Long routeId) {
+        final UserProfile profile = findById(id);
+        final Route route = routeRepository.findById(routeId)
+                .orElseThrow(() -> new ObjectNotFoundException("Rota não encontrada"));
+
+        profile.getRoutes().remove(route);
+        profileRepository.save(profile);
+    }
+
+    @Override
+    public void addUsers(Long id, List<Long> ids) {
+        final UserProfile profile = findById(id);
+        final Set<User> users = new HashSet<>(userRepository.findAllById(ids));
+        profile.getUsers().addAll(users);
+        profileRepository.save(profile);
+    }
+
+    @Override
+    public void deleteUser(Long id, Long userId) {
+        final UserProfile profile = findById(id);
+        final User user = userService.findById(userId);
+        profile.getUsers().remove(user);
+        profileRepository.save(profile);
     }
 
 

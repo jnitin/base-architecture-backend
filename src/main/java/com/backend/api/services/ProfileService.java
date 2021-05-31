@@ -23,5 +23,13 @@ public interface ProfileService extends CrudService<UserProfile, CreateProfileDt
 
     void saveProfiles(List<UserProfile> profiles);
 
+    Page<User> findProfileUsers(Long id, Pageable pageable);
 
+    void saveRoutes(Long id, List<Long> ids);
+
+    void deleteRoute(Long id, Long routeId);
+
+    void addUsers(Long id, List<Long> ids);
+
+    void deleteUser(Long id, Long userId);
 }
