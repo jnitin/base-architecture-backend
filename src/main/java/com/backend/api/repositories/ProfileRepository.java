@@ -18,8 +18,8 @@ import java.util.List;
 @Repository
 public interface ProfileRepository extends JpaRepository<UserProfile, Long>, JpaSpecificationExecutor<UserProfile> {
 
-    @Transactional()
-    @Query("SELECT r from UserProfile p JOIN p.routes r WHERE p.id = :profileId")
+//    @Query("SELECT r from UserProfile p JOIN p.routes r WHERE p.id = :profileId")
+    @Query("SELECT r from Route r JOIN r.profiles p WHERE p.id = :profileId")
     Page<Route> findLinkedRoutes(@Param("profileId") Long profileId, Pageable pageable);
 
     @Query("SELECT r FROM Route r WHERE r NOT IN(SELECT r2 FROM UserProfile p JOIN p.routes r2 WHERE p.id = :profileId)")
@@ -31,6 +31,6 @@ public interface ProfileRepository extends JpaRepository<UserProfile, Long>, Jpa
     @Query("SELECT p from UserProfile p WHERE p.id IN (:ids)")
     List<UserProfile> findByIds(@Param("ids") List<Long> ids);
 
-    @Query("SELECT u from UserProfile p join p.users u WHERE p.id = :id")
-    Page<User> findUsersById(@Param("id") Long id, Pageable pageable);
+    @Query("SELECT u from User u join u.userProfiles p WHERE p.id = :id")
+    Page<User> findLinkedUsers(@Param("id") Long id, Pageable pageable);
 }

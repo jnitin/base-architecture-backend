@@ -19,4 +19,6 @@ public interface RouteService extends CrudService<Route, CreateRouteDto, ReadRou
     Page<UserProfile> findUnlinkedProfiles(Long id, Pageable pageable);
 
     void linkProfiles(Long id, List<Long> ids);
+
+    void deleteProfile(Long id, Long profileId);
 }

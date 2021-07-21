@@ -4,7 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor
 @Builder
 @Getter

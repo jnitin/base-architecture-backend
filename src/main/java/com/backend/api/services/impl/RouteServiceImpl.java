@@ -17,6 +17,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import com.backend.api.pagination.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,11 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
+    public Page<Route> findAll(Specification spec, PageRequest pageRequest) {
+        return routeRepository.findAll(spec, pageRequest);
+    }
+
+    @Override
     public Route toEntity(CreateRouteDto createRouteDto) {
         final var routeFather = findById(createRouteDto.getFather().getId());
         return Route
@@ -106,6 +113,14 @@ public class RouteServiceImpl implements RouteService {
             profile.getRoutes().add(route);
         });
         profileRepository.saveAll(profiles);
+    }
+
+    @Override
+    public void deleteProfile(Long id, Long profileId) {
+        final Route route = findById(id);
+        final UserProfile profile = profileService.findById(profileId);
+        profile.getRoutes().remove(route);
+        profileRepository.save(profile);
     }
 
 

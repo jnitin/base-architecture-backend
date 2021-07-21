@@ -47,15 +47,11 @@ public class RouteController extends CrudController<Route, CreateRouteDto, ReadR
         return ResponseEntity.ok().build();
     }
 
-    //    @RequestMapping(value = "/{id}/profiles/{profileId}", method = RequestMethod.DELETE)
-//    public ResponseEntity<Void> deleteProfile(@PathVariable Long id, @PathVariable Integer profileId)
-//            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-//            InvocationTargetException {
-//        new LinkableService<Route, UserProfile>(service, profileService).delete(id, profileId, "getUserProfiles",
-//                "getRoutes", "Rota não encontrada", "Perfil não encontrado");
-//        return ResponseEntity.ok().build();
-//    }
-//
+        @DeleteMapping(value = "/{id}/profiles/{profileId}")
+    public void deleteProfile(@PathVariable Long id, @PathVariable Long profileId) {
+        routeService.deleteProfile(id, profileId);
+    }
+
     @GetMapping(value = "/{id}/unlinked-profiles")
     public Page<ReadProfileDto> getUnlinkedProfiles(@PathVariable Long id, Pageable pageable) {
         return mapper.mapAllTo(routeService.findUnlinkedProfiles(id, pageable), ReadProfileDto.class);

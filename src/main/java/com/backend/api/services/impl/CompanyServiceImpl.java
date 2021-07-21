@@ -13,6 +13,8 @@ import com.backend.api.services.CompanyService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,6 +55,11 @@ public class CompanyServiceImpl implements CompanyService {
     public Page<ReadCompanyDto> findAll(Pageable pageable) {
         final var companies = companyRepository.findAll(pageable.getPageable());
         return mapper.mapAllTo(companies, ReadCompanyDto.class);
+    }
+
+    @Override
+    public Page<Company> findAll(Specification spec, PageRequest pageRequest) {
+        return companyRepository.findAll(spec, pageRequest);
     }
 
     @Override

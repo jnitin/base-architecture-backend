@@ -4,11 +4,13 @@ import com.backend.api.domain.User;
 import com.backend.api.dto.create.CreateUserDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.read.ReadUserDto;
+import com.backend.api.dto.update.UpdateUserDto;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UserController extends CrudController<User, CreateUserDto, ReadUserDto, Object, Filter> {
+public class UserController extends CrudController<User, CreateUserDto, ReadUserDto, UpdateUserDto, Filter> {
 
     private final ProfileService profileService;
 
@@ -45,8 +47,9 @@ public class UserController extends CrudController<User, CreateUserDto, ReadUser
     }
 
     @GetMapping(value = "/{id}/unlinked-profiles")
-    public Page<ReadProfileDto> findUnlinkedProfiles(@PathVariable Long id, Pageable pageable) {
-        return mapper.mapAllTo(userService.findUnlinkedProfiles(id, pageable), ReadProfileDto.class);
+    public Page<ReadProfileDto> findUnlinkedProfiles(@PathVariable Long id, Pageable pageable, Filter filter) {
+        final Specification specification = generateSpecification(filter);
+        return userService.findUnlinkedProfiles(id, pageable, specification );
     }
 
 }

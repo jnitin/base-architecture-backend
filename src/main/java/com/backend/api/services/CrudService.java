@@ -4,6 +4,8 @@ import com.backend.api.domain.Base;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 
 
 public interface CrudService<Bean extends Base, CreateDto, ReadDto, UpdateDto, FilterDto extends Filter> {
@@ -20,6 +22,8 @@ public interface CrudService<Bean extends Base, CreateDto, ReadDto, UpdateDto, F
     default Page<ReadDto> findAll(Pageable pageable, FilterDto filter) {
         return findAll(pageable);
     }
+
+    Page<Bean> findAll(Specification spec, PageRequest pageRequest);
 
     Bean toEntity (CreateDto dto);
 

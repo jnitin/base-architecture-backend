@@ -6,14 +6,23 @@ import com.backend.api.dto.read.ReadParameterDto;
 import com.backend.api.dto.update.UpdateParameterDto;
 import com.backend.api.exceptions.ObjectNotFoundException;
 import com.backend.api.mapper.DataMapper;
+import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import com.backend.api.repositories.ParameterRepository;
 import com.backend.api.services.CompanyService;
 import com.backend.api.services.ParameterService;
+import com.backend.api.utils.CrudSpecificationBuilder;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -53,6 +62,17 @@ public class ParameterServiceImpl implements ParameterService {
     public Page<ReadParameterDto> findAll(Pageable pageable) {
         final var page = parameterRepository.findAll(pageable.getPageable());
         return mapper.mapAllTo(page, ReadParameterDto.class);
+    }
+
+    @Override
+    public Page<ReadParameterDto> findAll(Pageable pageable, Filter filter) {
+        final Page<Parameter> parameters = parameterRepository.findAll(pageable.getPageable());
+        return mapper.mapAllTo(parameters, ReadParameterDto.class);
+    }
+
+    @Override
+    public Page<Parameter> findAll(Specification spec, PageRequest pageRequest) {
+        return parameterRepository.findAll(spec, pageRequest);
     }
 
     @Override

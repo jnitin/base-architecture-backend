@@ -5,8 +5,6 @@ import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
 import com.backend.api.dto.read.ReadProfileDto;
-import com.backend.api.dto.read.ReadRouteDto;
-import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateProfileDto;
 import com.backend.api.exceptions.ObjectNotFoundException;
 import com.backend.api.mapper.DataMapper;
@@ -19,12 +17,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import com.backend.api.pagination.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -71,6 +70,11 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    public Page<UserProfile> findAll(Specification spec, PageRequest pageRequest) {
+        return profileRepository.findAll(spec, pageRequest);
+    }
+
+    @Override
     public UserProfile toEntity(CreateProfileDto createProfileDto) {
         return UserProfile
                 .builder()
@@ -107,7 +111,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public Page<User> findProfileUsers(Long id, Pageable pageable) {
-        return profileRepository.findUsersById(id, pageable.getPageable());
+        return profileRepository.findLinkedUsers(id, pageable.getPageable());
     }
 
     @Override

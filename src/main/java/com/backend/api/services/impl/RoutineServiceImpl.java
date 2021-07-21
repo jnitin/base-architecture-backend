@@ -10,6 +10,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import com.backend.api.pagination.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,6 +42,11 @@ public class RoutineServiceImpl implements RoutineService {
     @Override
     public Page<ReadRoutineDto> findAll(Pageable pageable) {
         return null;
+    }
+
+    @Override
+    public Page<Routine> findAll(Specification spec, PageRequest pageRequest) {
+        return routineRepository.findAll(spec, pageRequest);
     }
 
     @Override

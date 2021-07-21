@@ -5,10 +5,12 @@ import com.backend.api.domain.UserProfile;
 import com.backend.api.domain.enums.Profile;
 import com.backend.api.domain.enums.UserSituation;
 import com.backend.api.dto.create.CreateUserDto;
+import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateUserDto;
 import com.backend.api.exceptions.ObjectNotFoundException;
 import com.backend.api.mapper.DataMapper;
+import com.backend.api.query.UserQuery;
 import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.exceptions.DataIntegrityException;
@@ -19,6 +21,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import com.backend.api.pagination.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder pe;
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final UserQuery userQuery;
     private final DataMapper mapper;
 
     public List<UserProfile> findProfilesById(Long id) {
@@ -48,8 +53,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserProfile> findUnlinkedProfiles(Long id, Pageable pageable) {
-        return userRepository.findUnlinkedProfiles(id, pageable.getPageable());
+    public Page<ReadProfileDto> findUnlinkedProfiles(Long id, Pageable pageable, Specification specification) {
+        return userQuery.findUnlinkedProfiles(id, pageable, specification);
+        //        return userRepository.findUnlinkedProfiles(id, pageable.getPageable());
     }
 
     @Override
@@ -105,13 +111,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(Long id, UpdateUserDto dto) {
-
+        final var i = id;
+        throw new RuntimeException("Método não implementado");
     }
 
     @Override
     public Page<ReadUserDto> findAll(Pageable pageable) {
         final var users = userRepository.findAll(pageable.getPageable());
         return mapper.mapAllTo(users, ReadUserDto.class);
+    }
+
+    @Override
+    public Page<User> findAll(Specification spec, PageRequest pageRequest) {
+        return userRepository.findAll(spec, pageRequest);
     }
 
 
