@@ -27,7 +27,6 @@ public class CompanyController extends CrudController<Company, CreateCompanyDto,
     }
 
     @GetMapping("/menus")
-
     public List<ReadCompanyDto> getMenus() {
         return companyService.getMenus(userService.getLoggedInUser());
     }

@@ -107,7 +107,6 @@ public class ApiApplication implements CommandLineRunner {
         parametroRepository.saveAll(List.of(p1, p2, p3, p4, p5, p6));
 
         c.getUsers().add(user);
-        c2.getUsers().add(user);
 
         companyRepository.save(c);
         companyRepository.save(c2);
