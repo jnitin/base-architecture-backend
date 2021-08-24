@@ -1,10 +1,12 @@
 package com.backend.api.controllers;
 
+import com.backend.api.config.security.permission.UserAuthentication;
 import com.backend.api.domain.User;
 import com.backend.api.dto.create.CreateUserDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateUserDto;
+import com.backend.api.enums.Permission;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import com.backend.api.services.ProfileService;
@@ -15,41 +17,48 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserController extends CrudController<User, CreateUserDto, ReadUserDto, UpdateUserDto, Filter> {
 
-    private final ProfileService profileService;
+  private final ProfileService profileService;
 
-    private final UserService userService;
+  private final UserService userService;
 
-    public UserController(ProfileService profileService, UserService userService) {
-        super(userService);
-        this.profileService = profileService;
-        this.userService = userService;
-    }
+  public UserController(ProfileService profileService, UserService userService) {
+    super(userService);
+    this.profileService = profileService;
+    this.userService = userService;
+  }
 
-    @GetMapping(value = "/{id}/profiles")
-    public ResponseEntity<Page<ReadProfileDto>> getUserProfiles(@PathVariable Long id, Pageable pageable) {
-        Page<ReadProfileDto> profiles = mapper.mapAllTo(userService.findProfilesById(id, pageable), ReadProfileDto.class);
-        return ResponseEntity.ok().body(profiles);
-    }
+  @GetMapping("/menus")
+  public ResponseEntity<List<Permission>> getUserMenus(UserAuthentication userAuthentication) {
+    return ResponseEntity.ok().body(userService.getUserMenus(userAuthentication.getUser()));
+  }
 
-    @PostMapping(value = "/{id}/profiles")
-    public void addProfilesToUser(@PathVariable Long id, @RequestBody List<Long> ids) {
-        userService.addProfilesToUser(id, ids);
-    }
 
-    @DeleteMapping(value = "/{id}/profiles/{profileId}")
-    public void deleteProfile(@PathVariable Long id, @PathVariable Long profileId) {
-        userService.deleteProfile(id, profileId);
-    }
+  @GetMapping(value = "/{id}/profiles")
+  public ResponseEntity<Page<ReadProfileDto>> getUserProfiles(@PathVariable Long id, Pageable pageable) {
+    Page<ReadProfileDto> profiles = mapper.mapAllTo(userService.findProfilesById(id, pageable), ReadProfileDto.class);
+    return ResponseEntity.ok().body(profiles);
+  }
 
-    @GetMapping(value = "/{id}/unlinked-profiles")
-    public Page<ReadProfileDto> findUnlinkedProfiles(@PathVariable Long id, Pageable pageable, Filter filter) {
-        final Specification specification = generateSpecification(filter);
-        return userService.findUnlinkedProfiles(id, pageable, specification );
-    }
+  @PostMapping(value = "/{id}/profiles")
+  public void addProfilesToUser(@PathVariable Long id, @RequestBody List<Long> ids) {
+    userService.addProfilesToUser(id, ids);
+  }
+
+  @DeleteMapping(value = "/{id}/profiles/{profileId}")
+  public void deleteProfile(@PathVariable Long id, @PathVariable Long profileId) {
+    userService.deleteProfile(id, profileId);
+  }
+
+  @GetMapping(value = "/{id}/unlinked-profiles")
+  public Page<ReadProfileDto> findUnlinkedProfiles(@PathVariable Long id, Pageable pageable, Filter filter) {
+    final Specification specification = generateSpecification(filter);
+    return userService.findUnlinkedProfiles(id, pageable, specification);
+  }
 
 }

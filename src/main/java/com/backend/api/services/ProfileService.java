@@ -1,11 +1,12 @@
 package com.backend.api.services;
 
-import com.backend.api.domain.Route;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
+import com.backend.api.dto.read.ReadPermissionDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.update.UpdateProfileDto;
+import com.backend.api.enums.Permission;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import org.springframework.data.domain.Page;
@@ -13,9 +14,9 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface ProfileService extends CrudService<UserProfile, CreateProfileDto, ReadProfileDto, UpdateProfileDto, Filter> {
-    Page<Route> findLinkedRoutes(Long id, Pageable pageable);
+    Page<ReadPermissionDto> findLinkedPermissions(Long id, Pageable pageable);
 
-    Page<Route> findUnlinkedRoutes(Long id, Pageable pageable);
+    Page<ReadPermissionDto> findUnlinkedPermissions(Long id, Pageable pageable);
 
     Page<User> findUnlinkedUsers(Long id, Pageable pageable);
 
@@ -25,9 +26,9 @@ public interface ProfileService extends CrudService<UserProfile, CreateProfileDt
 
     Page<User> findProfileUsers(Long id, Pageable pageable);
 
-    void saveRoutes(Long id, List<Long> ids);
+    void savePermissions(Long id, List<Permission> permissions);
 
-    void deleteRoute(Long id, Long routeId);
+    void deletePermission(Long id, Permission permission);
 
     void addUsers(Long id, List<Long> ids);
 

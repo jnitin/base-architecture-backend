@@ -1,9 +1,11 @@
 package com.backend.api.domain;
 
 import com.backend.api.dto.update.UpdateProfileDto;
+import com.backend.api.enums.Permission;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -16,9 +18,10 @@ public class UserProfile extends Base {
     private String description;
     private Integer level;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "profile_route", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "route_id"))
-    private Set<Route> routes;
+    @NotNull
+    @OneToOne
+    Role role;
+
 
     @ManyToMany
     @JoinTable(name = "profile_routine", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "routine_id"))

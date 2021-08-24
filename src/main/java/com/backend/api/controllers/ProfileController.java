@@ -1,13 +1,14 @@
 package com.backend.api.controllers;
 
-import com.backend.api.domain.Route;
+import com.backend.api.config.security.permission.UserAuthentication;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
+import com.backend.api.dto.read.ReadPermissionDto;
 import com.backend.api.dto.read.ReadProfileDto;
-import com.backend.api.dto.read.ReadRouteDto;
 import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateProfileDto;
+import com.backend.api.enums.Permission;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import com.backend.api.services.ProfileService;
@@ -29,19 +30,19 @@ public class ProfileController extends CrudController<UserProfile, CreateProfile
         this.profileService = profileService;
     }
 
-    @GetMapping("/{id}/routes")
-    public Page<ReadRouteDto> getRoutes(@PathVariable Long id, Pageable pageable) throws Exception {
-        return mapper.mapAllTo(profileService.findLinkedRoutes(id, pageable), ReadRouteDto.class);
+    @GetMapping("/{id}/permissions")
+    public Page<ReadPermissionDto> getPermissions(@PathVariable Long id, Pageable pageable, UserAuthentication userAuthentication) throws Exception {
+        return mapper.mapAllTo(profileService.findLinkedPermissions(id, pageable), ReadPermissionDto.class);
     }
 
-    @PostMapping(value = "/{id}/routes")
-    public void addRoutes(@PathVariable Long id, @RequestBody List<Long> ids) {
-        profileService.saveRoutes(id, ids);
+    @PostMapping(value = "/{id}/permissions")
+    public void addPermissions(@PathVariable Long id, @RequestBody List<Permission> permissions) {
+        profileService.savePermissions(id, permissions);
     }
 
-    @DeleteMapping(value = "/{id}/routes/{routeId}")
-    public void deleteRoute(@PathVariable Long id, @PathVariable Long routeId) {
-        profileService.deleteRoute(id, routeId);
+    @DeleteMapping(value = "/{id}/permissions/{permission}")
+    public void deleteRoute(@PathVariable Long id, @PathVariable Permission permission) {
+        profileService.deletePermission(id, permission);
     }
 
     @GetMapping(value = "/{id}/users")
@@ -62,10 +63,9 @@ public class ProfileController extends CrudController<UserProfile, CreateProfile
         profileService.deleteUser(id, userId);
     }
 
-    @GetMapping(value = "/{id}/unlinked-routes")
-    public Page<ReadRouteDto> findProfileUnlinkedRoutes(@PathVariable Long id, Pageable pageable) {
-        final Page<Route> routes = profileService.findUnlinkedRoutes(id, pageable);
-        return mapper.mapAllTo(routes, ReadRouteDto.class);
+    @GetMapping(value = "/{id}/unlinked-permissions")
+    public Page<ReadPermissionDto> findProfileUnlinkedPermissions(@PathVariable Long id, Pageable pageable) {
+        return profileService.findUnlinkedPermissions(id, pageable);
     }
 
     @GetMapping(value = "/{id}/unlinked-users")
