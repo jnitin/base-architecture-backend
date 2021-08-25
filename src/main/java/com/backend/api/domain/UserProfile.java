@@ -10,10 +10,9 @@ import java.util.Set;
 
 @Entity
 @Builder
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class UserProfile extends Base {
     private String description;
     private Integer level;

@@ -11,8 +11,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Rent extends Base {
   private LocalDate paymentDay;
   private LocalDate contractInitialDay;

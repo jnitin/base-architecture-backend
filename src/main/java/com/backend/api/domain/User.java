@@ -15,9 +15,8 @@ import java.util.stream.Collectors;
 
 @Entity
 @Builder
-@Getter
-@Setter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
 public class User extends Base {
   @NotNull
   private String name;
