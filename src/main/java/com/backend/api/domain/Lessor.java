@@ -8,7 +8,8 @@ import javax.persistence.Entity;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Lessor extends Base{ // Locador (dono do imóvel)
   private String name;
 }

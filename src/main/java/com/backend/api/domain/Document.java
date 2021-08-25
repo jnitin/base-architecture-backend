@@ -9,7 +9,8 @@ import javax.persistence.Entity;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Document extends Base {
   private DocumentType type;
   private String name;

@@ -11,22 +11,22 @@ import org.apache.commons.io.FilenameUtils;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
+@Getter
+@Setter
 public class FileStorage extends Base {
 
-  @Column(name = "uuid", unique = true, nullable = false)
+  @Column(unique = true, nullable = false)
   private String uuid;
 
-  @Column(name = "filename", nullable = false)
+  @Column(nullable = false)
   private String filename;
 
-  @Column(name = "extension", nullable = false, length = 10)
+  @Column(nullable = false, length = 10)
   private String extension;
 
-  @Column(name = "content_type")
   private String contentType;
 
-  @Column(name = "size")
+  @Column()
   private Long size;
 
   public String getUuidWithExtension() {

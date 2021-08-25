@@ -12,7 +12,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Parameter extends Base {
     @NotNull
     private String key;

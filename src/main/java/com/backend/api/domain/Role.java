@@ -11,7 +11,8 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
+@Getter
+@Setter
 public class Role extends Base {
 
   private static final long serialVersionUID = 6576788537364875554L;

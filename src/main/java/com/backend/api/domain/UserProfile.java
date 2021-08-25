@@ -12,7 +12,8 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class UserProfile extends Base {
     private String description;
     private Integer level;

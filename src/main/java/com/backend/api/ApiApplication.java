@@ -45,6 +45,12 @@ public class ApiApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
+    if (userRepository.findAll().isEmpty()) {
+      init();
+    }
+  }
+
+  private void init() {
     Role r = Role
         .builder()
         .permission(Permission.ALL)

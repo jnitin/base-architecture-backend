@@ -14,9 +14,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Table(name = "system_user")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
+@Getter
+@Setter
 public class User extends Base {
   @NotNull
   private String name;
@@ -61,7 +63,7 @@ public class User extends Base {
 
 
   public Set<Profile> getProfiles() {
-    return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+    return profiles.stream().map(Profile::toEnum).collect(Collectors.toSet());
   }
 
   public void addProfile(Profile profile) {
