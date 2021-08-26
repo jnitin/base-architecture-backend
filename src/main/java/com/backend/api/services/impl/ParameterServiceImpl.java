@@ -75,7 +75,6 @@ public class ParameterServiceImpl implements ParameterService {
 
   @Override
   public Parameter toEntity(CreateParameterDto createParameterDto) {
-    final var company = CompanyService.getSelectedCompany();
     return Parameter
         .builder()
         .key(createParameterDto.getKey())

@@ -92,6 +92,7 @@ public class ApiApplication implements CommandLineRunner {
         .name("Zamp2")
         .cnpj("1234567891f")
         .users(new HashSet<>())
+        .parameters(new HashSet<>())
         .build();
 
 
@@ -127,6 +128,7 @@ public class ApiApplication implements CommandLineRunner {
     parametroRepository.saveAll(List.of(p1, p2, p3, p4, p5, p6));
 
     c.getParameters().addAll(Set.of(p1, p2, p3, p4, p5, p6));
+    c2.getParameters().addAll(Set.of(p1, p2));
 
     c.getUsers().add(user);
     c2.getUsers().add(user);

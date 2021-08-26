@@ -8,6 +8,7 @@ import com.backend.api.mapper.DataMapper;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import com.backend.api.services.CrudService;
+import com.backend.api.utils.Basics;
 import com.backend.api.utils.CrudSpecificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,7 +49,7 @@ public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, Fi
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Page<ReadDto>> listAll(Pageable pageable, FilterDto filter, UserAuthentication userAuthentication) {
-        final Specification spec = generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
+        final Specification spec = Basics.generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
         Page<Bean> list = service.findAll(spec, pageable.getPageable());
 
         Page<ReadDto> listDto = mapper.mapAllTo(list, readDtoClass);
@@ -78,16 +79,5 @@ public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, Fi
         ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
         return builder.path("/").path(String.valueOf(id)).build();
     }
-
-    protected Specification<?> generateSpecification(Filter filter, Company company, User user) {
-        CrudSpecificationBuilder<?> builder = new CrudSpecificationBuilder<>(company, user);
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>|=|%)(\\w+?)(,|\\|)");
-        Matcher matcher = pattern.matcher(filter.getSearch() + ",");
-        while (matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
-        }
-        return builder.build();
-    }
-
 
 }

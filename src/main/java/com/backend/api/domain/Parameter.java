@@ -3,10 +3,7 @@ package com.backend.api.domain;
 import com.backend.api.dto.update.UpdateParameterDto;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,7 +25,7 @@ public class Parameter extends Base {
 
     private String note;
 
-    @ManyToMany(mappedBy = "parameters")
+    @ManyToMany(mappedBy = "parameters", fetch = FetchType.LAZY)
     private Set<Company> companies = new HashSet<>();
 
     public void update(UpdateParameterDto dto, Company c) {

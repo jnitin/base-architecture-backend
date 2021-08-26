@@ -12,6 +12,7 @@ import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.UserService;
+import com.backend.api.utils.Basics;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
@@ -57,13 +58,13 @@ public class UserController extends CrudController<User, CreateUserDto, ReadUser
 
   @GetMapping(value = "/{id}/unlinked-profiles")
   public Page<ReadProfileDto> findUnlinkedProfiles(@PathVariable Long id, Pageable pageable, Filter filter, UserAuthentication userAuthentication) {
-    final Specification specification = generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
+    final Specification specification = Basics.generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
     return userService.findUnlinkedProfiles(id, pageable, specification);
   }
 
   @GetMapping(value = "/{id}/unlinked-companies")
   public Page<ReadCompanyDto> findUnlinkedCompanies(@PathVariable Long id, Pageable pageable, Filter filter, UserAuthentication userAuthentication) {
-    final Specification specification = generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
+    final Specification specification = Basics.generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
     return userService.findUnlinkedCompanies(id, pageable, specification);
   }
 
