@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "system_user")
+@Table(name = "user_table")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -35,7 +35,7 @@ public class User extends Base {
   @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
   private Set<UserProfile> userProfiles;
 
-  @ManyToMany(mappedBy = "users")
+  @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
   private Set<Company> companies;
 
   @ManyToMany

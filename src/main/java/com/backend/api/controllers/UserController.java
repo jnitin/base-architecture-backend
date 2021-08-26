@@ -3,6 +3,7 @@ package com.backend.api.controllers;
 import com.backend.api.config.security.permission.UserAuthentication;
 import com.backend.api.domain.User;
 import com.backend.api.dto.create.CreateUserDto;
+import com.backend.api.dto.read.ReadCompanyDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateUserDto;
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -56,9 +56,21 @@ public class UserController extends CrudController<User, CreateUserDto, ReadUser
   }
 
   @GetMapping(value = "/{id}/unlinked-profiles")
-  public Page<ReadProfileDto> findUnlinkedProfiles(@PathVariable Long id, Pageable pageable, Filter filter) {
-    final Specification specification = generateSpecification(filter);
+  public Page<ReadProfileDto> findUnlinkedProfiles(@PathVariable Long id, Pageable pageable, Filter filter, UserAuthentication userAuthentication) {
+    final Specification specification = generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
     return userService.findUnlinkedProfiles(id, pageable, specification);
+  }
+
+  @GetMapping(value = "/{id}/unlinked-companies")
+  public Page<ReadCompanyDto> findUnlinkedCompanies(@PathVariable Long id, Pageable pageable, Filter filter, UserAuthentication userAuthentication) {
+    final Specification specification = generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
+    return userService.findUnlinkedCompanies(id, pageable, specification);
+  }
+
+  @GetMapping(value = "/{id}/companies")
+  public ResponseEntity<Page<ReadCompanyDto>> getUserCompanies(@PathVariable Long id, Pageable pageable) {
+    Page<ReadCompanyDto> profiles = mapper.mapAllTo(userService.findCompaniesById(id, pageable), ReadCompanyDto.class);
+    return ResponseEntity.ok().body(profiles);
   }
 
 }

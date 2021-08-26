@@ -13,7 +13,8 @@ import java.util.List;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpecificationExecutor<Company> {
 
-  @Transactional()
-    @Query("SELECT DISTINCT c FROM User u JOIN u.companies c WHERE u.id = :userId")
+  @Query("SELECT DISTINCT c FROM User u JOIN u.companies c WHERE u.id = :userId")
   List<Company> getMenus(@Param("userId") Long userId);
+
+
 }

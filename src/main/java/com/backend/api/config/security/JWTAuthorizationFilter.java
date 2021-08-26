@@ -1,7 +1,10 @@
 package com.backend.api.config.security;
 
 import com.backend.api.config.security.permission.UserAuthentication;
+import com.backend.api.domain.Company;
 import com.backend.api.domain.User;
+import com.backend.api.exceptions.ObjectNotFoundException;
+import com.backend.api.repositories.CompanyRepository;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.security.JWTUtil;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,14 +25,17 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
   private final UserRepository userRepository;
 
+  private final CompanyRepository companyRepository;
+
   private final UserDetailsService userDetailsService;
 
   public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
-                                UserDetailsService userDetailsService, UserRepository userRepository) {
+                                UserDetailsService userDetailsService, UserRepository userRepository, CompanyRepository companyRepository) {
     super(authenticationManager);
     this.jwtUtil = jwtUtil;
     this.userDetailsService = userDetailsService;
     this.userRepository = userRepository;
+    this.companyRepository = companyRepository;
   }
 
   @Override
@@ -39,12 +45,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     if (header != null && header.startsWith("Bearer ")) {
       String rawToken = header.substring(7);
 
-      UsernamePasswordAuthenticationToken auth = getAuthentication(rawToken);
+      Long company = Long.valueOf(request.getHeader("company"));
+      UsernamePasswordAuthenticationToken auth = getAuthentication(rawToken, company);
       if (auth != null) {
         User user = (User) auth.getPrincipal();
         Long id = user.getId();
 
-        if(id == null) {
+        if (id == null) {
           chain.doFilter(request, response);
           return;
         }
@@ -56,12 +63,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     chain.doFilter(request, response);
   }
 
-
-  private UsernamePasswordAuthenticationToken getAuthentication(String token) {
+  private UsernamePasswordAuthenticationToken getAuthentication(String token, Long companyId) {
     if (jwtUtil.isValidToken(token)) {
       String username = jwtUtil.getUsername(token);
       User user = userRepository.findByEmail(username);
-      return new UserAuthentication(user);
+      Company company = companyId == -1 ? new Company() : companyId == 0L ? null : companyRepository.findById(companyId)
+          .orElseThrow(() -> new ObjectNotFoundException("Empresa não encontrada"));
+      return new UserAuthentication(user, company);
     }
     return null;
   }

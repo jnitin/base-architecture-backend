@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +32,9 @@ public class UserProfile extends Base {
     @ManyToMany
     @JoinTable(name = "profile_user", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
+
+    @ManyToMany(mappedBy = "userProfiles")
+    private List<Company> companies = new ArrayList<>();
 
     public void update(UpdateProfileDto dto) {
         description = dto.getDescription();

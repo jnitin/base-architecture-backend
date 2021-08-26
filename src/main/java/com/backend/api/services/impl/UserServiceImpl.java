@@ -1,10 +1,13 @@
 package com.backend.api.services.impl;
 
 import com.backend.api.config.security.permission.UserAuthentication;
+import com.backend.api.domain.Company;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.domain.enums.UserSituation;
+import com.backend.api.domain.enums.UserType;
 import com.backend.api.dto.create.CreateUserDto;
+import com.backend.api.dto.read.ReadCompanyDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateUserDto;
@@ -16,6 +19,7 @@ import com.backend.api.pagination.Pageable;
 import com.backend.api.query.UserQuery;
 import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.UserRepository;
+import com.backend.api.services.CompanyService;
 import com.backend.api.services.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +41,7 @@ public class UserServiceImpl implements UserService {
   private final BCryptPasswordEncoder pe;
   private final UserRepository userRepository;
   private final ProfileRepository profileRepository;
+  private final CompanyService companyService;
   private final UserQuery userQuery;
   private final DataMapper mapper;
 
@@ -48,15 +53,15 @@ public class UserServiceImpl implements UserService {
     return userRepository.getUserProfiles(id, pageable.getPageable());
   }
 
-  public User getLoggedInUser() {
-    return ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication())
-        .getUser();
-  }
-
   @Override
   public Page<ReadProfileDto> findUnlinkedProfiles(Long id, Pageable pageable, Specification specification) {
     return userQuery.findUnlinkedProfiles(id, pageable, specification);
     //        return userRepository.findUnlinkedProfiles(id, pageable.getPageable());
+  }
+
+  @Override
+  public Page<ReadCompanyDto> findUnlinkedCompanies(Long id, Pageable pageable, Specification specification) {
+    return userQuery.findUnlinkedCompanies(id, pageable, specification);
   }
 
   @Override
@@ -86,10 +91,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public Page<Company> findCompaniesById(Long id, Pageable pageable) {
+    return userRepository.getUserCompanies(id, pageable.getPageable());
+  }
+
+  @Override
   public User create(CreateUserDto createUserDto) {
     try {
       final User user = toEntity(createUserDto);
-      return this.userRepository.save(user);
+      this.userRepository.save(user);
+      companyService.addEntity(user);
+      return user;
 
     } catch (ConstraintViolationException e) {
       throw new DataIntegrityException(
@@ -105,6 +117,7 @@ public class UserServiceImpl implements UserService {
         .email(createUserDto.getEmail())
         .password(pe.encode(createUserDto.getPassword()))
         .situation(UserSituation.ACTIVE)
+        .type(UserType.ADMIN)
         .build();
   }
 

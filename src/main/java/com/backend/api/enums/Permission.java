@@ -18,6 +18,8 @@ public enum Permission {
   PROFILES_MENU("Menu de perfis","Menu"),
   PARAMETERS_MENU("Menu de parâmetros","Menu"),
   COMPANIES_MENU("Menu de empresas","Menu"),
+  ACCOUNTS_MENU("Menu de contas do livro caixa","Menu"),
+  ENTRIES_MENU("Menu de lançamentos do livro caixa","Menu")
   ;
 
   private final String authorityName = String.format("PERM_%s", name());

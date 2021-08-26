@@ -5,8 +5,13 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -23,15 +28,16 @@ public class Parameter extends Base {
 
     private String note;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @ManyToMany(mappedBy = "parameters")
+    private Set<Company> companies = new HashSet<>();
 
     public void update(UpdateParameterDto dto, Company c) {
-        this.company = c;
+        this.companies = Set.of(c);
         this.key = dto.getKey();
         this.value = dto.getValue();
         this.note = dto.getNote();
     }
+
+
 
 }

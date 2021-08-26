@@ -4,10 +4,11 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 @EqualsAndHashCode
 @ToString
 public class ReadCompanyDto implements Serializable {

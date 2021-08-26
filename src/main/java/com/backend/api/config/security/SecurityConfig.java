@@ -1,5 +1,6 @@
 package com.backend.api.config.security;
 
+import com.backend.api.repositories.CompanyRepository;
 import com.backend.api.repositories.UserRepository;
 import com.backend.api.security.JWTUtil;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsService userDetailsService;
 
-  private final UserRepository UserRepository;
+  private final CompanyRepository companyRepository;
+
+  private final UserRepository userRepository;
 
   private final JWTUtil jwtUtil;
 
@@ -44,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll().antMatchers(PUBLIC_MATCHERS).permitAll()
         .anyRequest().authenticated();
     http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-    http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService, UserRepository));
+    http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService, userRepository, companyRepository));
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
   }
@@ -60,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     configuration.setAllowedOrigins(Arrays.asList("*"));
     configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowCredentials(true);
-    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "Company"));
 
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);

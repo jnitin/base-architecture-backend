@@ -1,7 +1,9 @@
 package com.backend.api.query.impl;
 
+import com.backend.api.domain.Company;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
+import com.backend.api.dto.read.ReadCompanyDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.pagination.Pageable;
 import com.backend.api.query.UserQuery;
@@ -39,9 +41,9 @@ public class UserQueryImpl implements UserQuery {
         )
     );
 
-final Predicate specAux = specification != null ?
-    specification.toPredicate(root, cq, cb) :
-    cb.isTrue(cb.literal(true));
+    final Predicate specAux = specification != null ?
+        specification.toPredicate(root, cq, cb) :
+        cb.isTrue(cb.literal(true));
 
     cq.where(
         cb.and(
@@ -64,5 +66,49 @@ final Predicate specAux = specification != null ?
 
     final List<ReadProfileDto> list = typedQuery.getResultList();
     return new PageImpl<ReadProfileDto>(list, pageable.getPageable(), 10);
+  }
+
+  @Override
+  public Page<ReadCompanyDto> findUnlinkedCompanies(Long id, Pageable pageable, Specification specification) {
+    final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<ReadCompanyDto> cq = cb.createQuery(ReadCompanyDto.class);
+
+    final Root<Company> root = cq.from(Company.class);
+    final Join<UserProfile, User> userJoin = root.join("users", JoinType.LEFT);
+
+    cq.select(
+        cb.construct(ReadCompanyDto.class,
+            root.get("id"),
+            root.get("name"),
+            root.get("cnpj")
+        )
+    );
+
+    final Predicate specAux = specification != null ?
+        specification.toPredicate(root, cq, cb) :
+        cb.isTrue(cb.literal(true));
+
+    cq.where(
+        cb.and(
+            specAux,
+            cb.or(
+                cb.not(
+                    cb.equal(
+                        userJoin.get("id"),
+                        cb.literal(id)
+                    )
+                ),
+                cb.isNull(userJoin.get("id"))
+            )
+        )
+    );
+
+    cq.groupBy(root.get("id"));
+    cq.orderBy(QueryUtils.toOrders(pageable.getPageable().getSort(), root, cb));
+
+    final TypedQuery<ReadCompanyDto> typedQuery = entityManager.createQuery(cq);
+
+    final List<ReadCompanyDto> list = typedQuery.getResultList();
+    return new PageImpl<ReadCompanyDto>(list, pageable.getPageable(), 10);
   }
 }

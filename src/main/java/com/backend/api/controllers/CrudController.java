@@ -1,8 +1,9 @@
 package com.backend.api.controllers;
 
+import com.backend.api.config.security.permission.UserAuthentication;
 import com.backend.api.domain.Base;
-import com.backend.api.domain.Parameter;
-import com.backend.api.dto.read.ReadParameterDto;
+import com.backend.api.domain.Company;
+import com.backend.api.domain.User;
 import com.backend.api.mapper.DataMapper;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
@@ -46,14 +47,12 @@ public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, Fi
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Page<ReadDto>> listAll(Pageable pageable, FilterDto filter) {
-        final Specification spec = generateSpecification(filter);
+    public ResponseEntity<Page<ReadDto>> listAll(Pageable pageable, FilterDto filter, UserAuthentication userAuthentication) {
+        final Specification spec = generateSpecification(filter, userAuthentication.getCompany(), userAuthentication.getUser());
         Page<Bean> list = service.findAll(spec, pageable.getPageable());
 
         Page<ReadDto> listDto = mapper.mapAllTo(list, readDtoClass);
         return ResponseEntity.ok().body(listDto);
-//        Page<ReadDto> listDto = service.findAll(pageable, filter);
-//        return ResponseEntity.ok().body(listDto);
     }
 
     @PostMapping
@@ -80,8 +79,8 @@ public class CrudController<Bean extends Base, CreateDto, ReadDto, UpdateDto, Fi
         return builder.path("/").path(String.valueOf(id)).build();
     }
 
-    protected Specification<?> generateSpecification(Filter filter) {
-        CrudSpecificationBuilder<?> builder = new CrudSpecificationBuilder<>();
+    protected Specification<?> generateSpecification(Filter filter, Company company, User user) {
+        CrudSpecificationBuilder<?> builder = new CrudSpecificationBuilder<>(company, user);
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>|=|%)(\\w+?)(,|\\|)");
         Matcher matcher = pattern.matcher(filter.getSearch() + ",");
         while (matcher.find()) {

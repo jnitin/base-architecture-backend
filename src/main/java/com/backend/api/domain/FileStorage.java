@@ -2,10 +2,14 @@ package com.backend.api.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.*;
 import org.apache.commons.io.FilenameUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -26,8 +30,10 @@ public class FileStorage extends Base {
 
   private String contentType;
 
-  @Column()
   private Long size;
+
+  @ManyToMany(mappedBy = "fileStorages")
+  private List<Company> companies = new ArrayList<>();
 
   public String getUuidWithExtension() {
     return this.uuid + FilenameUtils.EXTENSION_SEPARATOR_STR + this.extension;

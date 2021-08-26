@@ -1,6 +1,7 @@
 package com.backend.api.config.security.permission;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.backend.api.domain.Company;
 import com.backend.api.domain.User;
 import com.backend.api.enums.Permission;
 import lombok.EqualsAndHashCode;
@@ -20,15 +21,18 @@ public class UserAuthentication extends UsernamePasswordAuthenticationToken {
 
   private transient DecodedJWT decodedJwt;
   private final transient User user;
+  private final Company company;
 
-  public UserAuthentication(User user, DecodedJWT decodedJwt) {
+  public UserAuthentication(User user, DecodedJWT decodedJwt, Company company) {
     super(user, decodedJwt, constructAuthoritiesOfUser(user));
     this.decodedJwt = decodedJwt;
     this.user = user;
+    this.company = company;
   }
 
-  public UserAuthentication(User user) {
+  public UserAuthentication(User user, Company company) {
     super(user, null, constructAuthoritiesOfUser(user));
+    this.company = company;
     this.user = user;
   }
 

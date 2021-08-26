@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootApplication
 @RequestMapping(name = "/api")
@@ -71,7 +72,6 @@ public class ApiApplication implements CommandLineRunner {
         .password(pe.encode("admin"))
         .situation(UserSituation.ACTIVE)
         .userProfiles(new HashSet<>())
-        .companies(new HashSet<>())
         .type(UserType.ADMIN)
         .roles(List.of(r))
         .build();
@@ -84,6 +84,7 @@ public class ApiApplication implements CommandLineRunner {
         .name("Zamp")
         .cnpj("12345678912")
         .users(new HashSet<>())
+        .parameters(new HashSet<>())
         .build();
 
     Company c2 = Company
@@ -92,15 +93,15 @@ public class ApiApplication implements CommandLineRunner {
         .cnpj("1234567891f")
         .users(new HashSet<>())
         .build();
-    companyRepository.save(c);
-    companyRepository.save(c2);
 
-    Parameter p1 = new Parameter("Maria da Silva", "69999955478", "Porto Velho", c);
-    Parameter p2 = new Parameter("Maria das graças", "69815254789", "Porto Velho", c);
-    Parameter p3 = new Parameter("Carlos Alberto", "69554758963", "Ariquemes", c);
-    Parameter p4 = new Parameter("Paulo Cesar", "41814578956", "Curitiba", c);
-    Parameter p5 = new Parameter("José Bonifácio", "41556657842", "Pinhais", c);
-    Parameter p6 = new Parameter("Euclides da Cunha", "45458569856", "Florianópolis", c);
+
+
+    Parameter p1 = new Parameter("Maria da Silva", "69999955478", "Porto Velho", new HashSet<>());
+    Parameter p2 = new Parameter("Maria das graças", "69815254789", "Porto Velho",  new HashSet<>());
+    Parameter p3 = new Parameter("Carlos Alberto", "69554758963", "Ariquemes",  new HashSet<>());
+    Parameter p4 = new Parameter("Paulo Cesar", "41814578956", "Curitiba",  new HashSet<>());
+    Parameter p5 = new Parameter("José Bonifácio", "41556657842", "Pinhais",  new HashSet<>());
+    Parameter p6 = new Parameter("Euclides da Cunha", "45458569856", "Florianópolis",  new HashSet<>());
 
     UserProfile p = UserProfile
         .builder()
@@ -125,7 +126,10 @@ public class ApiApplication implements CommandLineRunner {
 
     parametroRepository.saveAll(List.of(p1, p2, p3, p4, p5, p6));
 
+    c.getParameters().addAll(Set.of(p1, p2, p3, p4, p5, p6));
+
     c.getUsers().add(user);
+    c2.getUsers().add(user);
 
     companyRepository.save(c);
     companyRepository.save(c2);

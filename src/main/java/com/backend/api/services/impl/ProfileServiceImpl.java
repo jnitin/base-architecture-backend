@@ -13,6 +13,7 @@ import com.backend.api.pagination.Pageable;
 import com.backend.api.repositories.ProfileRepository;
 import com.backend.api.repositories.RoleRepository;
 import com.backend.api.repositories.UserRepository;
+import com.backend.api.services.CompanyService;
 import com.backend.api.services.ProfileService;
 import com.backend.api.services.RoleService;
 import com.backend.api.services.UserService;
@@ -39,6 +40,7 @@ public class ProfileServiceImpl implements ProfileService {
   private final RoleRepository roleRepository;
   private final RoleService roleService;
   private final DataMapper mapper;
+  private final CompanyService companyService;
 
   @Override
   public UserProfile create(CreateProfileDto createProfileDto) {
@@ -46,6 +48,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     final var profile = toEntity(createProfileDto);
     profileRepository.save(profile);
+    companyService.addEntity(profile);
     return profile;
   }
 
@@ -121,16 +124,6 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   @Override
-  public List<UserProfile> findByIds(List<Long> ids) {
-    return profileRepository.findByIds(ids);
-  }
-
-  @Override
-  public void saveProfiles(List<UserProfile> profiles) {
-    profileRepository.saveAll(profiles);
-  }
-
-  @Override
   public Page<User> findProfileUsers(Long id, Pageable pageable) {
     return profileRepository.findLinkedUsers(id, pageable.getPageable());
   }
@@ -167,7 +160,7 @@ public class ProfileServiceImpl implements ProfileService {
 
 
   private void validate(Integer level) {
-    User user = userService.getLoggedInUser();
+    User user = UserService.getLoggedInUser();
     if (user.getMaxUserProfileLevel().getLevel() < level) {
       throw new RuntimeException("Não é possivel criar um perfil com nível maior que o seu.");
     }

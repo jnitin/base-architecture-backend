@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,5 +37,8 @@ public class Role extends Base {
 
   @OneToOne
   UserProfile userProfile;
+
+  @ManyToMany(mappedBy = "roles")
+  private List<Company> companies = new ArrayList<>();
 
 }

@@ -32,4 +32,7 @@ public class Building extends Base {
   @OneToMany(targetEntity = Document.class)
   List<Document> documents = new ArrayList<>();
 
+  @ManyToMany
+  private List<Company> companies = new ArrayList<>();
+
 }

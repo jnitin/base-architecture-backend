@@ -11,7 +11,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class CreateCompanyDto implements Serializable {
-    private Long id;
     private String name;
     private String cnpj;
 }

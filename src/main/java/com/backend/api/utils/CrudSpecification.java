@@ -1,67 +1,93 @@
 package com.backend.api.utils;
 
+import com.backend.api.domain.Company;
+import com.backend.api.domain.User;
 import com.backend.api.exceptions.DataIntegrityException;
+import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
+@AllArgsConstructor
 public class CrudSpecification<Bean> implements Specification<Bean> {
-
-  private static final long serialVersionUID = 1L;
-  private SearchCriteria criteria;
-
-  public CrudSpecification(SearchCriteria criteria) {
-    this.criteria = criteria;
-  }
-
-  public CrudSpecification() {
-  }
+  private final SearchCriteria criteria;
+  private final Company company;
+  private final User user;
 
   @Override
-  public Predicate toPredicate(Root<Bean> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+  public Predicate toPredicate(Root<Bean> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 
     try {
       root.getJavaType().getDeclaredField(criteria.getKey());
     } catch (NoSuchFieldException e) {
       throw new DataIntegrityException("Campo (" + criteria.getKey() + ") do filtro não encontrado");
-    }
-    final String key = criteria.getKey();
+    } catch (NullPointerException ignored) {
 
+    }
+    final var entityName = root.getModel().getName();
+
+    Predicate linkCompany = null;
+    cq.groupBy(root.get("id"));
+
+
+    if (!entityName.equals("Company")) {
+      final Join<Company, Bean> companyBeanJoin = root.join("companies", JoinType.LEFT);
+
+
+      if (company == null) {
+        linkCompany = cb.conjunction();
+        for (Company c : user.getCompanies()) {
+          linkCompany = cb.or(linkCompany, cb.literal(c).in(companyBeanJoin));
+        }
+
+      } else if (company.getId() == null) {
+        linkCompany = cb.isTrue(cb.literal(true));
+      } else {
+        linkCompany = cb.isTrue(cb.literal(company).in(companyBeanJoin));
+      }
+    } else {
+      linkCompany = cb.isTrue(cb.literal(true));
+    }
+    if (criteria == null) {
+      return linkCompany;
+    }
+
+    final String key = criteria.getKey();
     // Caso haja uma lista de ids no criteria em notIn, vai retornar um query
     // filtrada sem aqueles ids
     if (criteria.getNotIn() != null) {
       Predicate predicate = root.in(criteria.getNotIn()).not();
-      return builder.and(predicate);
+      return cb.and(predicate, linkCompany);
     }
 
     final String value = criteria.getValue().toString();
 
+    Predicate ret = cb.conjunction();
+
     switch (criteria.getOperation()) {
       case ">":
-        return builder.greaterThanOrEqualTo(root.get(key), value);
+        ret.getExpressions().add(cb.and(cb.greaterThanOrEqualTo(root.get(key), value), linkCompany));
       case "<":
-        return builder.lessThanOrEqualTo(root.get(key), value);
+        ret.getExpressions().add(cb.and(cb.lessThanOrEqualTo(root.get(key), value), linkCompany));
       case ":": // Contains
         if (root.get(key).getJavaType() == String.class) {
-          return builder.like(builder.upper(root.get(key)), "%" + value.toUpperCase() + "%");
+          ret.getExpressions().add(cb.and(cb.like(cb.upper(root.get(key)), "%" + value.toUpperCase() + "%"), linkCompany));
         } else {
-          return builder.equal(root.get(key), criteria.getValue());
+          ret.getExpressions().add(cb.and(cb.equal(root.get(key), criteria.getValue()), linkCompany));
         }
       case "=": // Exact
         if (root.get(key).getJavaType() == String.class) {
-          return builder.equal(root.<String>get(key), value);
+          ret.getExpressions().add(cb.and(cb.equal(root.<String>get(key), value), linkCompany));
         } else {
-          return builder.equal(root.get(key), criteria.getValue());
+          ret.getExpressions().add(cb.and(cb.equal(root.get(key), criteria.getValue()), linkCompany));
         }
       case "%": // Starts With
         if (root.get(key).getJavaType() == String.class) {
-          return builder.like(builder.upper(root.get(key)), value.toUpperCase() + "%");
+          ret.getExpressions().add(cb.and(cb.like(cb.upper(root.get(key)), value.toUpperCase() + "%"), linkCompany));
         }
     }
-    return null;
+
+    return ret;
   }
 
 }

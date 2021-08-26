@@ -1,5 +1,6 @@
 package com.backend.api.services;
 
+import com.backend.api.config.security.permission.UserAuthentication;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
@@ -19,10 +20,6 @@ public interface ProfileService extends CrudService<UserProfile, CreateProfileDt
     Page<ReadPermissionDto> findUnlinkedPermissions(Long id, Pageable pageable);
 
     Page<User> findUnlinkedUsers(Long id, Pageable pageable);
-
-    List<UserProfile> findByIds(List<Long> ids);
-
-    void saveProfiles(List<UserProfile> profiles);
 
     Page<User> findProfileUsers(Long id, Pageable pageable);
 

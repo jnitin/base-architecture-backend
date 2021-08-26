@@ -1,5 +1,6 @@
 package com.backend.api.dto.create;
 
+import com.backend.api.domain.enums.AccountType;
 import lombok.*;
 
 import java.io.Serializable;
@@ -11,9 +12,9 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 @Setter
-public class CreateUserDto implements Serializable {
-    private String name;
-    private String email;
-    private String password;
-    private Integer situation;
+public class CreateAccountDto implements Serializable {
+  private String name;
+  private String code;
+  private AccountType type;
+  private Float balance;
 }

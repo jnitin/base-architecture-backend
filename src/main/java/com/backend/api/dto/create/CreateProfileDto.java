@@ -11,7 +11,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class CreateProfileDto implements Serializable {
-    private Long id;
     private String description;
     private Integer level;
 }

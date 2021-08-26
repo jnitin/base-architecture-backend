@@ -22,4 +22,7 @@ public class Routine extends Base {
 
     @ManyToMany(mappedBy = "routines")
     private List<UserProfile> profiles = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "routines")
+    private List<Company> companies = new ArrayList<>();
 }
