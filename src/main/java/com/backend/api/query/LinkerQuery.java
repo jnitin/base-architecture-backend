@@ -16,5 +16,4 @@ public interface LinkerQuery<A, B, BDto> {
 
   Page<B> findUnlinkedBEntities(Long id, Pageable pageable, Specification specification);
 
-  void setJoinField(String joinField);
 }

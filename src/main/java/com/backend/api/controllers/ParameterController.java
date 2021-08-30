@@ -47,9 +47,7 @@ public class ParameterController
     public CompaniesLink(CrudLinkerServiceImpl<Parameter, Company, ReadCompanyDto> service, DataMapper mapper, EntityManager entityManager) {
       super(service, mapper);
       LinkerQuery<Parameter, Company, ReadCompanyDto> query = new LinkerQueryImpl<Parameter, Company, ReadCompanyDto>(entityManager, Parameter.class, Company.class,ReadCompanyDto.class);
-
       service.setQuery(query);
-      service.setJoinField("companies");
     }
 
   }

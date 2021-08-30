@@ -17,11 +17,6 @@ import java.util.List;
 public class CrudLinkerServiceImpl<A, B, BDto> {
   private LinkerQuery<A, B, BDto> query;
 
-  public void setJoinField(String joinField) {
-    query.setJoinField(joinField);
-  }
-
-
   public Page<?> findAllBEntitiesById(Long id, Pageable pageable, Specification spec) {
     return query.findAllBEntitiesById(id, pageable, spec);
   }
@@ -40,7 +35,6 @@ public class CrudLinkerServiceImpl<A, B, BDto> {
   }
 
   public Page<B> findUnlinkedBEntities(Long id, Pageable pageable, Specification specification) {
-    return null;
-    //query.findUnlinkedBEntities(id, pageable, specification);
+    return query.findUnlinkedBEntities(id, pageable, specification);
   }
 }
