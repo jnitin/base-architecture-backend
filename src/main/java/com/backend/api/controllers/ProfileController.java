@@ -1,22 +1,29 @@
 package com.backend.api.controllers;
 
 import com.backend.api.config.security.permission.UserAuthentication;
+import com.backend.api.domain.Company;
 import com.backend.api.domain.User;
 import com.backend.api.domain.UserProfile;
 import com.backend.api.dto.create.CreateProfileDto;
+import com.backend.api.dto.read.ReadCompanyDto;
 import com.backend.api.dto.read.ReadPermissionDto;
 import com.backend.api.dto.read.ReadProfileDto;
 import com.backend.api.dto.read.ReadUserDto;
 import com.backend.api.dto.update.UpdateProfileDto;
 import com.backend.api.enums.Permission;
+import com.backend.api.mapper.DataMapper;
 import com.backend.api.pagination.Filter;
 import com.backend.api.pagination.Pageable;
+import com.backend.api.query.LinkedQuery;
+import com.backend.api.query.impl.LinkedQueryImpl;
 import com.backend.api.services.ProfileService;
+import com.backend.api.services.impl.CrudLinkerServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @RestController
@@ -71,5 +78,15 @@ public class ProfileController extends CrudController<UserProfile, CreateProfile
     @GetMapping(value = "/{id}/unlinked-users")
     public Page<ReadUserDto> findProfileUnlinkedUsers(@PathVariable Long id, Pageable pageable) {
         return mapper.mapAllTo(profileService.findUnlinkedUsers(id, pageable), ReadUserDto.class);
+    }
+
+    @RestController
+    @RequestMapping(value = "/profiles/{id}/companies")
+    static class CompaniesLink extends CrudLinkerController<UserProfile, Company, ReadCompanyDto> {
+        public CompaniesLink(CrudLinkerServiceImpl<UserProfile, Company, ReadCompanyDto> service, DataMapper mapper, EntityManager entityManager) {
+            super(service, mapper);
+            LinkedQuery<UserProfile, Company, ReadCompanyDto> query = new LinkedQueryImpl<>(entityManager, UserProfile.class, Company.class, ReadCompanyDto.class);
+            service.setQuery(query);
+        }
     }
 }

@@ -25,6 +25,9 @@ public class Account extends Base {
   private Set<Company> companies = new HashSet<>();
 
   public void update(UpdateAccountDto dto, Company company) {
-    throw new RuntimeException("Metodo nao implementado");
+    getCompanies().add(company);
+    setName(dto.getName());
+    setCode(dto.getCode());
+    setType(dto.getType());
   }
 }

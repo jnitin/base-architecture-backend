@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class UserProfile extends Base {
     private Set<User> users;
 
     @ManyToMany(mappedBy = "userProfiles")
-    private List<Company> companies = new ArrayList<>();
+    private Set<Company> companies = new HashSet<>();
 
     public void update(UpdateProfileDto dto) {
         description = dto.getDescription();

@@ -1,5 +1,6 @@
 package com.backend.api.dto.read;
 
+import com.backend.api.domain.enums.AccountType;
 import lombok.*;
 
 import java.io.Serializable;
@@ -18,4 +19,6 @@ public class ReadAccountDto implements Serializable {
   private String typeName;
   private Float balance;
   private Long companyId;
+  private AccountType type;
+
 }

@@ -82,7 +82,7 @@ public class Company extends Base {
 
   @ManyToMany
 //  @JoinTable(name = "user_profile_account", joinColumns = @JoinColumn(name = "company_id"), inverseJoinColumns = @JoinColumn(name = "user_profile_id"))
-  private Set<UserProfile> userProfiles;
+  private Set<UserProfile> userProfiles = new HashSet<>();
 
   public void update(UpdateCompanyDto dto) {
     name = dto.getName();

@@ -1,7 +1,7 @@
 package com.backend.api.services.impl;
 
 import com.backend.api.pagination.Pageable;
-import com.backend.api.query.LinkerQuery;
+import com.backend.api.query.LinkedQuery;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CrudLinkerServiceImpl<A, B, BDto> {
-  private LinkerQuery<A, B, BDto> query;
+  private LinkedQuery<A, B, BDto> query;
 
   public Page<?> findAllBEntitiesById(Long id, Pageable pageable, Specification spec) {
     return query.findAllBEntitiesById(id, pageable, spec);

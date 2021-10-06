@@ -49,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public void update(Long id, UpdateAccountDto dto) {
-    final var company = companyService.findById(dto.getCompanyId());
+    final var company = CompanyService.getSelectedCompany();
     final var account = findById(id);
     account.update(dto, company);
     accountRepository.save(account);

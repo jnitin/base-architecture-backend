@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface LinkerQuery<A, B, BDto> {
+public interface LinkedQuery<A, B, BDto> {
   Page<B> findAllBEntitiesById(Long id, Pageable pageable, Specification specification);
 
   void addBEntityToAEntity(Long id, List<Long> ids);

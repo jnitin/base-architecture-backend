@@ -8,8 +8,8 @@ import com.backend.api.dto.read.ReadParameterDto;
 import com.backend.api.dto.update.UpdateCompanyDto;
 import com.backend.api.mapper.DataMapper;
 import com.backend.api.pagination.Filter;
-import com.backend.api.query.LinkerQuery;
-import com.backend.api.query.impl.LinkerQueryImpl;
+import com.backend.api.query.LinkedQuery;
+import com.backend.api.query.impl.LinkedQueryImpl;
 import com.backend.api.services.CompanyService;
 import com.backend.api.services.UserService;
 import com.backend.api.services.impl.CrudLinkerServiceImpl;
@@ -44,7 +44,7 @@ public class CompanyController extends CrudController<Company, CreateCompanyDto,
     public ParametersLink(CrudLinkerServiceImpl<Company, Parameter, ReadParameterDto> service, DataMapper mapper, EntityManager entityManager) {
       super(service, mapper);
 
-      LinkerQuery<Company, Parameter, ReadParameterDto> query = new LinkerQueryImpl(entityManager, Company.class, Parameter.class, ReadParameterDto.class);
+      LinkedQuery<Company, Parameter, ReadParameterDto> query = new LinkedQueryImpl(entityManager, Company.class, Parameter.class, ReadParameterDto.class);
       service.setQuery(query);
     }
   }
